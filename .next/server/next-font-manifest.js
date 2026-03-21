@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST='{"pages":{},"app":{"/Users/misteruser/Desktop/GitHub/0_vanduo/ugne-online/app/layout":["static/media/e4af272ccee01ff0-s.p.woff2","static/media/793968fa3513f5d6-s.p.woff2"]},"appUsingSizeAdjust":true,"pagesUsingSizeAdjust":false}';
