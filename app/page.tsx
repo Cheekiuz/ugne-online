@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Mail, Search, Dribbble } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { ExecutiveDecisionSprite } from './components/executive-decision-sprite/ExecutiveDecisionSprite';
 
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 const KINETIC_MAIN_IMAGE = '/dcd50533-5c90-4e05-ae9c-1e1640403fbc.jpeg';
@@ -122,7 +123,10 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="min-w-0 lg:col-span-3 order-3 flex justify-center lg:justify-end lg:self-end">
+            <div className="min-w-0 lg:col-span-3 order-3 flex flex-col items-center justify-center gap-6 lg:items-end lg:justify-end lg:self-end">
+              <div className="flex w-full justify-center lg:justify-end">
+                <ExecutiveDecisionSprite variant="blue" compact />
+              </div>
               <div className="bg-primary-container p-8 rounded-xl flex flex-col items-center justify-center text-center shadow-sm w-full max-w-[220px] shrink-0">
                 <span className="font-headline text-5xl font-black text-on-primary-container">40-15</span>
                 <span className="font-label uppercase tracking-widest text-sm text-on-primary-container opacity-70 mt-2">Game Point Mindset</span>
@@ -283,6 +287,9 @@ export default function Home() {
                 View Statistics
               </button>
             </div>
+          </div>
+          <div className="flex justify-center mt-12">
+            <ExecutiveDecisionSprite variant="red" />
           </div>
         </section>
       </main>
