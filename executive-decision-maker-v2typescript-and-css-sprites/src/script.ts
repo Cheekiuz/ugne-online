@@ -322,248 +322,250 @@ class SpriteAnimator {
 
 import type { Sheet } from "./sheet";
 
+const SPRITE_BASE = "./executive-decision-sprites";
+
 const charSheet: Sheet[][] = [
   [
     {
-      url: "https://assets.codepen.io/163598/ex01-yes-01-sprite.png"
+      url: `${SPRITE_BASE}/ex01-yes-01-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-yes-02-sprite.png"
+      url: `${SPRITE_BASE}/ex01-yes-02-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-maybe-02-sprite.png"
+      url: `${SPRITE_BASE}/ex01-maybe-02-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-ask-01-sprite.png"
+      url: `${SPRITE_BASE}/ex01-ask-01-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-ask-02-sprite.png"
+      url: `${SPRITE_BASE}/ex01-ask-02-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-yes-03-sprite.png"
+      url: `${SPRITE_BASE}/ex01-yes-03-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-yes-04-sprite.png"
+      url: `${SPRITE_BASE}/ex01-yes-04-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-maybe-01-sprite.png"
+      url: `${SPRITE_BASE}/ex01-maybe-01-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-no-01-sprite.png"
+      url: `${SPRITE_BASE}/ex01-no-01-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-no-02-sprite.png"
+      url: `${SPRITE_BASE}/ex01-no-02-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-no-03-sprite.png"
+      url: `${SPRITE_BASE}/ex01-no-03-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-01-sprite.png"
+      url: `${SPRITE_BASE}/ex01-01-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-02-sprite.png"
+      url: `${SPRITE_BASE}/ex01-02-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-03-sprite.png"
+      url: `${SPRITE_BASE}/ex01-03-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-04-sprite.png"
+      url: `${SPRITE_BASE}/ex01-04-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-05-sprite.png"
+      url: `${SPRITE_BASE}/ex01-05-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-06-sprite.png"
+      url: `${SPRITE_BASE}/ex01-06-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-07-sprite.png"
+      url: `${SPRITE_BASE}/ex01-07-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-08-sprite.png"
+      url: `${SPRITE_BASE}/ex01-08-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-09-sprite.png"
+      url: `${SPRITE_BASE}/ex01-09-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-10-sprite.png"
+      url: `${SPRITE_BASE}/ex01-10-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-11-sprite.png"
+      url: `${SPRITE_BASE}/ex01-11-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-12-sprite.png"
+      url: `${SPRITE_BASE}/ex01-12-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-13-sprite.png"
+      url: `${SPRITE_BASE}/ex01-13-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-14-sprite.png"
+      url: `${SPRITE_BASE}/ex01-14-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-12-sprite.png"
+      url: `${SPRITE_BASE}/ex01-12-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-15-sprite.png"
+      url: `${SPRITE_BASE}/ex01-15-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-16-sprite.png"
+      url: `${SPRITE_BASE}/ex01-16-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-17-sprite.png"
+      url: `${SPRITE_BASE}/ex01-17-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-18-sprite.png"
+      url: `${SPRITE_BASE}/ex01-18-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-19-sprite.png"
+      url: `${SPRITE_BASE}/ex01-19-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-20-sprite.png"
+      url: `${SPRITE_BASE}/ex01-20-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-21-sprite.png"
+      url: `${SPRITE_BASE}/ex01-21-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-22-sprite.png"
+      url: `${SPRITE_BASE}/ex01-22-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-23-sprite.png"
+      url: `${SPRITE_BASE}/ex01-23-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-24-sprite.png"
+      url: `${SPRITE_BASE}/ex01-24-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-25-sprite.png"
+      url: `${SPRITE_BASE}/ex01-25-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex01-26-sprite.png"
+      url: `${SPRITE_BASE}/ex01-26-sprite.png`
     }
   ],
 
   [
     {
-      url: "https://assets.codepen.io/163598/ex02-yes-01-sprite.png"
+      url: `${SPRITE_BASE}/ex02-yes-01-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-yes-02-sprite.png"
+      url: `${SPRITE_BASE}/ex02-yes-02-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-no-04-sprite.png"
+      url: `${SPRITE_BASE}/ex02-no-04-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-maybe-01-sprite.png"
+      url: `${SPRITE_BASE}/ex02-maybe-01-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-maybe-02-sprite.png"
+      url: `${SPRITE_BASE}/ex02-maybe-02-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-yes-03-sprite.png"
+      url: `${SPRITE_BASE}/ex02-yes-03-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-no-01-sprite.png"
+      url: `${SPRITE_BASE}/ex02-no-01-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-no-02-sprite.png"
+      url: `${SPRITE_BASE}/ex02-no-02-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-no-03-sprite.png"
+      url: `${SPRITE_BASE}/ex02-no-03-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-ask-01-sprite.png"
+      url: `${SPRITE_BASE}/ex02-ask-01-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-ask-02-sprite.png"
+      url: `${SPRITE_BASE}/ex02-ask-02-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-01-sprite.png"
+      url: `${SPRITE_BASE}/ex02-01-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-02-sprite.png"
+      url: `${SPRITE_BASE}/ex02-02-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-03-sprite.png"
+      url: `${SPRITE_BASE}/ex02-03-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-04-sprite.png"
+      url: `${SPRITE_BASE}/ex02-04-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-05-sprite.png"
+      url: `${SPRITE_BASE}/ex02-05-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-06-sprite.png"
+      url: `${SPRITE_BASE}/ex02-06-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-07-sprite.png"
+      url: `${SPRITE_BASE}/ex02-07-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-24-sprite.png"
+      url: `${SPRITE_BASE}/ex02-24-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-09-sprite.png"
+      url: `${SPRITE_BASE}/ex02-09-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-10-sprite.png"
+      url: `${SPRITE_BASE}/ex02-10-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-11-sprite.png"
+      url: `${SPRITE_BASE}/ex02-11-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-12-sprite.png"
+      url: `${SPRITE_BASE}/ex02-12-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-13-sprite.png"
+      url: `${SPRITE_BASE}/ex02-13-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-14-sprite.png"
+      url: `${SPRITE_BASE}/ex02-14-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-12-sprite.png"
+      url: `${SPRITE_BASE}/ex02-12-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-25-sprite.png"
+      url: `${SPRITE_BASE}/ex02-25-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-16-sprite.png"
+      url: `${SPRITE_BASE}/ex02-16-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-17-sprite.png"
+      url: `${SPRITE_BASE}/ex02-17-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-18-sprite.png"
+      url: `${SPRITE_BASE}/ex02-18-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-19-sprite.png"
+      url: `${SPRITE_BASE}/ex02-19-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-20-sprite.png"
+      url: `${SPRITE_BASE}/ex02-20-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-21-sprite.png"
+      url: `${SPRITE_BASE}/ex02-21-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-22-sprite.png"
+      url: `${SPRITE_BASE}/ex02-22-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-23-sprite.png"
+      url: `${SPRITE_BASE}/ex02-23-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-24-sprite.png"
+      url: `${SPRITE_BASE}/ex02-24-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-25-sprite.png"
+      url: `${SPRITE_BASE}/ex02-25-sprite.png`
     },
     {
-      url: "https://assets.codepen.io/163598/ex02-26-sprite.png"
+      url: `${SPRITE_BASE}/ex02-26-sprite.png`
     }
   ]
 ];
 
 const indexSheet: Sheet[] = [
   {
-    url: "https://assets.codepen.io/163598/ex01-00-sprite.png"
+    url: `${SPRITE_BASE}/ex01-00-sprite.png`
   },
   {
-    url: "https://assets.codepen.io/163598/ex02-00-sprite.png"
+    url: `${SPRITE_BASE}/ex02-00-sprite.png`
   }
 ];
 
