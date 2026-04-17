@@ -1,9 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { Mail, Search, Dribbble } from 'lucide-react';
+import { Mail, Search } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { ExecutiveDecisionSprite } from './components/executive-decision-sprite/ExecutiveDecisionSprite';
+import { SeriousVisitorsCard } from './components/serious-visitors/SeriousVisitorsCard';
 
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 const KINETIC_MAIN_IMAGE = '/dcd50533-5c90-4e05-ae9c-1e1640403fbc.jpeg';
@@ -135,17 +136,17 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Kinetic Gallery (Asymmetric Layout) */}
-        <section className="bg-surface-container-low py-24 mb-20">
+        {/* Kinetic Gallery — portrait + strategic tiles */}
+        <section className="bg-surface-container-low pt-24 pb-24 mb-20">
           <div className="max-w-7xl mx-auto px-8">
             <div className="flex flex-col md:flex-row gap-4 mb-12 items-baseline">
               <h2 className="font-headline text-4xl font-bold">The Kinetic Drive</h2>
               <div className="h-[2px] flex-grow bg-outline-variant opacity-20"></div>
               <span className="font-label text-tertiary-container bg-tertiary px-4 py-1 rounded-full text-xs uppercase tracking-widest">Active Season</span>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 h-auto md:h-[600px]">
-              <div className="md:col-span-2 md:row-span-2 flex h-full min-h-[320px] flex-col overflow-hidden rounded-xl bg-surface-container-lowest md:min-h-0">
-                <div className="relative min-h-0 flex-1 basis-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:min-h-[600px] md:items-stretch">
+              <div className="flex min-h-[320px] flex-col overflow-hidden rounded-xl bg-surface-container-lowest md:min-h-0">
+                <div className="relative min-h-0 flex-1 basis-0 min-h-[280px]">
                   <Image
                     className="object-cover"
                     alt="Portrait among letter sculpture by the coast"
@@ -161,24 +162,24 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <div className="md:col-span-2 md:row-span-1 bg-secondary-container rounded-xl overflow-hidden relative">
-                <div className="absolute inset-0 tennis-gradient opacity-10"></div>
-                <div className="p-8 h-full flex flex-col justify-center relative z-10">
-                  <span className="text-6xl font-headline font-black text-on-secondary-container opacity-20 mb-4">#01</span>
-                  <h3 className="text-2xl font-bold text-on-secondary-container leading-tight">Strategic positioning is 90% of the game.</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="sm:col-span-2 min-h-[200px] bg-secondary-container rounded-xl overflow-hidden relative">
+                  <div className="absolute inset-0 tennis-gradient opacity-10"></div>
+                  <div className="p-8 h-full flex flex-col justify-center relative z-10">
+                    <span className="text-6xl font-headline font-black text-on-secondary-container opacity-20 mb-4">#01</span>
+                    <h3 className="text-2xl font-bold text-on-secondary-container leading-tight">Strategic positioning is 90% of the game.</h3>
+                  </div>
                 </div>
-              </div>
-              <div className="md:col-span-1 md:row-span-1 bg-surface-container-highest rounded-xl overflow-hidden relative">
-                <Image 
-                  className="w-full h-full object-cover" 
-                  alt="Yellow tennis balls organized in a container" 
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFEWkygmGUL1IUcvF9-gtfbDFUd_wvgg16h5I4pNBBe7Yeppbz08bAY0MPwP6ce9GvpQJVGUirZ04-kANT5abHi4fkx_Yprq5r770LS9hi4gT60Biwn3mh9oxMhicQEGLbpunmyANwlDEWM9MpNabBIMYVouU0WVmTY23trNdNLjFsqEkgPwnRKJ9BrE-grHtCVMiYZgqh5A3YGm1-w4weaxq8FBCp2pLcMnc1IXgT7Bw7sOF4tQ-eK1rZRaKh8lnI5dO7Jfllw8M"
-                  fill
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <div className="md:col-span-1 md:row-span-1 bg-primary rounded-xl flex items-center justify-center">
-                <Dribbble className="text-on-primary w-16 h-16" />
+                <div className="min-h-[200px] bg-surface-container-highest rounded-xl overflow-hidden relative">
+                  <Image
+                    className="w-full h-full object-cover"
+                    alt="Yellow tennis balls organized in a container"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFEWkygmGUL1IUcvF9-gtfbDFUd_wvgg16h5I4pNBBe7Yeppbz08bAY0MPwP6ce9GvpQJVGUirZ04-kANT5abHi4fkx_Yprq5r770LS9hi4gT60Biwn3mh9oxMhicQEGLbpunmyANwlDEWM9MpNabBIMYVouU0WVmTY23trNdNLjFsqEkgPwnRKJ9BrE-grHtCVMiYZgqh5A3YGm1-w4weaxq8FBCp2pLcMnc1IXgT7Bw7sOF4tQ-eK1rZRaKh8lnI5dO7Jfllw8M"
+                    fill
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <SeriousVisitorsCard />
               </div>
             </div>
           </div>
