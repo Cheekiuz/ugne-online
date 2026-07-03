@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { Mail, Search } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { ExecutiveDecisionSprite } from './components/executive-decision-sprite/ExecutiveDecisionSprite';
@@ -280,13 +281,12 @@ export default function Home() {
               >
                 Book a Court
               </button>
-              <button
-                type="button"
-                onClick={playBoomSound}
+              <Link
+                href="/statistics/"
                 className="border-2 border-on-primary text-on-primary px-10 py-4 rounded-xl font-black text-lg hover:bg-on-primary/10 transition-all"
               >
                 View Statistics
-              </button>
+              </Link>
             </div>
           </div>
           <div className="flex justify-center mt-12">
