@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Mail, Search } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { ExecutiveDecisionSprite } from './components/executive-decision-sprite/ExecutiveDecisionSprite';
 import { SeriousVisitorsCard } from './components/serious-visitors/SeriousVisitorsCard';
@@ -65,7 +65,7 @@ export default function Home() {
             <div className="text-3xl font-black text-primary">Ugnė.</div>
           </div>
           <div className="hidden md:flex gap-10 items-center">
-            <a className="text-primary font-bold border-b-2 border-primary pb-1" href="#">Tennis</a>
+            <a className="text-primary font-bold border-b-2 border-primary pb-1" href="#">Tennis & Something</a>
           </div>
           <div className="flex items-center gap-6">
             <div className="flex gap-4">
@@ -76,27 +76,15 @@ export default function Home() {
               >
                 <Mail className="h-6 w-6" aria-hidden />
               </a>
-              <Search
-                role="button"
-                tabIndex={0}
-                onClick={playBoomSound}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    playBoomSound();
-                  }
-                }}
-                className="text-primary cursor-pointer hover:scale-110 transition-transform"
-                aria-label="Search"
-              />
             </div>
-            <button
-              type="button"
-              onClick={playBoomSound}
+            <a
+              href="https://www.instagram.com/ugne_le_?utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-primary text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform"
             >
               Connect
-            </button>
+            </a>
           </div>
         </div>
       </nav>
@@ -279,7 +267,7 @@ export default function Home() {
                 onClick={playBoomSound}
                 className="bg-on-primary text-primary px-10 py-4 rounded-xl font-black text-lg hover:scale-105 active:scale-95 transition-all"
               >
-                Book a Court
+                Think again
               </button>
               <Link
                 href="/statistics/"
@@ -300,10 +288,17 @@ export default function Home() {
         <div className="flex flex-col md:flex-row justify-between items-center p-12 mt-20 max-w-7xl mx-auto font-body text-sm uppercase tracking-widest">
           <div className="font-headline font-bold text-on-surface mb-6 md:mb-0">Ugnė.</div>
           <div className="text-on-surface opacity-60 text-center md:text-left mb-6 md:mb-0">
-            ©2026 Ugnė. Engineered with Precision. Played with Passion.
+            ©2026 Ugnė. Engineered with Precision. Played with Passion. Not for serious persons.
           </div>
           <div className="flex gap-8">
-            <a className="text-on-surface opacity-60 hover:text-primary underline underline-offset-4 transition-opacity" href="#">Instagram</a>
+            <a
+              className="text-on-surface opacity-60 hover:text-primary underline underline-offset-4 transition-opacity"
+              href="https://www.instagram.com/ugne_le_?utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
           </div>
         </div>
       </footer>

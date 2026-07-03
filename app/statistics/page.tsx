@@ -245,12 +245,14 @@ export default function StatisticsPage() {
         <div className="flex flex-col md:flex-row justify-between items-center p-12 mt-20 max-w-7xl mx-auto font-body text-sm uppercase tracking-widest">
           <div className="font-headline font-bold text-on-surface mb-6 md:mb-0">Ugnė.</div>
           <div className="text-on-surface opacity-60 text-center md:text-left mb-6 md:mb-0">
-            ©2026 Ugnė. Engineered with Precision. Played with Passion.
+            ©2026 Ugnė. Engineered with Precision. Played with Passion. Not for serious persons.
           </div>
           <div className="flex gap-8">
             <a
               className="text-on-surface opacity-60 hover:text-primary underline underline-offset-4 transition-opacity"
-              href="#"
+              href="https://www.instagram.com/ugne_le_?utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Instagram
             </a>
