@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import {Mail} from 'lucide-react';
+import {Instagram, Mail} from 'lucide-react';
 import {SeriousVisitorsCard} from '../components/serious-visitors/SeriousVisitorsCard';
 import {ThemeToggle} from '../components/theme-toggle/ThemeToggle';
 
@@ -251,12 +251,13 @@ export default function StatisticsPage() {
           </div>
           <div className="flex gap-8">
             <a
-              className="text-on-surface opacity-60 hover:text-primary underline underline-offset-4 transition-opacity"
+              className="text-on-surface opacity-60 hover:text-primary hover:scale-110 transition-all inline-flex"
               href="https://www.instagram.com/ugne_le_?utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Instagram"
             >
-              Instagram
+              <Instagram className="h-6 w-6" aria-hidden />
             </a>
           </div>
         </div>
