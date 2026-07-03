@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {Mail} from 'lucide-react';
 import {SeriousVisitorsCard} from '../components/serious-visitors/SeriousVisitorsCard';
+import {ThemeToggle} from '../components/theme-toggle/ThemeToggle';
 
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 
@@ -97,6 +98,7 @@ export default function StatisticsPage() {
             >
               Back to Court
             </Link>
+            <ThemeToggle />
           </div>
         </div>
       </nav>
@@ -146,7 +148,7 @@ export default function StatisticsPage() {
         <section className="bg-surface-container-low pt-24 pb-24 mb-24">
           <div className="max-w-7xl mx-auto px-8">
             <h2 className="font-headline text-4xl font-bold mb-12">Season Record</h2>
-            <div className="bg-white rounded-xl overflow-hidden shadow-sm">
+            <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-outline-variant/20 bg-surface-container-lowest">

@@ -6,6 +6,7 @@ import { Mail } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { ExecutiveDecisionSprite } from './components/executive-decision-sprite/ExecutiveDecisionSprite';
 import { SeriousVisitorsCard } from './components/serious-visitors/SeriousVisitorsCard';
+import { ThemeToggle } from './components/theme-toggle/ThemeToggle';
 
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 const KINETIC_MAIN_IMAGE = '/dcd50533-5c90-4e05-ae9c-1e1640403fbc.jpeg';
@@ -34,14 +35,14 @@ export default function Home() {
       </audio>
 
       {!hasEntered ? (
-        <div className="fixed inset-0 z-[100] flex min-h-screen items-center justify-center bg-white">
+        <div className="fixed inset-0 z-[100] flex min-h-screen items-center justify-center bg-background">
           <button
             type="button"
             onClick={handleEnter}
             className="group flex cursor-pointer items-center justify-center rounded-3xl p-10 transition-all duration-200 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 active:scale-[0.98]"
             aria-label="Enter site"
           >
-            <span className="material-symbols-outlined select-none text-[clamp(4.5rem,20vmin,12rem)] leading-none text-neutral-800 transition-colors duration-200 group-hover:text-primary group-hover:drop-shadow-md">
+            <span className="material-symbols-outlined select-none text-[clamp(4.5rem,20vmin,12rem)] leading-none text-on-surface transition-colors duration-200 group-hover:text-primary group-hover:drop-shadow-md">
               door_front
             </span>
           </button>
@@ -85,6 +86,7 @@ export default function Home() {
             >
               Connect
             </a>
+            <ThemeToggle />
           </div>
         </div>
       </nav>
@@ -102,7 +104,7 @@ export default function Home() {
               </p>
             </div>
             <div className="min-w-0 lg:col-span-4 order-1 lg:order-2 flex justify-center">
-              <div className="relative mx-auto w-full max-w-sm aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border-4 border-white ring-1 ring-outline-variant/20">
+              <div className="relative mx-auto w-full max-w-sm aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20">
                 <Image
                   src={PERSONA_IMAGE}
                   alt="Ugnė — court competitor"
@@ -144,7 +146,7 @@ export default function Home() {
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
-                <div className="shrink-0 border-t border-outline-variant/20 bg-white/95 p-6 backdrop-blur-md">
+                <div className="shrink-0 border-t border-outline-variant/20 bg-surface-container-lowest/95 p-6 backdrop-blur-md">
                   <h3 className="font-headline text-xl font-bold text-primary">The Forehand Snap</h3>
                   <p className="mt-2 max-w-md text-sm opacity-80">
                     Execution with a 98% precision rate. Just like a successful production deployment.
@@ -222,7 +224,7 @@ export default function Home() {
 
         {/* Preferred Courts (Map & List) */}
         <section className="max-w-7xl mx-auto px-8 mb-24">
-          <div className="bg-white rounded-xl overflow-hidden shadow-sm flex flex-col md:flex-row">
+          <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col md:flex-row">
             <div className="md:w-1/2 h-96 md:h-auto relative">
               <Image 
                 className="w-full h-full object-cover" 
