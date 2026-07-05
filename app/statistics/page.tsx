@@ -1,62 +1,139 @@
 import type {Metadata} from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import {Instagram, Mail} from 'lucide-react';
-import {SeriousVisitorsCard} from '../components/serious-visitors/SeriousVisitorsCard';
+import type {LucideIcon} from 'lucide-react';
+import {
+  Activity,
+  AlertTriangle,
+  Bandage,
+  Bug,
+  Circle,
+  CircleDot,
+  Coffee,
+  HeartCrack,
+  Instagram,
+  Mail,
+  Sparkles,
+  Terminal,
+  Trophy,
+} from 'lucide-react';
 import {ThemeToggle} from '../components/theme-toggle/ThemeToggle';
 
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
+const HERO_IMAGE = '/career-statistics-hero.png';
 
 export const metadata: Metadata = {
-  title: 'Statistics — Ugnė',
-  description: 'Court performance metrics and season highlights.',
+  title: 'Career Statistics — Ugnė',
+  description: "Numbers don't lie. I just adjust them.",
 };
 
-const KEY_METRICS = [
-  {label: 'Matches Played', value: '47', border: 'border-primary'},
-  {label: 'Win Rate', value: '68%', border: 'border-secondary-container'},
-  {label: 'First Serve', value: '72%', border: 'border-tertiary-container'},
-  {label: 'Aces', value: '124', border: 'border-primary'},
-  {label: 'Fastest Serve', value: '168 km/h', border: 'border-secondary-container'},
-  {label: 'Longest Rally', value: '34 shots', border: 'border-tertiary-container'},
-];
+type StatVariant = 'numeric' | 'text' | 'redacted' | 'long';
 
-const SEASON_RECORDS = [
-  {period: 'August 2023', record: '12–4', note: 'Comeback season — tie-break specialists beware.'},
-  {period: 'May 2024', record: '9–6', note: 'Clay court endurance block. Three-hour marathons logged.'},
-  {period: 'Active Season', record: '26–8', note: 'Current form trending upward. Serve QA in progress.'},
-];
+type CareerStat = {
+  label: string;
+  value: string;
+  subtext: string;
+  variant: StatVariant;
+  border: string;
+  icon: LucideIcon;
+};
 
-const SHOT_BREAKDOWN = [
-  {label: 'Forehand', percent: 42, color: 'bg-primary'},
-  {label: 'Backhand', percent: 31, color: 'bg-secondary'},
-  {label: 'Volley', percent: 14, color: 'bg-tertiary'},
-  {label: 'Serve', percent: 13, color: 'bg-primary-container'},
-];
-
-const RECENT_FORM = [
+const CAREER_STATS: CareerStat[] = [
   {
-    date: 'June 2026',
-    result: 'W 6–4, 7–5',
-    opponent: 'vs. baseline grinder',
-    tags: ['Precision', 'Patience'],
+    label: 'Bug reports resolved',
+    value: '2,341',
+    subtext: 'And still shipping (tennis balls).',
+    variant: 'numeric',
     border: 'border-primary',
+    icon: Bug,
   },
   {
-    date: 'May 2026',
-    result: 'W 7–6, 6–3',
-    opponent: 'vs. net rusher',
-    tags: ['Strategy', 'Adaptability'],
+    label: 'Aces',
+    value: 'Sometimes',
+    subtext: 'When the stars align and the net is feeling generous.',
+    variant: 'text',
     border: 'border-secondary-container',
+    icon: Circle,
   },
   {
-    date: 'April 2026',
-    result: 'L 4–6, 6–7',
-    opponent: 'vs. lefty slicer',
-    tags: ['Learning', 'Grit'],
+    label: 'Double faults',
+    value: 'Redacted',
+    subtext: "Some things my coach and I don't talk about.",
+    variant: 'redacted',
     border: 'border-tertiary-container',
+    icon: HeartCrack,
+  },
+  {
+    label: 'Production bugs introduced',
+    value: 'My lawyer advised me not to answer.',
+    subtext: "Let's just say: less than the number of coffees I drink.",
+    variant: 'long',
+    border: 'border-primary',
+    icon: Terminal,
+  },
+  {
+    label: 'Balls lost over the fence',
+    value: 'Too many',
+    subtext: "RIP to those we'll never see again.",
+    variant: 'text',
+    border: 'border-secondary-container',
+    icon: CircleDot,
+  },
+  {
+    label: 'Win rate',
+    value: "Depends who's counting",
+    subtext: 'Umpires, vibes, and the bounce.',
+    variant: 'text',
+    border: 'border-tertiary-container',
+    icon: Trophy,
   },
 ];
+
+const MINI_STATS: {value: string; label: string; icon: LucideIcon}[] = [
+  {value: '99', label: 'Little injuries', icon: Bandage},
+  {value: '1', label: 'Very expensive racket', icon: Activity},
+  {value: '∞', label: 'Cups of coffee (est.)', icon: Coffee},
+  {value: '0', label: 'Grand slam titles', icon: Sparkles},
+  {value: '404', label: 'Lost balls', icon: AlertTriangle},
+];
+
+function statValueClassName(variant: StatVariant): string {
+  switch (variant) {
+    case 'numeric':
+      return 'font-headline text-4xl md:text-5xl font-black text-primary tabular-nums';
+    case 'text':
+      return 'font-headline text-xl md:text-2xl font-black text-primary italic';
+    case 'redacted':
+      return 'font-headline text-xl md:text-2xl font-black text-primary';
+    case 'long':
+      return 'font-headline text-base md:text-lg font-black text-primary leading-snug';
+  }
+}
+
+function StatCard({stat}: {stat: CareerStat}) {
+  const Icon = stat.icon;
+
+  return (
+    <div
+      className={`bg-surface-container-lowest p-8 rounded-xl shadow-sm border-b-4 ${stat.border} flex flex-col gap-3`}
+    >
+      <Icon className="h-5 w-5 text-primary" strokeWidth={1.75} aria-hidden />
+      <p className="font-label uppercase tracking-widest text-xs text-on-surface-variant">{stat.label}</p>
+      {stat.variant === 'redacted' ? (
+        <div className="relative inline-block max-w-full">
+          <span className={statValueClassName(stat.variant)}>{stat.value}</span>
+          <span
+            className="absolute inset-0 rounded bg-on-surface/90 blur-[2px]"
+            aria-hidden
+          />
+        </div>
+      ) : (
+        <span className={statValueClassName(stat.variant)}>{stat.value}</span>
+      )}
+      <p className="text-on-surface-variant text-sm leading-relaxed">{stat.subtext}</p>
+    </div>
+  );
+}
 
 export default function StatisticsPage() {
   return (
@@ -96,7 +173,7 @@ export default function StatisticsPage() {
               href="/"
               className="bg-primary text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform"
             >
-              Back to Court
+              Back to Reality
             </Link>
             <ThemeToggle />
           </div>
@@ -104,141 +181,79 @@ export default function StatisticsPage() {
       </nav>
 
       <main className="pt-32 pb-20">
-        <section className="max-w-7xl mx-auto px-8 mb-20">
-          <div className="tennis-gradient p-12 md:p-16 rounded-xl text-center text-on-primary shadow-xl">
-            <span className="font-label text-xs uppercase tracking-widest opacity-80 mb-4 block">
-              Performance Dashboard
-            </span>
-            <h1 className="font-headline text-4xl md:text-5xl font-black mb-4">Court Statistics</h1>
-            <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto font-light">
-              Season metrics tracked with the same rigor as a production QA suite — every serve,
-              rally, and result logged for continuous improvement.
+        <section className="max-w-7xl mx-auto px-8 mb-12">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-8 font-label text-xs uppercase tracking-widest text-primary">
+            <span>Statistics that definitely can&apos;t be faked</span>
+            <span className="text-on-surface-variant">(Trust me)</span>
+          </div>
+
+          <div className="tennis-gradient p-12 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-12">
+            <h1 className="font-headline text-4xl md:text-5xl font-black mb-3">Career Statistics</h1>
+            <p className="font-headline text-xl md:text-2xl font-bold opacity-90 mb-2">
+              of a Court Competitor &amp; Bug Hunter
             </p>
+            <p className="text-lg opacity-80 font-light">Numbers don&apos;t lie. I just adjust them.</p>
           </div>
-        </section>
 
-        <section className="max-w-7xl mx-auto px-8 mb-24">
-          <div className="flex flex-col md:flex-row gap-4 mb-12 items-baseline">
-            <h2 className="font-headline text-4xl font-bold">Key Metrics</h2>
-            <div className="h-[2px] flex-grow bg-outline-variant opacity-20" />
-            <span className="font-label text-tertiary-container bg-tertiary px-4 py-1 rounded-full text-xs uppercase tracking-widest">
-              Season Totals
-            </span>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {KEY_METRICS.map((metric) => (
-              <div
-                key={metric.label}
-                className={`bg-surface-container-lowest p-8 rounded-xl shadow-sm border-b-4 ${metric.border}`}
-              >
-                <span className="font-headline text-4xl md:text-5xl font-black text-primary tabular-nums">
-                  {metric.value}
-                </span>
-                <p className="mt-3 font-label uppercase tracking-widest text-xs text-on-surface-variant">
-                  {metric.label}
-                </p>
+          <div className="grid lg:grid-cols-[1fr_min(560px,48%)] gap-8 xl:gap-12 items-start">
+            <div className="space-y-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {CAREER_STATS.map((stat) => (
+                  <StatCard key={stat.label} stat={stat} />
+                ))}
               </div>
-            ))}
-          </div>
-          <div className="mt-6 max-w-sm">
-            <SeriousVisitorsCard />
-          </div>
-        </section>
 
-        <section className="bg-surface-container-low pt-24 pb-24 mb-24">
-          <div className="max-w-7xl mx-auto px-8">
-            <h2 className="font-headline text-4xl font-bold mb-12">Season Record</h2>
-            <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
-              <table className="w-full text-left">
-                <thead>
-                  <tr className="border-b border-outline-variant/20 bg-surface-container-lowest">
-                    <th className="px-8 py-4 font-label text-xs uppercase tracking-widest text-on-surface-variant">
-                      Period
-                    </th>
-                    <th className="px-8 py-4 font-label text-xs uppercase tracking-widest text-on-surface-variant">
-                      W–L
-                    </th>
-                    <th className="px-8 py-4 font-label text-xs uppercase tracking-widest text-on-surface-variant hidden md:table-cell">
-                      Notes
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {SEASON_RECORDS.map((row) => (
-                    <tr key={row.period} className="border-b border-outline-variant/10 last:border-0">
-                      <td className="px-8 py-6 font-bold text-primary">{row.period}</td>
-                      <td className="px-8 py-6 font-headline text-2xl font-black tabular-nums">
-                        {row.record}
-                      </td>
-                      <td className="px-8 py-6 text-sm text-on-surface-variant hidden md:table-cell">
-                        {row.note}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="bg-surface-container-low rounded-xl p-8">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {MINI_STATS.map((mini) => {
+                    const MiniIcon = mini.icon;
+                    return (
+                      <div key={mini.label} className="flex flex-col items-center text-center gap-2">
+                        <MiniIcon className="h-5 w-5 text-primary" strokeWidth={1.75} aria-hidden />
+                        <span className="font-headline text-xl font-black text-primary tabular-nums">
+                          {mini.value}
+                        </span>
+                        <span className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant leading-snug">
+                          {mini.label}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="text-on-surface-variant text-sm leading-relaxed space-y-1">
+                <p>* Statistics verified by nobody.</p>
+                <p>** Performance may vary on clay, grass, hard courts, and Mondays.</p>
+              </div>
             </div>
-          </div>
-        </section>
 
-        <section className="max-w-7xl mx-auto px-8 mb-24">
-          <h2 className="font-headline text-4xl font-bold mb-12">Shot Breakdown</h2>
-          <div className="bg-surface-container-lowest p-8 md:p-12 rounded-xl shadow-sm space-y-8">
-            {SHOT_BREAKDOWN.map((shot) => (
-              <div key={shot.label}>
-                <div className="flex justify-between items-baseline mb-2">
-                  <span className="font-bold text-lg">{shot.label}</span>
-                  <span className="font-headline text-2xl font-black text-primary tabular-nums">
-                    {shot.percent}%
-                  </span>
-                </div>
-                <div className="h-3 bg-surface-container-high rounded-full overflow-hidden">
-                  <div
-                    className={`h-full ${shot.color} rounded-full transition-all`}
-                    style={{width: `${shot.percent}%`}}
-                  />
-                </div>
+            <aside className="hidden lg:block lg:sticky lg:top-36">
+              <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20">
+                <Image
+                  src={HERO_IMAGE}
+                  alt="Ugnė on court — CODE. TEST. TENNIS. REPEAT."
+                  width={920}
+                  height={1024}
+                  className="w-full h-auto"
+                  sizes="(max-width: 1024px) 100vw, 560px"
+                  priority
+                />
               </div>
-            ))}
+            </aside>
           </div>
-        </section>
 
-        <section className="max-w-7xl mx-auto px-8 mb-24">
-          <h2 className="font-headline text-4xl font-bold mb-12">Recent Form</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {RECENT_FORM.map((match) => (
-              <div
-                key={match.date}
-                className={`bg-surface-container-lowest p-8 rounded-xl shadow-sm border-b-4 ${match.border}`}
-              >
-                <div className="flex justify-between mb-6">
-                  <span className="text-xs font-label uppercase tracking-tighter text-outline">
-                    {match.date}
-                  </span>
-                  <span
-                    className={`text-xs font-label uppercase tracking-widest font-bold ${
-                      match.result.startsWith('W') ? 'text-primary' : 'text-error'
-                    }`}
-                  >
-                    {match.result.startsWith('W') ? 'Win' : 'Loss'}
-                  </span>
-                </div>
-                <h4 className="font-headline text-xl font-bold mb-2 tabular-nums">{match.result}</h4>
-                <p className="text-on-surface-variant text-sm leading-relaxed mb-6 italic">
-                  {match.opponent}
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  {match.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 bg-surface-container-high rounded-full text-[10px] uppercase font-bold text-on-surface-variant"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="mt-10 lg:hidden">
+            <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20 max-w-2xl mx-auto">
+              <Image
+                src={HERO_IMAGE}
+                alt="Ugnė on court — CODE. TEST. TENNIS. REPEAT."
+                width={920}
+                height={1024}
+                className="w-full h-auto"
+                sizes="100vw"
+              />
+            </div>
           </div>
         </section>
       </main>
