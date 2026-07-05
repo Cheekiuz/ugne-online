@@ -61,12 +61,12 @@
 }
 
 .glass-nav {
-  background: rgba(244, 247, 245, 0.8);
+  background: rgba(244, 247, 245, 0.65);
   backdrop-filter: blur(20px);
 }
 
 .dark .glass-nav {
-  background: rgba(15, 20, 18, 0.85);
+  background: rgba(15, 20, 18, 0.7);
 }
 
 .tennis-gradient {

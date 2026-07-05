@@ -11,6 +11,7 @@ import { ThemeToggle } from './components/theme-toggle/ThemeToggle';
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 const KINETIC_MAIN_IMAGE = '/dcd50533-5c90-4e05-ae9c-1e1640403fbc.jpeg';
 const PAGE_LOAD_SOUND = '/audio/211976__qubodup__boom2.flac';
+const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
 
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -79,12 +80,12 @@ export default function Home() {
               </a>
             </div>
             <a
-              href="https://www.instagram.com/ugne_le_?utm_source=qr"
+              href={CHALLENGE_ME_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-primary text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform"
             >
-              Connect
+              Challenge me
             </a>
             <ThemeToggle />
           </div>
@@ -261,8 +262,8 @@ export default function Home() {
         {/* CTA Section */}
         <section className="max-w-7xl mx-auto px-8">
           <div className="tennis-gradient p-16 rounded-xl text-center text-on-primary shadow-xl">
-            <h3 className="font-headline text-4xl md:text-5xl font-black mb-6">READY FOR A MATCH?</h3>
-            <p className="text-xl opacity-90 mb-10 max-w-xl mx-auto">Whether it&apos;s discussing QA methodologies or hitting some balls on the court, I&apos;m always open to connecting.</p>
+            <h3 className="font-headline text-4xl md:text-5xl font-black mb-6">Ready to challenge me?</h3>
+            <p className="text-xl opacity-90 mb-10 max-w-xl mx-auto">Tennis, QA, coffee or arguing about whether that ball was actually out.</p>
             <div className="flex flex-col md:flex-row gap-4 justify-center">
               <button
                 type="button"
@@ -277,6 +278,14 @@ export default function Home() {
               >
                 View Statistics
               </Link>
+              <a
+                href={CHALLENGE_ME_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-error text-on-error px-10 py-4 rounded-xl font-black text-lg hover:scale-105 active:scale-95 transition-all"
+              >
+                Challenge me
+              </a>
             </div>
           </div>
           <div className="flex justify-center mt-12">
@@ -295,7 +304,7 @@ export default function Home() {
           <div className="flex gap-8">
             <a
               className="text-on-surface opacity-60 hover:text-primary hover:scale-110 transition-all inline-flex"
-              href="https://www.instagram.com/ugne_le_?utm_source=qr"
+              href={CHALLENGE_ME_URL}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"

@@ -267,7 +267,7 @@ export default function StatisticsPage() {
           <div className="flex gap-8">
             <a
               className="text-on-surface opacity-60 hover:text-primary hover:scale-110 transition-all inline-flex"
-              href="https://www.instagram.com/ugne_le_?utm_source=qr"
+              href="https://www.instagram.com/ugne_le_"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
