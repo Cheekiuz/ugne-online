@@ -7,12 +7,7 @@ import {
   layoutScatteredSmiles,
   type LayoutSmile,
 } from '../../lib/supabase/smile-layout';
-import {
-  ensureSmilesForDisplay,
-  fetchSmileCount,
-  fetchSmiles,
-  type SponsorSmile,
-} from '../../lib/supabase/smiles';
+import {fetchSmiles, type SponsorSmile} from '../../lib/supabase/smiles';
 import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
 import {useSubmitSmile} from './useSubmitSmile';
 
@@ -39,7 +34,6 @@ function createOptimisticSmile(): SponsorSmile {
 
 export function SponsorSmileWall() {
   const [smiles, setSmiles] = useState<SponsorSmile[]>([]);
-  const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [optimisticSmile, setOptimisticSmile] = useState<SponsorSmile | null>(null);
   const prevSmileCountRef = useRef(0);
@@ -47,23 +41,20 @@ export function SponsorSmileWall() {
   const alreadySmiled = hasSmiled || hasSmiledLocally();
 
   const smilesForLayout = useMemo(() => {
-    let base = smiles;
-    if (optimisticSmile && smiles.length < count) {
-      base = [...smiles, optimisticSmile];
+    if (optimisticSmile && !smiles.some((smile) => smile.id === optimisticSmile.id)) {
+      return [...smiles, optimisticSmile];
     }
-    return ensureSmilesForDisplay(base, count);
-  }, [smiles, optimisticSmile, count]);
+    return smiles;
+  }, [smiles, optimisticSmile]);
 
   const wallSmiles = useMemo(() => layoutScatteredSmiles(smilesForLayout), [smilesForLayout]);
-  const displayCount = loading ? null : count;
-  const hasVisibleSmiles = !loading && count > 0;
-  const wallMinHeight = (displayCount ?? 0) > 8 ? 'min-h-[280px]' : 'min-h-[240px]';
+  const hasVisibleSmiles = !loading && wallSmiles.length > 0;
+  const wallMinHeight = wallSmiles.length > 8 ? 'min-h-[280px]' : 'min-h-[240px]';
 
   const loadSmiles = useCallback(async () => {
     setLoading(true);
-    const [data, total] = await Promise.all([fetchSmiles(), fetchSmileCount()]);
+    const data = await fetchSmiles();
     setSmiles(data);
-    setCount(total);
     setLoading(false);
   }, []);
 
@@ -88,29 +79,15 @@ export function SponsorSmileWall() {
     if (!loading && smiles.length > prevSmileCountRef.current) {
       setOptimisticSmile(null);
     }
-    if (!loading && optimisticSmile && smiles.length >= count) {
-      setOptimisticSmile(null);
-    }
     prevSmileCountRef.current = smiles.length;
-  }, [loading, smiles.length, count, optimisticSmile]);
+  }, [loading, smiles.length]);
 
   return (
     <div className="space-y-4">
-      <div
-        className={`relative overflow-hidden bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 ${
-          hasVisibleSmiles ? 'min-h-[140px]' : 'min-h-[120px]'
-        }`}
-      >
-        <div className="relative z-10 flex flex-col items-center justify-center gap-3">
-          {!hasVisibleSmiles ? (
-            <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
-          ) : null}
-          <span className="font-headline text-4xl font-bold tabular-nums text-on-primary">
-            {displayCount === null ? '…' : displayCount}
-          </span>
-          <div className="h-px w-16 bg-on-primary/35" role="presentation" />
-          <span className="text-center text-sm font-normal text-on-primary/90">Real Smiles</span>
-        </div>
+      <div className="bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 min-h-[120px]">
+        <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
+        <div className="h-px w-16 bg-on-primary/35" role="presentation" />
+        <span className="text-center text-sm font-normal text-on-primary/90">Real Smiles</span>
       </div>
 
       {hasVisibleSmiles ? (
