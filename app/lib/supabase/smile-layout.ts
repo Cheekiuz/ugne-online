@@ -158,41 +158,22 @@ function assignSpreadColors(
   return assignments;
 }
 
-function positionFromId(id: number): {x: number; y: number} {
+function hashFromId(id: number, seed: number): number {
+  return (id * 1597334677 + seed) & 0x7fffffff;
+}
+
+function rotationFromSeed(id: number, seed: number): number {
+  return hashFromId(id, seed ^ 0x51ed270b) % 360;
+}
+
+function chaoticPositionFromSeed(id: number, seed: number): {x: number; y: number} {
+  const span = BOUNDS_MAX - BOUNDS_MIN;
+  const hashX = hashFromId(id, seed ^ 0x6a09e667);
+  const hashY = hashFromId(id, seed ^ 0xbb67ae85);
   return {
-    x: 10 + ((id * 47) % 80),
-    y: 10 + ((id * 83) % 80),
+    x: BOUNDS_MIN + ((hashX % 10000) / 10000) * span,
+    y: BOUNDS_MIN + ((hashY % 10000) / 10000) * span,
   };
-}
-
-function jitterFromId(id: number): {x: number; y: number} {
-  const hashX = ((id * 7919) % 1000) / 1000;
-  const hashY = ((id * 7927) % 1000) / 1000;
-  return {
-    x: (hashX - 0.5) * 12,
-    y: (hashY - 0.5) * 12,
-  };
-}
-
-function applyJitter(pos: {x: number; y: number}, id: number): {x: number; y: number} {
-  const jitter = jitterFromId(id);
-  return {
-    x: pos.x + jitter.x,
-    y: pos.y + jitter.y,
-  };
-}
-
-function rotationFromId(id: number): number {
-  return ((id * 17) % 17) - 8;
-}
-
-function startPosition(smile: SponsorSmile): {x: number; y: number} {
-  const base =
-    smile.pos_x != null && smile.pos_y != null
-      ? {x: smile.pos_x, y: smile.pos_y}
-      : positionFromId(smile.id);
-
-  return applyJitter(base, smile.id);
 }
 
 function clamp(value: number, min = BOUNDS_MIN, max = BOUNDS_MAX): number {
@@ -216,6 +197,7 @@ function resolvePosition(
   start: {x: number; y: number},
   placed: Array<{display_x: number; display_y: number}>,
   id: number,
+  layoutSeed: number,
   minDistance = MIN_DISTANCE,
 ): {x: number; y: number} {
   const baseX = clamp(start.x);
@@ -237,7 +219,7 @@ function resolvePosition(
     }
   }
 
-  const fallback = applyJitter(positionFromId(id + placed.length * 13), id);
+  const fallback = chaoticPositionFromSeed(id + placed.length * 13, layoutSeed);
   return {x: clamp(fallback.x), y: clamp(fallback.y)};
 }
 
@@ -272,12 +254,13 @@ function buildLayoutSmiles(
   adjustPosition?: (x: number, y: number) => {x: number; y: number},
   minDistance = MIN_DISTANCE,
 ): LayoutSmile[] {
-  const sorted = [...smiles].sort((a, b) => a.id - b.id);
+  const baseSeed = seedFromIds(smiles.map((smile) => smile.id));
+  const placementOrder = seededShuffle(smiles, baseSeed ^ 0xc4ceb9fe);
   const positioned: Array<SponsorSmile & {display_x: number; display_y: number}> = [];
 
-  for (const smile of sorted) {
-    const start = startPosition(smile);
-    let {x, y} = resolvePosition(start, positioned, smile.id, minDistance);
+  for (const smile of placementOrder) {
+    const start = chaoticPositionFromSeed(smile.id, baseSeed);
+    let {x, y} = resolvePosition(start, positioned, smile.id, baseSeed, minDistance);
 
     if (adjustPosition) {
       ({x, y} = adjustPosition(x, y));
@@ -292,13 +275,12 @@ function buildLayoutSmiles(
     });
   }
 
-  const baseSeed = seedFromIds(positioned.map((smile) => smile.id));
   const wallColors = assignSpreadColors(positioned, SMILE_COLOR_WALL, baseSeed);
   const counterColors = assignSpreadColors(positioned, SMILE_COLOR_COUNTER, baseSeed ^ 0x9e3779b9);
 
   return positioned.map((smile) => ({
     ...smile,
-    rotation: rotationFromId(smile.id),
+    rotation: rotationFromSeed(smile.id, baseSeed),
     colorWall: wallColors.get(smile.id) ?? SMILE_COLOR_WALL[0],
     colorCounter: counterColors.get(smile.id) ?? SMILE_COLOR_COUNTER[0],
   }));
