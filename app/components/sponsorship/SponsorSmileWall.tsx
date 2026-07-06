@@ -7,7 +7,12 @@ import {
   layoutScatteredSmiles,
   type LayoutSmile,
 } from '../../lib/supabase/smile-layout';
-import {fetchSmiles, type SponsorSmile} from '../../lib/supabase/smiles';
+import {
+  ensureSmilesForDisplay,
+  fetchSmileCount,
+  fetchSmiles,
+  type SponsorSmile,
+} from '../../lib/supabase/smiles';
 import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
 import {useSubmitSmile} from './useSubmitSmile';
 
@@ -34,6 +39,7 @@ function createOptimisticSmile(): SponsorSmile {
 
 export function SponsorSmileWall() {
   const [smiles, setSmiles] = useState<SponsorSmile[]>([]);
+  const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [optimisticSmile, setOptimisticSmile] = useState<SponsorSmile | null>(null);
   const prevSmileCountRef = useRef(0);
@@ -41,20 +47,21 @@ export function SponsorSmileWall() {
   const alreadySmiled = hasSmiled || hasSmiledLocally();
 
   const smilesForLayout = useMemo(() => {
+    let base = smiles;
     if (optimisticSmile && !smiles.some((smile) => smile.id === optimisticSmile.id)) {
-      return [...smiles, optimisticSmile];
+      base = [...smiles, optimisticSmile];
     }
-    return smiles;
-  }, [smiles, optimisticSmile]);
+    return ensureSmilesForDisplay(base, Math.max(base.length, count));
+  }, [smiles, optimisticSmile, count]);
 
   const wallSmiles = useMemo(() => layoutScatteredSmiles(smilesForLayout), [smilesForLayout]);
-  const hasVisibleSmiles = !loading && wallSmiles.length > 0;
   const wallMinHeight = wallSmiles.length > 8 ? 'min-h-[280px]' : 'min-h-[240px]';
 
   const loadSmiles = useCallback(async () => {
     setLoading(true);
-    const data = await fetchSmiles();
+    const [data, total] = await Promise.all([fetchSmiles(), fetchSmileCount()]);
     setSmiles(data);
+    setCount(total);
     setLoading(false);
   }, []);
 
@@ -84,13 +91,19 @@ export function SponsorSmileWall() {
 
   return (
     <div className="space-y-4">
-      {loading ? (
-        <p className="text-sm text-on-surface-variant text-center py-8">Loading smiles…</p>
-      ) : hasVisibleSmiles ? (
-        <div
-          className={`bg-surface-container-lowest rounded-xl shadow-sm p-4 ${wallMinHeight} relative overflow-hidden border-b-2 border-primary`}
-        >
-          {wallSmiles.map((smile, index) => (
+      <div className="bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 min-h-[120px]">
+        <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
+        <div className="h-px w-16 bg-on-primary/35" role="presentation" />
+        <span className="text-center text-sm font-normal text-on-primary/90">Real Smiles</span>
+      </div>
+
+      <div
+        className={`bg-surface-container-lowest rounded-xl shadow-sm p-4 ${wallMinHeight} relative overflow-hidden border-b-2 border-primary`}
+      >
+        {loading ? (
+          <p className="text-on-surface-variant text-sm text-center py-16">Loading smiles…</p>
+        ) : wallSmiles.length > 0 ? (
+          wallSmiles.map((smile, index) => (
             <Smile
               key={`wall-${smile.id}`}
               className="absolute h-10 w-10"
@@ -98,9 +111,13 @@ export function SponsorSmileWall() {
               style={smileStyle(smile, index + 1, smile.colorWall)}
               aria-hidden
             />
-          ))}
-        </div>
-      ) : null}
+          ))
+        ) : (
+          <p className="text-on-surface-variant text-sm text-center italic py-16 px-4">
+            No smiles yet. Be the first to leave one.
+          </p>
+        )}
+      </div>
 
       <div className="text-center space-y-2">
         {justSaved ? (

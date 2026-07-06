@@ -18,7 +18,7 @@ function positionFromId(id: number): {pos_x: number; pos_y: number} {
 
 export function ensureSmilesForDisplay(smiles: SponsorSmile[], count: number): SponsorSmile[] {
   if (count <= 0) {
-    return [];
+    return smiles;
   }
 
   const sorted = [...smiles].sort((a, b) => b.id - a.id);
