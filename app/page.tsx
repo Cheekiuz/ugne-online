@@ -278,6 +278,12 @@ export default function Home() {
               >
                 View Statistics
               </Link>
+              <Link
+                href="/sponsorship/"
+                className="border-2 border-on-primary text-on-primary px-10 py-4 rounded-xl font-black text-lg hover:bg-on-primary/10 transition-all"
+              >
+                💰 Sponsorship Opportunities
+              </Link>
               <a
                 href={CHALLENGE_ME_URL}
                 target="_blank"
