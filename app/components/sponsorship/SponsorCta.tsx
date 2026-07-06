@@ -2,11 +2,19 @@
 
 import Link from 'next/link';
 import {useState} from 'react';
+import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
+import {useSubmitSmile} from './useSubmitSmile';
 
 export function SponsorCta() {
-  const [hasSponsored, setHasSponsored] = useState(false);
+  const {submitSmile, submitting, hasSmiled, saveWarning, resetThankYou} = useSubmitSmile();
+  const [showThankYou, setShowThankYou] = useState(() => hasSmiledLocally());
 
-  if (hasSponsored) {
+  const handleSponsorClick = async () => {
+    await submitSmile();
+    setShowThankYou(true);
+  };
+
+  if (showThankYou || hasSmiled) {
     return (
       <div className="tennis-gradient rounded-xl p-10 md:p-12 text-center text-on-primary shadow-xl space-y-6">
         <div>
@@ -30,9 +38,15 @@ export function SponsorCta() {
           All contributions are deeply appreciated, caffeinated, and put to good use.
         </p>
         <p className="text-base font-bold opacity-90">We&apos;ll happily accept either.</p>
+        {saveWarning ? (
+          <p className="text-sm opacity-80 italic">Couldn&apos;t save your smile right now — but thank you anyway.</p>
+        ) : null}
         <Link
           href="/sponsorship/"
-          onClick={() => setHasSponsored(false)}
+          onClick={() => {
+            resetThankYou();
+            setShowThankYou(false);
+          }}
           className="inline-block border-2 border-on-primary text-on-primary px-10 py-4 rounded-xl font-black text-lg hover:bg-on-primary/10 transition-all"
         >
           Return to being Sponsor again →
@@ -46,14 +60,16 @@ export function SponsorCta() {
       <p className="font-headline text-2xl md:text-3xl font-black uppercase">Become a Sponsor</p>
       <button
         type="button"
-        onClick={() => setHasSponsored(true)}
-        className="bg-on-primary text-primary px-10 py-4 rounded-xl font-black text-lg uppercase hover:scale-105 active:scale-95 transition-all"
+        onClick={() => void handleSponsorClick()}
+        disabled={submitting}
+        className="bg-on-primary text-primary px-10 py-4 rounded-xl font-black text-lg uppercase hover:scale-105 active:scale-95 transition-all disabled:opacity-70 disabled:hover:scale-100"
       >
-        Let&apos;s Make Magic Happen
+        {submitting ? 'Saving…' : "Let's Make Magic Happen"}
       </button>
       <p className="text-sm opacity-90 italic max-w-xs mx-auto">
         Help a player dream bigger. And hit stronger.
       </p>
+      <p className="text-xs opacity-75">Also adds your smile to the board above.</p>
     </div>
   );
 }

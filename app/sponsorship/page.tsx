@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {Instagram, Mail} from 'lucide-react';
 import {SponsorCta} from '../components/sponsorship/SponsorCta';
+import {SponsorSmileWall} from '../components/sponsorship/SponsorSmileWall';
 import {ThemeToggle} from '../components/theme-toggle/ThemeToggle';
 
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
@@ -287,6 +288,8 @@ export default function SponsorshipPage() {
 
           <div className="grid lg:grid-cols-[1fr_min(560px,48%)] gap-8 xl:gap-12 items-start">
             <div className="space-y-10">
+              <SponsorSmileWall />
+
               <div className="space-y-6">
                 <SectionHeading eyebrow="AKA Life Support System" title="Currently Sponsored By" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
