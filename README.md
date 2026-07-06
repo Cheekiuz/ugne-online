@@ -29,26 +29,29 @@ The workflow at `.github/workflows/deploy-pages.yml` runs on every push to `main
 
 ### 2. Enable Pages source (one-time)
 
-Use GitHub CLI to set Pages to deploy from Actions:
+In the repo on GitHub: **Settings → Pages → Build and deployment → Source** → **Deploy from a branch**.
+
+- **Branch:** `gh-pages`
+- **Folder:** `/ (root)`
+
+The workflow pushes the built `out/` folder to the `gh-pages` branch on every push to `main`.
+
+If you previously used **GitHub Actions** as the Pages source, switch to **Deploy from a branch** as above.
+
+Optional via GitHub CLI (`Cheekiuz/ugne-online`):
 
 ```bash
-gh api repos/Nostromo-618/ugne-online/pages \
-   --method POST \
-   -f build_type=workflow
-```
-
-If Pages is already enabled, update it with:
-
-```bash
-gh api repos/Nostromo-618/ugne-online/pages \
+gh api repos/Cheekiuz/ugne-online/pages \
    --method PUT \
-   -f build_type=workflow
+   -f build_type=legacy \
+   -f 'source[branch]=gh-pages' \
+   -f 'source[path]=/'
 ```
 
 ### 3. Set custom domain (one-time)
 
 ```bash
-gh api repos/Nostromo-618/ugne-online/pages \
+gh api repos/Cheekiuz/ugne-online/pages \
    --method PUT \
    -f cname=ugne.online
 ```
@@ -56,7 +59,7 @@ gh api repos/Nostromo-618/ugne-online/pages \
 After GitHub provisions the TLS certificate, enforce HTTPS:
 
 ```bash
-gh api repos/Nostromo-618/ugne-online/pages \
+gh api repos/Cheekiuz/ugne-online/pages \
    --method PUT \
    -F https_enforced=true
 ```
@@ -72,7 +75,7 @@ At your DNS provider, point the apex domain to GitHub Pages with A records:
 - 185.199.110.153
 - 185.199.111.153
 
-Optional: add `www` as a CNAME to `Nostromo-618.github.io`.
+Optional: add `www` as a CNAME to `cheekiuz.github.io`.
 
 ### 5. Verify
 
