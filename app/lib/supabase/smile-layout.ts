@@ -4,7 +4,30 @@ export type LayoutSmile = SponsorSmile & {
   display_x: number;
   display_y: number;
   rotation: number;
+  colorClassWall: string;
+  colorClassCounter: string;
 };
+
+const SMILE_COLOR_WALL = [
+  'text-primary',
+  'text-secondary',
+  'text-tertiary',
+  'text-error',
+  'text-tertiary-dim',
+] as const;
+
+const SMILE_COLOR_COUNTER = [
+  'text-on-primary',
+  'text-secondary-container',
+  'text-tertiary-container',
+  'text-primary-container',
+  'text-on-secondary',
+] as const;
+
+export function smileColorFromId(id: number, variant: 'wall' | 'counter'): string {
+  const palette = variant === 'wall' ? SMILE_COLOR_WALL : SMILE_COLOR_COUNTER;
+  return palette[Math.abs(id) % palette.length];
+}
 
 const MIN_DISTANCE = 10;
 const BOUNDS_MIN = 8;
@@ -86,6 +109,8 @@ export function layoutScatteredSmiles(smiles: SponsorSmile[]): LayoutSmile[] {
       display_x: x,
       display_y: y,
       rotation: rotationFromId(smile.id),
+      colorClassWall: smileColorFromId(smile.id, 'wall'),
+      colorClassCounter: smileColorFromId(smile.id, 'counter'),
     });
   }
 

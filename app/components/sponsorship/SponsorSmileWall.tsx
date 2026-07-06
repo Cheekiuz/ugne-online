@@ -2,7 +2,7 @@
 
 import type {CSSProperties} from 'react';
 import {Smile} from 'lucide-react';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {layoutScatteredSmiles, type LayoutSmile} from '../../lib/supabase/smile-layout';
 import {fetchSmileCount, fetchSmiles, type SponsorSmile} from '../../lib/supabase/smiles';
 import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
@@ -19,13 +19,34 @@ function smileStyle(smile: LayoutSmile, zIndex: number): CSSProperties {
   };
 }
 
+function createOptimisticSmile(): SponsorSmile {
+  return {
+    id: Date.now(),
+    pos_x: 15 + Math.random() * 70,
+    pos_y: 15 + Math.random() * 70,
+    created_at: new Date().toISOString(),
+  };
+}
+
 export function SponsorSmileWall() {
   const [smiles, setSmiles] = useState<SponsorSmile[]>([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [optimisticSmile, setOptimisticSmile] = useState<SponsorSmile | null>(null);
+  const prevSmileCountRef = useRef(0);
   const {submitSmile, submitting, hasSmiled, saveWarning, justSaved} = useSubmitSmile();
   const alreadySmiled = hasSmiled || hasSmiledLocally();
-  const layoutSmiles = useMemo(() => layoutScatteredSmiles(smiles), [smiles]);
+
+  const smilesForLayout = useMemo(() => {
+    if (optimisticSmile && smiles.length < count) {
+      return [...smiles, optimisticSmile];
+    }
+    return smiles;
+  }, [smiles, optimisticSmile, count]);
+
+  const layoutSmiles = useMemo(() => layoutScatteredSmiles(smilesForLayout), [smilesForLayout]);
+  const displayCount = loading ? null : Math.max(count, layoutSmiles.length);
+  const hasVisibleSmiles = layoutSmiles.length > 0;
 
   const loadSmiles = useCallback(async () => {
     setLoading(true);
@@ -46,41 +67,67 @@ export function SponsorSmileWall() {
     return () => window.removeEventListener(SPONSOR_SMILES_REFRESH_EVENT, onRefresh);
   }, [loadSmiles]);
 
+  useEffect(() => {
+    if (justSaved) {
+      setOptimisticSmile(createOptimisticSmile());
+    }
+  }, [justSaved]);
+
+  useEffect(() => {
+    if (!loading && smiles.length > prevSmileCountRef.current) {
+      setOptimisticSmile(null);
+    }
+    if (!loading && optimisticSmile && smiles.length >= count) {
+      setOptimisticSmile(null);
+    }
+    prevSmileCountRef.current = smiles.length;
+  }, [loading, smiles.length, count, optimisticSmile]);
+
   return (
     <div className="space-y-4">
-      <div className="min-h-[120px] bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6">
-        <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
-        <span className="font-headline text-4xl font-bold tabular-nums text-on-primary">
-          {loading ? '…' : count}
-        </span>
-        <div className="h-px w-16 bg-on-primary/35" role="presentation" />
-        <span className="text-center text-sm font-normal text-on-primary/90">Real Smiles</span>
+      <div
+        className={`relative overflow-hidden bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 ${
+          hasVisibleSmiles ? 'min-h-[160px]' : 'min-h-[120px]'
+        }`}
+      >
+        {hasVisibleSmiles ? (
+          <div className="absolute inset-0 pointer-events-none" aria-hidden>
+            {layoutSmiles.map((smile, index) => (
+              <Smile
+                key={smile.id}
+                className={`absolute h-5 w-5 opacity-80 ${smile.colorClassCounter}`}
+                strokeWidth={1.5}
+                style={smileStyle(smile, index + 1)}
+              />
+            ))}
+          </div>
+        ) : null}
+
+        <div className="relative z-10 flex flex-col items-center justify-center gap-3">
+          {!hasVisibleSmiles ? (
+            <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
+          ) : null}
+          <span className="font-headline text-4xl font-bold tabular-nums text-on-primary">
+            {displayCount === null ? '…' : displayCount}
+          </span>
+          <div className="h-px w-16 bg-on-primary/35" role="presentation" />
+          <span className="text-center text-sm font-normal text-on-primary/90">Real Smiles</span>
+        </div>
       </div>
 
-      <div className="bg-surface-container-lowest rounded-xl shadow-sm p-4 min-h-[240px] relative overflow-hidden border-b-2 border-primary">
-        {loading ? (
-          <p className="text-on-surface-variant text-sm text-center py-16">Loading smiles…</p>
-        ) : count === 0 ? (
-          <p className="text-on-surface-variant text-sm text-center italic py-10 px-4">
-            No smiles yet. Be the first.
-          </p>
-        ) : layoutSmiles.length === 0 ? (
-          <p className="text-on-surface-variant text-sm text-center italic py-10 px-4">
-            {count} {count === 1 ? 'smile' : 'smiles'} on the board.
-          </p>
-        ) : (
-          layoutSmiles.map((smile, index) => (
-            <span
+      {!loading && hasVisibleSmiles ? (
+        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-4 min-h-[240px] relative overflow-hidden border-b-2 border-primary">
+          {layoutSmiles.map((smile, index) => (
+            <Smile
               key={smile.id}
-              className="absolute text-3xl leading-none select-none"
+              className={`absolute h-8 w-8 ${smile.colorClassWall}`}
+              strokeWidth={1.5}
               style={smileStyle(smile, index + 1)}
               aria-hidden
-            >
-              😊
-            </span>
-          ))
-        )}
-      </div>
+            />
+          ))}
+        </div>
+      ) : null}
 
       <div className="text-center space-y-2">
         {justSaved ? (
