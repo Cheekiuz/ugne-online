@@ -446,7 +446,7 @@ export default function SponsorshipPage() {
         <div className="flex flex-col md:flex-row justify-between items-center p-6 sm:p-8 md:p-12 mt-12 sm:mt-20 max-w-7xl mx-auto font-body text-xs sm:text-sm uppercase tracking-wide sm:tracking-widest gap-4 md:gap-0">
           <div className="font-headline font-bold text-on-surface mb-6 md:mb-0">Ugnė.</div>
           <div className="text-on-surface opacity-60 text-center md:text-left mb-6 md:mb-0">
-            ©2026 Ugnė. Engineered with Precision. Played with Passion. Not for serious persons.
+            ©2026 Ugnė. Engineered with Precision. Played with Passion. Seriousness not required.
           </div>
           <div className="flex gap-8">
             <a
