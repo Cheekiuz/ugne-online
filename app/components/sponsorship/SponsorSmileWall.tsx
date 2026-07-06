@@ -4,7 +4,6 @@ import type {CSSProperties} from 'react';
 import {Smile} from 'lucide-react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
-  layoutCounterSmiles,
   layoutScatteredSmiles,
   type LayoutSmile,
 } from '../../lib/supabase/smile-layout';
@@ -52,13 +51,12 @@ export function SponsorSmileWall() {
     if (optimisticSmile && smiles.length < count) {
       base = [...smiles, optimisticSmile];
     }
-    return ensureSmilesForDisplay(base, Math.max(count, base.length));
+    return ensureSmilesForDisplay(base, count);
   }, [smiles, optimisticSmile, count]);
 
   const wallSmiles = useMemo(() => layoutScatteredSmiles(smilesForLayout), [smilesForLayout]);
-  const counterSmiles = useMemo(() => layoutCounterSmiles(smilesForLayout), [smilesForLayout]);
-  const displayCount = loading ? null : Math.max(count, smilesForLayout.length);
-  const hasVisibleSmiles = !loading && (displayCount ?? 0) > 0;
+  const displayCount = loading ? null : count;
+  const hasVisibleSmiles = !loading && count > 0;
   const wallMinHeight = (displayCount ?? 0) > 8 ? 'min-h-[280px]' : 'min-h-[240px]';
 
   const loadSmiles = useCallback(async () => {
@@ -100,22 +98,9 @@ export function SponsorSmileWall() {
     <div className="space-y-4">
       <div
         className={`relative overflow-hidden bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 ${
-          hasVisibleSmiles ? 'min-h-[160px]' : 'min-h-[120px]'
+          hasVisibleSmiles ? 'min-h-[140px]' : 'min-h-[120px]'
         }`}
       >
-        {hasVisibleSmiles ? (
-          <div className="absolute inset-0 pointer-events-none" aria-hidden>
-            {counterSmiles.map((smile, index) => (
-              <Smile
-                key={`counter-${smile.id}`}
-                className="absolute h-6 w-6 drop-shadow-sm"
-                strokeWidth={2}
-                style={smileStyle(smile, index + 1, smile.colorCounter)}
-              />
-            ))}
-          </div>
-        ) : null}
-
         <div className="relative z-10 flex flex-col items-center justify-center gap-3">
           {!hasVisibleSmiles ? (
             <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />

@@ -18,15 +18,18 @@ function positionFromId(id: number): {pos_x: number; pos_y: number} {
 
 export function ensureSmilesForDisplay(smiles: SponsorSmile[], count: number): SponsorSmile[] {
   if (count <= 0) {
-    return smiles;
+    return [];
   }
 
-  if (smiles.length >= count) {
-    return smiles;
+  const sorted = [...smiles].sort((a, b) => b.id - a.id);
+  const capped = sorted.slice(0, count);
+
+  if (capped.length >= count) {
+    return capped.sort((a, b) => a.id - b.id);
   }
 
-  const byId = new Map(smiles.map((smile) => [smile.id, smile]));
-  const filled: SponsorSmile[] = [...smiles];
+  const byId = new Map(capped.map((smile) => [smile.id, smile]));
+  const filled: SponsorSmile[] = [...capped];
 
   for (let id = 1; filled.length < count; id++) {
     if (byId.has(id)) {
@@ -44,7 +47,7 @@ export function ensureSmilesForDisplay(smiles: SponsorSmile[], count: number): S
     byId.set(id, placeholder);
   }
 
-  let nextId = Math.max(0, ...smiles.map((smile) => smile.id)) + 1;
+  let nextId = Math.max(0, ...capped.map((smile) => smile.id)) + 1;
   while (filled.length < count) {
     if (byId.has(nextId)) {
       nextId++;
@@ -63,7 +66,7 @@ export function ensureSmilesForDisplay(smiles: SponsorSmile[], count: number): S
     nextId++;
   }
 
-  return filled;
+  return filled.sort((a, b) => a.id - b.id);
 }
 
 function normalizeSmile(smile: SponsorSmile): SponsorSmile {
