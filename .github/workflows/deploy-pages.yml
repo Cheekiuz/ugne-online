@@ -80,7 +80,7 @@ jobs:
           path: out
 
       - name: Publish gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v4.1.0
         with:
           github_token: ${{ github.token }}
           publish_dir: ./out
