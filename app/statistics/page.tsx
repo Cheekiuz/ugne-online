@@ -150,7 +150,7 @@ export default function StatisticsPage() {
             <p className="font-headline text-lg sm:text-xl md:text-2xl font-bold opacity-90 mb-2">
               of a Court Competitor &amp; Bug Hunter
             </p>
-            <p className="text-lg opacity-80 font-light">Numbers don&apos;t lie. I just adjust them.</p>
+            <p className="text-lg opacity-90 font-light italic max-w-xl mx-auto">Numbers don&apos;t lie. I just adjust them.</p>
           </div>
 
           <div className="grid lg:grid-cols-[1fr_min(560px,48%)] gap-8 xl:gap-12 items-start">
