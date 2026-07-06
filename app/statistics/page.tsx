@@ -21,7 +21,7 @@ import {SiteNav} from '../components/layout/SiteNav';
 const HERO_IMAGE = '/career-statistics-hero.png';
 
 export const metadata: Metadata = {
-  title: 'Career Statistics — Ugnė',
+  title: 'Career Statistics - Ugnė',
   description: "Numbers don't lie. I just adjust them.",
 };
 

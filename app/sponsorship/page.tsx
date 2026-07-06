@@ -9,7 +9,7 @@ import {SponsorSmileWall} from '../components/sponsorship/SponsorSmileWall';
 const HERO_IMAGE = '/sponsorship-hero.png';
 
 export const metadata: Metadata = {
-  title: 'Sponsorship — Ugnė',
+  title: 'Sponsorship - Ugnė',
   description: 'Funding dreams since approximately last Tuesday.',
 };
 
