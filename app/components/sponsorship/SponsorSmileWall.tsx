@@ -94,7 +94,7 @@ export function SponsorSmileWall() {
       <div className="bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 min-h-[120px]">
         <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
         <div className="h-px w-16 bg-on-primary/35" role="presentation" />
-        <span className="text-center text-sm font-normal text-on-primary/90">Real Smiles</span>
+        <span className="text-center text-sm font-normal text-on-primary/90">Real Smiles donated</span>
       </div>
 
       <div
@@ -123,7 +123,10 @@ export function SponsorSmileWall() {
         {justSaved ? (
           <p className="text-sm text-primary font-bold">Your smile is on the board. Thank you!</p>
         ) : alreadySmiled ? (
-          <p className="text-sm text-on-surface-variant italic">You already left a smile here.</p>
+          <p className="text-sm text-on-surface-variant italic">
+            You already left a smile here.{' '}
+            <span className="text-error-container not-italic font-semibold">Karma noticed.</span>
+          </p>
         ) : (
           <button
             type="button"
