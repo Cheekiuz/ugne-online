@@ -359,7 +359,7 @@ export default function SponsorshipPage() {
               </div>
 
               <div className="space-y-4">
-                <SectionHeading eyebrow="100% Real*" title="Testimonials" />
+                <SectionHeading eyebrow="100% Real" title="Testimonials" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {TESTIMONIALS.map((item) => (
                     <div
