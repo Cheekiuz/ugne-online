@@ -16,9 +16,9 @@ export function SponsorCta() {
 
   if (showThankYou || hasSmiled) {
     return (
-      <div className="tennis-gradient rounded-xl p-10 md:p-12 text-center text-on-primary shadow-xl space-y-6">
+      <div className="tennis-gradient rounded-xl p-6 sm:p-10 md:p-12 text-center text-on-primary shadow-xl space-y-6">
         <div>
-          <p className="font-headline text-3xl md:text-4xl font-black mb-3 uppercase">Thank you!</p>
+          <p className="font-headline text-2xl sm:text-3xl md:text-4xl font-black mb-3 uppercase">Thank you!</p>
           <p className="text-lg opacity-90 leading-relaxed">
             You&apos;re officially part of the team. Legends start somewhere.
           </p>
@@ -47,7 +47,7 @@ export function SponsorCta() {
             resetThankYou();
             setShowThankYou(false);
           }}
-          className="inline-block border-2 border-on-primary text-on-primary px-10 py-4 rounded-xl font-black text-lg hover:bg-on-primary/10 transition-all"
+          className="inline-block border-2 border-on-primary text-on-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:bg-on-primary/10 transition-all"
         >
           Return to being Sponsor again →
         </Link>
@@ -56,13 +56,13 @@ export function SponsorCta() {
   }
 
   return (
-    <div className="tennis-gradient rounded-xl p-10 md:p-12 text-center text-on-primary shadow-xl space-y-4">
-      <p className="font-headline text-2xl md:text-3xl font-black uppercase">Become a Sponsor</p>
+    <div className="tennis-gradient rounded-xl p-6 sm:p-10 md:p-12 text-center text-on-primary shadow-xl space-y-4">
+      <p className="font-headline text-xl sm:text-2xl md:text-3xl font-black uppercase">Become a Sponsor</p>
       <button
         type="button"
         onClick={() => void handleSponsorClick()}
         disabled={submitting}
-        className="bg-on-primary text-primary px-10 py-4 rounded-xl font-black text-lg uppercase hover:scale-105 active:scale-95 transition-all disabled:opacity-70 disabled:hover:scale-100"
+        className="bg-on-primary text-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg uppercase hover:scale-105 active:scale-95 transition-all disabled:opacity-70 disabled:hover:scale-100 w-full sm:w-auto"
       >
         {submitting ? 'Saving…' : "Let's Make Magic Happen"}
       </button>

@@ -2,11 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Instagram, Mail } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { ExecutiveDecisionSprite } from './components/executive-decision-sprite/ExecutiveDecisionSprite';
+import { SiteNav } from './components/layout/SiteNav';
 import { SeriousVisitorsCard } from './components/serious-visitors/SeriousVisitorsCard';
-import { ThemeToggle } from './components/theme-toggle/ThemeToggle';
 
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 const KINETIC_MAIN_IMAGE = '/dcd50533-5c90-4e05-ae9c-1e1640403fbc.jpeg';
@@ -51,56 +51,17 @@ export default function Home() {
       ) : (
         <>
       {/* TopNavBar */}
-      <nav className="fixed top-0 w-full z-50 glass-nav">
-        <div className="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto font-headline tracking-tight">
-          <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
-              <Image
-                src={PERSONA_IMAGE}
-                alt="Ugnė"
-                fill
-                className="object-cover object-top"
-                sizes="40px"
-                priority
-              />
-            </div>
-            <div className="text-3xl font-black text-primary">Ugnė.</div>
-          </div>
-          <div className="hidden md:flex gap-10 items-center">
-            <a className="text-primary font-bold border-b-2 border-primary pb-1" href="#">Tennis & Something</a>
-          </div>
-          <div className="flex items-center gap-6">
-            <div className="flex gap-4">
-              <a
-                href="mailto:crycocacola@gmail.com"
-                className="text-primary inline-flex hover:scale-110 transition-transform"
-                aria-label="Email crycocacola@gmail.com"
-              >
-                <Mail className="h-6 w-6" aria-hidden />
-              </a>
-            </div>
-            <a
-              href={CHALLENGE_ME_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-primary text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform"
-            >
-              Challenge me
-            </a>
-            <ThemeToggle />
-          </div>
-        </div>
-      </nav>
+      <SiteNav currentPage="home" />
 
-      <main className="pt-32 pb-20">
+      <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32">
         {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-8 mb-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-12 sm:mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-x-12 lg:gap-y-10 items-center">
             <div className="min-w-0 lg:col-span-5 order-2 lg:order-1">
-              <h1 className="font-headline text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-black text-primary leading-[0.95] tracking-tighter mb-6 break-words">
+              <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-primary leading-[0.95] tracking-tighter mb-4 sm:mb-6 break-words">
                 COURT<br/><span className="text-secondary">COMPETITOR.</span>
               </h1>
-              <p className="text-xl md:text-2xl text-on-surface-variant max-w-2xl font-light leading-relaxed">
+              <p className="text-lg sm:text-xl md:text-2xl text-on-surface-variant max-w-2xl font-light leading-relaxed">
                 Where technical precision meets kinetic energy. Exploring the parallels between high-stakes QA engineering and the strategic rhythm of the tennis court.
               </p>
             </div>
@@ -116,12 +77,12 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="min-w-0 lg:col-span-3 order-3 flex flex-col items-center justify-center gap-6 lg:items-end lg:justify-end lg:self-end">
-              <div className="flex w-full justify-center lg:justify-end">
+            <div className="min-w-0 lg:col-span-3 order-3 flex flex-col items-center justify-center gap-4 sm:gap-6 lg:items-end lg:justify-end lg:self-end overflow-hidden">
+              <div className="flex w-full justify-center lg:justify-end max-w-full overflow-hidden">
                 <ExecutiveDecisionSprite variant="blue" compact />
               </div>
-              <div className="bg-primary-container p-8 rounded-xl flex flex-col items-center justify-center text-center shadow-sm w-full max-w-[220px] shrink-0">
-                <span className="font-headline text-5xl font-black text-on-primary-container">40-15</span>
+              <div className="bg-primary-container p-6 sm:p-8 rounded-xl flex flex-col items-center justify-center text-center shadow-sm w-full max-w-[220px] shrink-0">
+                <span className="font-headline text-4xl sm:text-5xl font-black text-on-primary-container">40-15</span>
                 <span className="font-label uppercase tracking-widest text-sm text-on-primary-container opacity-70 mt-2">Game Point Mindset</span>
               </div>
             </div>
@@ -129,10 +90,10 @@ export default function Home() {
         </section>
 
         {/* Kinetic Gallery — portrait + strategic tiles */}
-        <section className="bg-surface-container-low pt-24 pb-24 mb-20">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="flex flex-col md:flex-row gap-4 mb-12 items-baseline">
-              <h2 className="font-headline text-4xl font-bold">The Kinetic Drive</h2>
+        <section className="bg-surface-container-low pt-12 pb-12 sm:pt-24 sm:pb-24 mb-12 sm:mb-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <div className="flex flex-col md:flex-row gap-4 mb-8 sm:mb-12 items-baseline">
+              <h2 className="font-headline text-3xl sm:text-4xl font-bold">The Kinetic Drive</h2>
               <div className="h-[2px] flex-grow bg-outline-variant opacity-20"></div>
               <span className="font-label text-tertiary-container bg-tertiary px-4 py-1 rounded-full text-xs uppercase tracking-widest">Active Season</span>
             </div>
@@ -157,9 +118,9 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="sm:col-span-2 min-h-[200px] bg-secondary-container rounded-xl overflow-hidden relative">
                   <div className="absolute inset-0 tennis-gradient opacity-10"></div>
-                  <div className="p-8 h-full flex flex-col justify-center relative z-10">
-                    <span className="text-6xl font-headline font-black text-on-secondary-container opacity-20 mb-4">#01</span>
-                    <h3 className="text-2xl font-bold text-on-secondary-container leading-tight">Strategic positioning is 90% of the game.</h3>
+                  <div className="p-6 sm:p-8 h-full flex flex-col justify-center relative z-10">
+                    <span className="text-4xl sm:text-6xl font-headline font-black text-on-secondary-container opacity-20 mb-4">#01</span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-on-secondary-container leading-tight">Strategic positioning is 90% of the game.</h3>
                   </div>
                 </div>
                 <div className="min-h-[200px] bg-surface-container-highest rounded-xl overflow-hidden relative">
@@ -178,11 +139,11 @@ export default function Home() {
         </section>
 
         {/* Favorite Match Moments (Bento Grid) */}
-        <section className="max-w-7xl mx-auto px-8 mb-24">
-          <h2 className="font-headline text-4xl font-bold mb-12">Match Moments</h2>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-16 sm:mb-24">
+          <h2 className="font-headline text-3xl sm:text-4xl font-bold mb-8 sm:mb-12">Match Moments</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Moment 1 */}
-            <div className="bg-surface-container-lowest p-8 rounded-xl shadow-sm border-b-4 border-primary">
+            <div className="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 border-primary">
               <div className="flex justify-between mb-6">
                 <span className="text-xs font-label uppercase tracking-tighter text-outline">August 2023</span>
                 <div className="w-2 h-2 rounded-full bg-secondary"></div>
@@ -195,7 +156,7 @@ export default function Home() {
               </div>
             </div>
             {/* Moment 2 */}
-            <div className="bg-surface-container-lowest p-8 rounded-xl shadow-sm border-b-4 border-secondary-container">
+            <div className="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 border-secondary-container">
               <div className="flex justify-between mb-6">
                 <span className="text-xs font-label uppercase tracking-tighter text-outline">May 2024</span>
                 <div className="w-2 h-2 rounded-full bg-primary"></div>
@@ -208,7 +169,7 @@ export default function Home() {
               </div>
             </div>
             {/* Moment 3 */}
-            <div className="bg-surface-container-lowest p-8 rounded-xl shadow-sm border-b-4 border-tertiary-container">
+            <div className="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 border-tertiary-container">
               <div className="flex justify-between mb-6">
                 <span className="text-xs font-label uppercase tracking-tighter text-outline">Active</span>
                 <div className="w-2 h-2 rounded-full bg-tertiary"></div>
@@ -224,9 +185,9 @@ export default function Home() {
         </section>
 
         {/* Preferred Courts (Map & List) */}
-        <section className="max-w-7xl mx-auto px-8 mb-24">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-16 sm:mb-24">
           <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col md:flex-row">
-            <div className="md:w-1/2 h-96 md:h-auto relative">
+            <div className="md:w-1/2 h-56 sm:h-72 md:h-auto relative min-h-[14rem]">
               <Image 
                 className="w-full h-full object-cover" 
                 alt="Overhead view of several green and blue tennis courts" 
@@ -235,8 +196,8 @@ export default function Home() {
                 referrerPolicy="no-referrer"
               />
             </div>
-            <div className="md:w-1/2 p-12 bg-surface-container-low flex flex-col justify-center">
-              <h2 className="font-headline text-3xl font-bold mb-8 text-primary">Preferred Courts</h2>
+            <div className="md:w-1/2 p-6 sm:p-8 md:p-12 bg-surface-container-low flex flex-col justify-center">
+              <h2 className="font-headline text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-primary">Preferred Courts</h2>
               <ul className="space-y-6">
                 <li className="flex items-start gap-4">
                   <div className="w-4 h-4 mt-1 bg-primary rounded-sm rotate-45 shrink-0"></div>
@@ -260,27 +221,27 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="max-w-7xl mx-auto px-8">
-          <div className="tennis-gradient p-16 rounded-xl text-center text-on-primary shadow-xl">
-            <h3 className="font-headline text-4xl md:text-5xl font-black mb-6">Ready to challenge me?</h3>
-            <p className="text-xl opacity-90 mb-10 max-w-xl mx-auto">Tennis, QA, coffee or arguing about whether that ball was actually out.</p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl">
+            <h3 className="font-headline text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-4 sm:mb-6">Ready to challenge me?</h3>
+            <p className="text-base sm:text-lg md:text-xl opacity-90 mb-6 sm:mb-10 max-w-xl mx-auto">Tennis, QA, coffee or arguing about whether that ball was actually out.</p>
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center">
               <button
                 type="button"
                 onClick={playBoomSound}
-                className="bg-on-primary text-primary px-10 py-4 rounded-xl font-black text-lg hover:scale-105 active:scale-95 transition-all"
+                className="bg-on-primary text-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:scale-105 active:scale-95 transition-all w-full sm:w-auto"
               >
                 Think again
               </button>
               <Link
                 href="/statistics/"
-                className="border-2 border-on-primary text-on-primary px-10 py-4 rounded-xl font-black text-lg hover:bg-on-primary/10 transition-all"
+                className="border-2 border-on-primary text-on-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:bg-on-primary/10 transition-all w-full sm:w-auto"
               >
                 View Statistics
               </Link>
               <Link
                 href="/sponsorship/"
-                className="border-2 border-on-primary text-on-primary px-10 py-4 rounded-xl font-black text-lg hover:bg-on-primary/10 transition-all"
+                className="border-2 border-on-primary text-on-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:bg-on-primary/10 transition-all w-full sm:w-auto"
               >
                 💰 Sponsorship Opportunities
               </Link>
@@ -288,13 +249,13 @@ export default function Home() {
                 href={CHALLENGE_ME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-error text-on-error px-10 py-4 rounded-xl font-black text-lg hover:scale-105 active:scale-95 transition-all"
+                className="bg-error text-on-error px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:scale-105 active:scale-95 transition-all w-full sm:w-auto"
               >
                 Challenge me
               </a>
             </div>
           </div>
-          <div className="flex justify-center mt-12">
+          <div className="flex justify-center mt-8 sm:mt-12 overflow-hidden max-w-full">
             <ExecutiveDecisionSprite variant="red" />
           </div>
         </section>
@@ -302,7 +263,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="w-full rounded-t-none bg-surface-container-low">
-        <div className="flex flex-col md:flex-row justify-between items-center p-12 mt-20 max-w-7xl mx-auto font-body text-sm uppercase tracking-widest">
+        <div className="flex flex-col md:flex-row justify-between items-center p-6 sm:p-8 md:p-12 mt-12 sm:mt-20 max-w-7xl mx-auto font-body text-xs sm:text-sm uppercase tracking-wide sm:tracking-widest gap-4 md:gap-0">
           <div className="font-headline font-bold text-on-surface mb-6 md:mb-0">Ugnė.</div>
           <div className="text-on-surface opacity-60 text-center md:text-left mb-6 md:mb-0">
             ©2026 Ugnė. Engineered with Precision. Played with Passion. Not for serious persons.

@@ -1,4 +1,4 @@
-import type {Metadata} from 'next';
+import type {Metadata, Viewport} from 'next';
 import { Lexend, Inter } from 'next/font/google';
 import {GoogleAnalytics} from './components/analytics/GoogleAnalytics';
 import './globals.css'; // Global styles
@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.png',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

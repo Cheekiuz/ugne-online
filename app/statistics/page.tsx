@@ -12,14 +12,12 @@ import {
   Coffee,
   HeartCrack,
   Instagram,
-  Mail,
   Sparkles,
   Terminal,
   Trophy,
 } from 'lucide-react';
-import {ThemeToggle} from '../components/theme-toggle/ThemeToggle';
+import {SiteNav} from '../components/layout/SiteNav';
 
-const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 const HERO_IMAGE = '/career-statistics-hero.png';
 
 export const metadata: Metadata = {
@@ -115,7 +113,7 @@ function StatCard({stat}: {stat: CareerStat}) {
 
   return (
     <div
-      className={`bg-surface-container-lowest p-8 rounded-xl shadow-sm border-b-4 ${stat.border} flex flex-col gap-3`}
+      className={`bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 ${stat.border} flex flex-col gap-3`}
     >
       <Icon className="h-5 w-5 text-primary" strokeWidth={1.75} aria-hidden />
       <p className="font-label uppercase tracking-widest text-xs text-on-surface-variant">{stat.label}</p>
@@ -138,58 +136,18 @@ function StatCard({stat}: {stat: CareerStat}) {
 export default function StatisticsPage() {
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 glass-nav">
-        <div className="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto font-headline tracking-tight">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
-              <Image
-                src={PERSONA_IMAGE}
-                alt="Ugnė"
-                fill
-                className="object-cover object-top"
-                sizes="40px"
-                priority
-              />
-            </div>
-            <div className="text-3xl font-black text-primary">Ugnė.</div>
-          </Link>
-          <div className="hidden md:flex gap-10 items-center">
-            <Link
-              href="/statistics/"
-              className="text-primary font-bold border-b-2 border-primary pb-1"
-            >
-              Statistics
-            </Link>
-          </div>
-          <div className="flex items-center gap-6">
-            <a
-              href="mailto:crycocacola@gmail.com"
-              className="text-primary inline-flex hover:scale-110 transition-transform"
-              aria-label="Email crycocacola@gmail.com"
-            >
-              <Mail className="h-6 w-6" aria-hidden />
-            </a>
-            <Link
-              href="/"
-              className="bg-primary text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform"
-            >
-              Back to Reality
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </nav>
+      <SiteNav currentPage="statistics" />
 
-      <main className="pt-32 pb-20">
-        <section className="max-w-7xl mx-auto px-8 mb-12">
+      <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-12">
           <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-8 font-label text-xs uppercase tracking-widest text-primary">
             <span>Statistics that definitely can&apos;t be faked</span>
             <span className="text-on-surface-variant">(Trust me)</span>
           </div>
 
-          <div className="tennis-gradient p-12 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-12">
-            <h1 className="font-headline text-4xl md:text-5xl font-black mb-3">Career Statistics</h1>
-            <p className="font-headline text-xl md:text-2xl font-bold opacity-90 mb-2">
+          <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-8 sm:mb-12">
+            <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black mb-3">Career Statistics</h1>
+            <p className="font-headline text-lg sm:text-xl md:text-2xl font-bold opacity-90 mb-2">
               of a Court Competitor &amp; Bug Hunter
             </p>
             <p className="text-lg opacity-80 font-light">Numbers don&apos;t lie. I just adjust them.</p>
@@ -203,7 +161,7 @@ export default function StatisticsPage() {
                 ))}
               </div>
 
-              <div className="bg-surface-container-low rounded-xl p-8">
+              <div className="bg-surface-container-low rounded-xl p-6 sm:p-8">
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
                   {MINI_STATS.map((mini) => {
                     const MiniIcon = mini.icon;
@@ -259,7 +217,7 @@ export default function StatisticsPage() {
       </main>
 
       <footer className="w-full rounded-t-none bg-surface-container-low">
-        <div className="flex flex-col md:flex-row justify-between items-center p-12 mt-20 max-w-7xl mx-auto font-body text-sm uppercase tracking-widest">
+        <div className="flex flex-col md:flex-row justify-between items-center p-6 sm:p-8 md:p-12 mt-12 sm:mt-20 max-w-7xl mx-auto font-body text-xs sm:text-sm uppercase tracking-wide sm:tracking-widest gap-4 md:gap-0">
           <div className="font-headline font-bold text-on-surface mb-6 md:mb-0">Ugnė.</div>
           <div className="text-on-surface opacity-60 text-center md:text-left mb-6 md:mb-0">
             ©2026 Ugnė. Engineered with Precision. Played with Passion. Not for serious persons.

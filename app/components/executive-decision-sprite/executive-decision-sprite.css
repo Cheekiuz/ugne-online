@@ -7,13 +7,16 @@
   align-items: center;
   min-height: 220px;
   padding-top: 2.5rem;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 @media (max-width: 640px) {
   .edm-root {
-    transform: scale(0.85);
+    transform: scale(0.75);
     transform-origin: top center;
-    min-height: 200px;
+    min-height: 180px;
+    padding-top: 1rem;
   }
 }
 
@@ -25,8 +28,9 @@
 
 @media (max-width: 640px) {
   .edm-root.edm-root--compact {
-    transform: scale(0.75);
-    transform-origin: top right;
+    transform: scale(0.65);
+    transform-origin: top center;
+    min-height: 0;
   }
 }
 

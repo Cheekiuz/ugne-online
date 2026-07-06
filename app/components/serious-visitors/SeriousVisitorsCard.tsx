@@ -61,7 +61,7 @@ export function SeriousVisitorsCard() {
   return (
     <div className="min-h-[200px] bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6">
       <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
-      <span className="font-headline text-4xl font-bold tabular-nums text-on-primary">{count}</span>
+      <span className="font-headline text-2xl sm:text-3xl md:text-4xl font-bold tabular-nums text-on-primary">{count}</span>
       <div className="h-px w-16 bg-on-primary/35" role="presentation" />
       <span className="text-center text-sm font-normal text-on-primary/90">Serious Visitors</span>
     </div>

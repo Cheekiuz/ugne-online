@@ -1,12 +1,11 @@
 import type {Metadata} from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import {Instagram, Mail} from 'lucide-react';
+import {Instagram} from 'lucide-react';
+import {SiteNav} from '../components/layout/SiteNav';
 import {SponsorCta} from '../components/sponsorship/SponsorCta';
 import {SponsorSmileWall} from '../components/sponsorship/SponsorSmileWall';
-import {ThemeToggle} from '../components/theme-toggle/ThemeToggle';
 
-const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 const HERO_IMAGE = '/sponsorship-hero.png';
 
 export const metadata: Metadata = {
@@ -194,7 +193,7 @@ function SectionHeading({eyebrow, title}: {eyebrow?: string; title: string}) {
 function SponsorCard({sponsor}: {sponsor: Sponsor}) {
   return (
     <div
-      className={`bg-surface-container-lowest p-8 rounded-xl shadow-sm border-b-2 ${sponsor.border} flex flex-col gap-3`}
+      className={`bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-2 ${sponsor.border} flex flex-col gap-3`}
     >
       <div className="flex items-center justify-between gap-2">
         <span className="text-3xl" aria-hidden>
@@ -227,62 +226,22 @@ function PackageCard({pkg}: {pkg: Package}) {
 export default function SponsorshipPage() {
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 glass-nav">
-        <div className="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto font-headline tracking-tight">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
-              <Image
-                src={PERSONA_IMAGE}
-                alt="Ugnė"
-                fill
-                className="object-cover object-top"
-                sizes="40px"
-                priority
-              />
-            </div>
-            <div className="text-3xl font-black text-primary">Ugnė.</div>
-          </Link>
-          <div className="hidden md:flex gap-10 items-center">
-            <Link
-              href="/sponsorship/"
-              className="text-primary font-bold border-b-2 border-primary pb-1"
-            >
-              Sponsorship
-            </Link>
-          </div>
-          <div className="flex items-center gap-6">
-            <a
-              href="mailto:crycocacola@gmail.com"
-              className="text-primary inline-flex hover:scale-110 transition-transform"
-              aria-label="Email crycocacola@gmail.com"
-            >
-              <Mail className="h-6 w-6" aria-hidden />
-            </a>
-            <Link
-              href="/"
-              className="bg-primary text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform"
-            >
-              Back to Reality
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </nav>
+      <SiteNav currentPage="sponsorship" />
 
-      <main className="pt-32 pb-20">
-        <section className="max-w-7xl mx-auto px-8 mb-12">
+      <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-12">
           <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-8 font-label text-xs uppercase tracking-widest text-primary">
             <span>Current world ranking: Financially Optimistic.</span>
           </div>
 
-          <div className="tennis-gradient p-12 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6">
-            <h1 className="font-headline text-4xl md:text-5xl font-black mb-3 uppercase">Sponsorship Opportunities</h1>
+          <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6">
+            <h1 className="font-headline text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-3 uppercase">Sponsorship Opportunities</h1>
             <p className="text-lg opacity-90 font-light italic max-w-xl mx-auto">
               Funding dreams since approximately last Tuesday.
             </p>
           </div>
 
-          <blockquote className="bg-surface-container-low rounded-xl p-6 border-l-2 border-primary italic text-on-surface-variant text-base md:text-lg leading-relaxed mb-12 max-w-3xl">
+          <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-12 max-w-3xl">
             &ldquo;I don&apos;t need a title sponsor. I need an iced latte.&rdquo;
           </blockquote>
 
@@ -338,7 +297,7 @@ export default function SponsorshipPage() {
 
               <div className="space-y-4">
                 <SectionHeading eyebrow="Investor Relations" title="ROI Calculator" />
-                <div className="bg-surface-container-low rounded-xl p-8">
+                <div className="bg-surface-container-low rounded-xl p-6 sm:p-8">
                   <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">
                     Investment: One latte
                   </p>
@@ -360,7 +319,7 @@ export default function SponsorshipPage() {
 
               <div className="space-y-4">
                 <SectionHeading title="Donation Meter" />
-                <div className="bg-surface-container-lowest rounded-xl p-8 shadow-sm">
+                <div className="bg-surface-container-lowest rounded-xl p-6 sm:p-8 shadow-sm">
                   <div className="flex justify-between items-baseline mb-3">
                     <span className="font-headline text-2xl font-black text-primary tabular-nums">82%</span>
                     <span className="font-label text-xs uppercase tracking-widest text-on-surface-variant">
@@ -481,7 +440,7 @@ export default function SponsorshipPage() {
       </main>
 
       <footer className="w-full rounded-t-none bg-surface-container-low">
-        <div className="flex flex-col md:flex-row justify-between items-center p-12 mt-20 max-w-7xl mx-auto font-body text-sm uppercase tracking-widest">
+        <div className="flex flex-col md:flex-row justify-between items-center p-6 sm:p-8 md:p-12 mt-12 sm:mt-20 max-w-7xl mx-auto font-body text-xs sm:text-sm uppercase tracking-wide sm:tracking-widest gap-4 md:gap-0">
           <div className="font-headline font-bold text-on-surface mb-6 md:mb-0">Ugnė.</div>
           <div className="text-on-surface opacity-60 text-center md:text-left mb-6 md:mb-0">
             ©2026 Ugnė. Engineered with Precision. Played with Passion. Not for serious persons.

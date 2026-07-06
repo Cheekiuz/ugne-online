@@ -2,6 +2,11 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+html,
+body {
+  overflow-x: clip;
+}
+
 @theme {
   --color-tertiary: #4b5a89;
   --color-primary-fixed: #cff830;
@@ -67,6 +72,34 @@
 
 .dark .glass-nav {
   background: rgba(15, 20, 18, 0.7);
+}
+
+@keyframes mobile-nav-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-nav-panel {
+  animation: mobile-nav-enter 200ms ease-out;
+}
+
+.mobile-nav-backdrop {
+  animation: mobile-nav-backdrop-enter 200ms ease-out;
+}
+
+@keyframes mobile-nav-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .tennis-gradient {
