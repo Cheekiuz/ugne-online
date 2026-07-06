@@ -2,20 +2,20 @@
 
 import type {CSSProperties} from 'react';
 import {Smile} from 'lucide-react';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {layoutScatteredSmiles, type LayoutSmile} from '../../lib/supabase/smile-layout';
 import {fetchSmileCount, fetchSmiles, type SponsorSmile} from '../../lib/supabase/smiles';
 import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
 import {useSubmitSmile} from './useSubmitSmile';
 
 import {SPONSOR_SMILES_REFRESH_EVENT} from './sponsor-smile-events';
 
-function smileStyle(smile: SponsorSmile): CSSProperties {
-  const x = smile.pos_x ?? 50;
-  const y = smile.pos_y ?? 50;
+function smileStyle(smile: LayoutSmile, zIndex: number): CSSProperties {
   return {
-    left: `${x}%`,
-    top: `${y}%`,
-    transform: 'translate(-50%, -50%)',
+    left: `${smile.display_x}%`,
+    top: `${smile.display_y}%`,
+    transform: `translate(-50%, -50%) rotate(${smile.rotation}deg)`,
+    zIndex,
   };
 }
 
@@ -25,6 +25,7 @@ export function SponsorSmileWall() {
   const [loading, setLoading] = useState(true);
   const {submitSmile, submitting, hasSmiled, saveWarning, justSaved} = useSubmitSmile();
   const alreadySmiled = hasSmiled || hasSmiledLocally();
+  const layoutSmiles = useMemo(() => layoutScatteredSmiles(smiles), [smiles]);
 
   const loadSmiles = useCallback(async () => {
     setLoading(true);
@@ -56,22 +57,27 @@ export function SponsorSmileWall() {
         <span className="text-center text-sm font-normal text-on-primary/90">Real Smiles</span>
       </div>
 
-      <div className="bg-surface-container-lowest rounded-xl shadow-sm p-4 min-h-[200px] relative overflow-hidden border-b-2 border-primary">
+      <div className="bg-surface-container-lowest rounded-xl shadow-sm p-4 min-h-[240px] relative overflow-hidden border-b-2 border-primary">
         {loading ? (
           <p className="text-on-surface-variant text-sm text-center py-16">Loading smiles…</p>
-        ) : smiles.length === 0 ? (
+        ) : count === 0 ? (
           <p className="text-on-surface-variant text-sm text-center italic py-10 px-4">
             No smiles yet. Be the first.
           </p>
+        ) : layoutSmiles.length === 0 ? (
+          <p className="text-on-surface-variant text-sm text-center italic py-10 px-4">
+            {count} {count === 1 ? 'smile' : 'smiles'} on the board.
+          </p>
         ) : (
-          smiles.map((smile) => (
-            <Smile
+          layoutSmiles.map((smile, index) => (
+            <span
               key={smile.id}
-              className="absolute h-6 w-6 text-primary opacity-80"
-              strokeWidth={1.5}
-              style={smileStyle(smile)}
+              className="absolute text-3xl leading-none select-none"
+              style={smileStyle(smile, index + 1)}
               aria-hidden
-            />
+            >
+              😊
+            </span>
           ))
         )}
       </div>
