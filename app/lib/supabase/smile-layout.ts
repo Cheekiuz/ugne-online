@@ -4,24 +4,24 @@ export type LayoutSmile = SponsorSmile & {
   display_x: number;
   display_y: number;
   rotation: number;
-  colorClassWall: string;
-  colorClassCounter: string;
+  colorWall: string;
+  colorCounter: string;
 };
 
 const SMILE_COLOR_WALL = [
-  'text-primary',
-  'text-secondary',
-  'text-tertiary',
-  'text-error',
-  'text-tertiary-dim',
+  'var(--color-primary)',
+  'var(--color-secondary)',
+  'var(--color-tertiary)',
+  'var(--color-error)',
+  'var(--color-tertiary-dim)',
 ] as const;
 
 const SMILE_COLOR_COUNTER = [
-  'text-on-primary',
-  'text-secondary-container',
-  'text-tertiary-container',
-  'text-primary-container',
-  'text-on-secondary',
+  'var(--color-on-primary)',
+  'var(--color-secondary-container)',
+  'var(--color-tertiary-container)',
+  'var(--color-primary-container)',
+  'var(--color-on-secondary)',
 ] as const;
 
 export function smileColorFromId(id: number, variant: 'wall' | 'counter'): string {
@@ -34,6 +34,8 @@ const BOUNDS_MIN = 8;
 const BOUNDS_MAX = 92;
 const SPIRAL_STEP = 4;
 const SPIRAL_ANGLES = 8;
+const COUNTER_DEAD_MIN = 35;
+const COUNTER_DEAD_MAX = 65;
 
 function positionFromId(id: number): {x: number; y: number} {
   return {
@@ -53,19 +55,20 @@ function startPosition(smile: SponsorSmile): {x: number; y: number} {
   return positionFromId(smile.id);
 }
 
-function clamp(value: number): number {
-  return Math.min(BOUNDS_MAX, Math.max(BOUNDS_MIN, value));
+function clamp(value: number, min = BOUNDS_MIN, max = BOUNDS_MAX): number {
+  return Math.min(max, Math.max(min, value));
 }
 
 function collides(
   x: number,
   y: number,
   placed: Array<{display_x: number; display_y: number}>,
+  minDistance = MIN_DISTANCE,
 ): boolean {
   return placed.some((other) => {
     const dx = x - other.display_x;
     const dy = y - other.display_y;
-    return Math.hypot(dx, dy) < MIN_DISTANCE;
+    return Math.hypot(dx, dy) < minDistance;
   });
 }
 
@@ -73,11 +76,12 @@ function resolvePosition(
   start: {x: number; y: number},
   placed: Array<{display_x: number; display_y: number}>,
   id: number,
+  minDistance = MIN_DISTANCE,
 ): {x: number; y: number} {
   const baseX = clamp(start.x);
   const baseY = clamp(start.y);
 
-  if (!collides(baseX, baseY, placed)) {
+  if (!collides(baseX, baseY, placed, minDistance)) {
     return {x: baseX, y: baseY};
   }
 
@@ -87,7 +91,7 @@ function resolvePosition(
       const angle = ((angleIndex / SPIRAL_ANGLES) * Math.PI * 2) + (id * 0.31);
       const x = clamp(baseX + Math.cos(angle) * radius);
       const y = clamp(baseY + Math.sin(angle) * radius);
-      if (!collides(x, y, placed)) {
+      if (!collides(x, y, placed, minDistance)) {
         return {x, y};
       }
     }
@@ -97,22 +101,67 @@ function resolvePosition(
   return {x: clamp(fallback.x), y: clamp(fallback.y)};
 }
 
-export function layoutScatteredSmiles(smiles: SponsorSmile[]): LayoutSmile[] {
+function avoidCenterDeadZone(x: number, y: number): {x: number; y: number} {
+  const inDeadX = x >= COUNTER_DEAD_MIN && x <= COUNTER_DEAD_MAX;
+  const inDeadY = y >= COUNTER_DEAD_MIN && y <= COUNTER_DEAD_MAX;
+
+  if (!inDeadX || !inDeadY) {
+    return {x, y};
+  }
+
+  const toLeft = x - COUNTER_DEAD_MIN;
+  const toRight = COUNTER_DEAD_MAX - x;
+  const toTop = y - COUNTER_DEAD_MIN;
+  const toBottom = COUNTER_DEAD_MAX - y;
+  const min = Math.min(toLeft, toRight, toTop, toBottom);
+
+  if (min === toLeft) {
+    return {x: COUNTER_DEAD_MIN - 6, y};
+  }
+  if (min === toRight) {
+    return {x: COUNTER_DEAD_MAX + 6, y};
+  }
+  if (min === toTop) {
+    return {x, y: COUNTER_DEAD_MIN - 6};
+  }
+  return {x, y: COUNTER_DEAD_MAX + 6};
+}
+
+function buildLayoutSmiles(
+  smiles: SponsorSmile[],
+  adjustPosition?: (x: number, y: number) => {x: number; y: number},
+  minDistance = MIN_DISTANCE,
+): LayoutSmile[] {
   const sorted = [...smiles].sort((a, b) => a.id - b.id);
   const placed: LayoutSmile[] = [];
 
   for (const smile of sorted) {
     const start = startPosition(smile);
-    const {x, y} = resolvePosition(start, placed, smile.id);
+    let {x, y} = resolvePosition(start, placed, smile.id, minDistance);
+
+    if (adjustPosition) {
+      ({x, y} = adjustPosition(x, y));
+      x = clamp(x);
+      y = clamp(y);
+    }
+
     placed.push({
       ...smile,
       display_x: x,
       display_y: y,
       rotation: rotationFromId(smile.id),
-      colorClassWall: smileColorFromId(smile.id, 'wall'),
-      colorClassCounter: smileColorFromId(smile.id, 'counter'),
+      colorWall: smileColorFromId(smile.id, 'wall'),
+      colorCounter: smileColorFromId(smile.id, 'counter'),
     });
   }
 
   return placed;
+}
+
+export function layoutScatteredSmiles(smiles: SponsorSmile[]): LayoutSmile[] {
+  return buildLayoutSmiles(smiles);
+}
+
+export function layoutCounterSmiles(smiles: SponsorSmile[]): LayoutSmile[] {
+  return buildLayoutSmiles(smiles, avoidCenterDeadZone, 8);
 }

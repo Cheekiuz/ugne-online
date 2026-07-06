@@ -16,6 +16,56 @@ function positionFromId(id: number): {pos_x: number; pos_y: number} {
   };
 }
 
+export function ensureSmilesForDisplay(smiles: SponsorSmile[], count: number): SponsorSmile[] {
+  if (count <= 0) {
+    return smiles;
+  }
+
+  if (smiles.length >= count) {
+    return smiles;
+  }
+
+  const byId = new Map(smiles.map((smile) => [smile.id, smile]));
+  const filled: SponsorSmile[] = [...smiles];
+
+  for (let id = 1; filled.length < count; id++) {
+    if (byId.has(id)) {
+      continue;
+    }
+
+    const derived = positionFromId(id);
+    const placeholder: SponsorSmile = {
+      id,
+      pos_x: derived.pos_x,
+      pos_y: derived.pos_y,
+      created_at: '',
+    };
+    filled.push(placeholder);
+    byId.set(id, placeholder);
+  }
+
+  let nextId = Math.max(0, ...smiles.map((smile) => smile.id)) + 1;
+  while (filled.length < count) {
+    if (byId.has(nextId)) {
+      nextId++;
+      continue;
+    }
+
+    const derived = positionFromId(nextId);
+    const placeholder: SponsorSmile = {
+      id: nextId,
+      pos_x: derived.pos_x,
+      pos_y: derived.pos_y,
+      created_at: '',
+    };
+    filled.push(placeholder);
+    byId.set(nextId, placeholder);
+    nextId++;
+  }
+
+  return filled;
+}
+
 function normalizeSmile(smile: SponsorSmile): SponsorSmile {
   if (smile.pos_x != null && smile.pos_y != null) {
     return smile;

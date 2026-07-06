@@ -3,18 +3,28 @@
 import type {CSSProperties} from 'react';
 import {Smile} from 'lucide-react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {layoutScatteredSmiles, type LayoutSmile} from '../../lib/supabase/smile-layout';
-import {fetchSmileCount, fetchSmiles, type SponsorSmile} from '../../lib/supabase/smiles';
+import {
+  layoutCounterSmiles,
+  layoutScatteredSmiles,
+  type LayoutSmile,
+} from '../../lib/supabase/smile-layout';
+import {
+  ensureSmilesForDisplay,
+  fetchSmileCount,
+  fetchSmiles,
+  type SponsorSmile,
+} from '../../lib/supabase/smiles';
 import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
 import {useSubmitSmile} from './useSubmitSmile';
 
 import {SPONSOR_SMILES_REFRESH_EVENT} from './sponsor-smile-events';
 
-function smileStyle(smile: LayoutSmile, zIndex: number): CSSProperties {
+function smileStyle(smile: LayoutSmile, zIndex: number, color: string): CSSProperties {
   return {
     left: `${smile.display_x}%`,
     top: `${smile.display_y}%`,
     transform: `translate(-50%, -50%) rotate(${smile.rotation}deg)`,
+    color,
     zIndex,
   };
 }
@@ -38,15 +48,18 @@ export function SponsorSmileWall() {
   const alreadySmiled = hasSmiled || hasSmiledLocally();
 
   const smilesForLayout = useMemo(() => {
+    let base = smiles;
     if (optimisticSmile && smiles.length < count) {
-      return [...smiles, optimisticSmile];
+      base = [...smiles, optimisticSmile];
     }
-    return smiles;
+    return ensureSmilesForDisplay(base, Math.max(count, base.length));
   }, [smiles, optimisticSmile, count]);
 
-  const layoutSmiles = useMemo(() => layoutScatteredSmiles(smilesForLayout), [smilesForLayout]);
-  const displayCount = loading ? null : Math.max(count, layoutSmiles.length);
-  const hasVisibleSmiles = layoutSmiles.length > 0;
+  const wallSmiles = useMemo(() => layoutScatteredSmiles(smilesForLayout), [smilesForLayout]);
+  const counterSmiles = useMemo(() => layoutCounterSmiles(smilesForLayout), [smilesForLayout]);
+  const displayCount = loading ? null : Math.max(count, smilesForLayout.length);
+  const hasVisibleSmiles = !loading && (displayCount ?? 0) > 0;
+  const wallMinHeight = (displayCount ?? 0) > 8 ? 'min-h-[280px]' : 'min-h-[240px]';
 
   const loadSmiles = useCallback(async () => {
     setLoading(true);
@@ -92,12 +105,12 @@ export function SponsorSmileWall() {
       >
         {hasVisibleSmiles ? (
           <div className="absolute inset-0 pointer-events-none" aria-hidden>
-            {layoutSmiles.map((smile, index) => (
+            {counterSmiles.map((smile, index) => (
               <Smile
-                key={smile.id}
-                className={`absolute h-5 w-5 opacity-80 ${smile.colorClassCounter}`}
-                strokeWidth={1.5}
-                style={smileStyle(smile, index + 1)}
+                key={`counter-${smile.id}`}
+                className="absolute h-6 w-6 drop-shadow-sm"
+                strokeWidth={2}
+                style={smileStyle(smile, index + 1, smile.colorCounter)}
               />
             ))}
           </div>
@@ -115,14 +128,16 @@ export function SponsorSmileWall() {
         </div>
       </div>
 
-      {!loading && hasVisibleSmiles ? (
-        <div className="bg-surface-container-lowest rounded-xl shadow-sm p-4 min-h-[240px] relative overflow-hidden border-b-2 border-primary">
-          {layoutSmiles.map((smile, index) => (
+      {hasVisibleSmiles ? (
+        <div
+          className={`bg-surface-container-lowest rounded-xl shadow-sm p-4 ${wallMinHeight} relative overflow-hidden border-b-2 border-primary`}
+        >
+          {wallSmiles.map((smile, index) => (
             <Smile
-              key={smile.id}
-              className={`absolute h-8 w-8 ${smile.colorClassWall}`}
-              strokeWidth={1.5}
-              style={smileStyle(smile, index + 1)}
+              key={`wall-${smile.id}`}
+              className="absolute h-10 w-10"
+              strokeWidth={2.25}
+              style={smileStyle(smile, index + 1, smile.colorWall)}
               aria-hidden
             />
           ))}
