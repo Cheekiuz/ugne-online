@@ -4,7 +4,6 @@ import Link from 'next/link';
 import {SiteNav} from '../components/layout/SiteNav';
 import {SiteFooter} from '../components/layout/SiteFooter';
 import {SponsorCta} from '../components/sponsorship/SponsorCta';
-import {SponsorSmileWall} from '../components/sponsorship/SponsorSmileWall';
 
 const HERO_IMAGE = '/sponsorship-hero.png';
 
@@ -250,8 +249,6 @@ export default function SponsorshipPage() {
 
           <div className="grid lg:grid-cols-[1fr_min(560px,48%)] gap-8 xl:gap-12 items-start">
             <div className="space-y-10">
-              <SponsorSmileWall />
-
               <div className="space-y-6">
                 <SectionHeading eyebrow="AKA Life Support System" title="Currently Sponsored By" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

@@ -69,7 +69,13 @@ export function SponsorCta() {
       <p className="text-sm opacity-90 italic max-w-xs mx-auto">
         Help a player dream bigger. And hit stronger.
       </p>
-      <p className="text-xs opacity-75">Also adds your smile to the board above.</p>
+      <p className="text-xs opacity-75">
+        Also adds your smile to the{' '}
+        <Link href="/cheese/" className="underline underline-offset-2 hover:opacity-100">
+          Cheese
+        </Link>{' '}
+        wall.
+      </p>
     </div>
   );
 }
