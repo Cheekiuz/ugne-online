@@ -25,7 +25,7 @@ export default function SayCheesePage() {
             <span className="text-on-surface-variant">(Yet)</span>
           </div>
 
-          <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-8 sm:mb-12">
+          <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6">
             <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black mb-3">Say Cheese</h1>
             <p className="font-headline text-lg sm:text-xl md:text-2xl font-bold opacity-90 mb-2">
               THE SMILE WALL
