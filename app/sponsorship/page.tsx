@@ -414,8 +414,8 @@ export default function SponsorshipPage() {
                 <Image
                   src={HERO_IMAGE}
                   alt="Ugnė holding an iced latte and tennis racket — CODE. TEST. TENNIS. REPEAT."
-                  width={920}
-                  height={1024}
+                  width={1024}
+                  height={862}
                   className="w-full h-auto"
                   sizes="(max-width: 1024px) 100vw, 560px"
                   priority
@@ -429,8 +429,8 @@ export default function SponsorshipPage() {
               <Image
                 src={HERO_IMAGE}
                 alt="Ugnė holding an iced latte and tennis racket — CODE. TEST. TENNIS. REPEAT."
-                width={920}
-                height={1024}
+                width={1024}
+                height={862}
                 className="w-full h-auto"
                 sizes="100vw"
               />
