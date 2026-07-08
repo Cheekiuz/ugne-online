@@ -1,6 +1,7 @@
 import type {Metadata, Viewport} from 'next';
 import { Lexend, Inter } from 'next/font/google';
 import {GoogleAnalytics} from './components/analytics/GoogleAnalytics';
+import {Snowfall} from './components/snow/Snowfall';
 import './globals.css'; // Global styles
 
 const lexend = Lexend({
@@ -41,6 +42,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         />
       </head>
       <body className="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container antialiased" suppressHydrationWarning>
+        <Snowfall />
         {children}
         <GoogleAnalytics />
       </body>

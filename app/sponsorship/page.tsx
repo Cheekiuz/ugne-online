@@ -1,8 +1,8 @@
 import type {Metadata} from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import {Instagram} from 'lucide-react';
 import {SiteNav} from '../components/layout/SiteNav';
+import {SiteFooter} from '../components/layout/SiteFooter';
 import {SponsorCta} from '../components/sponsorship/SponsorCta';
 import {SponsorSmileWall} from '../components/sponsorship/SponsorSmileWall';
 
@@ -442,25 +442,7 @@ export default function SponsorshipPage() {
         </section>
       </main>
 
-      <footer className="w-full rounded-t-none bg-surface-container-low">
-        <div className="flex flex-col md:flex-row justify-between items-center p-6 sm:p-8 md:p-12 mt-12 sm:mt-20 max-w-7xl mx-auto font-body text-xs sm:text-sm uppercase tracking-wide sm:tracking-widest gap-4 md:gap-0">
-          <div className="font-headline font-bold text-on-surface mb-6 md:mb-0">Ugnė.</div>
-          <div className="text-on-surface opacity-60 text-center md:text-left mb-6 md:mb-0">
-            ©2026 Ugnė. Engineered with Precision. Played with Passion. Seriousness not required.
-          </div>
-          <div className="flex gap-8">
-            <a
-              className="text-on-surface opacity-60 hover:text-primary hover:scale-110 transition-all inline-flex"
-              href="https://www.instagram.com/ugne_le_"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <Instagram className="h-6 w-6" aria-hidden />
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }
