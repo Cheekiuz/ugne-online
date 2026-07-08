@@ -11,6 +11,7 @@ import {
   ensureSmilesForDisplay,
   fetchSmileCount,
   fetchSmiles,
+  SMILE_DONATION_FLOOR,
   type SponsorSmile,
 } from '../../lib/supabase/smiles';
 import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
@@ -51,11 +52,12 @@ export function SponsorSmileWall() {
     if (optimisticSmile && !smiles.some((smile) => smile.id === optimisticSmile.id)) {
       base = [...smiles, optimisticSmile];
     }
-    return ensureSmilesForDisplay(base, Math.max(base.length, count));
+    const displayCount = Math.max(SMILE_DONATION_FLOOR, count);
+    return ensureSmilesForDisplay(base, Math.max(base.length, displayCount));
   }, [smiles, optimisticSmile, count]);
 
   const wallSmiles = useMemo(() => layoutScatteredSmiles(smilesForLayout), [smilesForLayout]);
-  const wallMinHeight = wallSmiles.length > 8 ? 'min-h-[280px]' : 'min-h-[240px]';
+  const wallMinHeight = wallSmiles.length > 8 ? 'min-h-[700px]' : 'min-h-[480px]';
 
   const loadSmiles = useCallback(async () => {
     setLoading(true);

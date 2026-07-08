@@ -8,6 +8,7 @@ export type SponsorSmile = {
 };
 
 const SMILE_LIMIT = 100;
+export const SMILE_DONATION_FLOOR = 35;
 
 function positionFromId(id: number): {pos_x: number; pos_y: number} {
   return {
