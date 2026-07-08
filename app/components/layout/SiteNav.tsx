@@ -12,7 +12,7 @@ const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
 const EMAIL = 'crycocacola@gmail.com';
 
 type SiteNavProps = {
-  currentPage?: 'home' | 'statistics' | 'sponsorship' | 'cheese';
+  currentPage?: 'home' | 'statistics' | 'sponsorship' | 'say-cheese';
 };
 
 type NavPage = SiteNavProps['currentPage'];
@@ -21,7 +21,7 @@ const NAV_LINKS: {page: NavPage; href: string; label: string}[] = [
   {page: 'home', href: '/', label: 'Home'},
   {page: 'statistics', href: '/statistics/', label: 'Statistics'},
   {page: 'sponsorship', href: '/sponsorship/', label: 'Sponsorship'},
-  {page: 'cheese', href: '/cheese/', label: 'Cheese'},
+  {page: 'say-cheese', href: '/say-cheese/', label: 'Say Cheese'},
 ];
 
 function useThemeMode(): 'light' | 'dark' {

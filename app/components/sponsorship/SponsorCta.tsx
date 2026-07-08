@@ -71,8 +71,8 @@ export function SponsorCta() {
       </p>
       <p className="text-xs opacity-75">
         Also adds your smile to the{' '}
-        <Link href="/cheese/" className="underline underline-offset-2 hover:opacity-100">
-          Cheese
+        <Link href="/say-cheese/" className="underline underline-offset-2 hover:opacity-100">
+          Say Cheese
         </Link>{' '}
         wall.
       </p>
