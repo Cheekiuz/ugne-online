@@ -77,8 +77,8 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="min-w-0 lg:col-span-3 order-3 flex flex-col items-center justify-center gap-4 sm:gap-6 lg:items-end lg:justify-end lg:self-end overflow-hidden">
-              <div className="flex w-full justify-center lg:justify-end max-w-full overflow-hidden">
+            <div className="min-w-0 lg:col-span-3 order-3 flex flex-col items-center justify-center gap-4 sm:gap-6 lg:items-end lg:justify-end lg:self-end">
+              <div className="flex w-full justify-center lg:justify-end max-w-full">
                 <ExecutiveDecisionSprite variant="blue" compact />
               </div>
               <div className="bg-primary-container p-6 sm:p-8 rounded-xl flex flex-col items-center justify-center text-center shadow-sm w-full max-w-[220px] shrink-0">
@@ -255,7 +255,7 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className="flex justify-center mt-8 sm:mt-12 overflow-hidden max-w-full">
+          <div className="flex justify-center mt-8 sm:mt-12 max-w-full">
             <ExecutiveDecisionSprite variant="red" />
           </div>
         </section>
