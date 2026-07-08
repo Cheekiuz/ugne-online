@@ -153,6 +153,10 @@ export default function StatisticsPage() {
             <p className="text-lg opacity-90 font-light italic max-w-xl mx-auto">Numbers don&apos;t lie. I just adjust them.</p>
           </div>
 
+          <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-12 max-w-3xl">
+            &ldquo;Statistics are for impressing absolutely nobody.&rdquo;
+          </blockquote>
+
           <div className="grid lg:grid-cols-[1fr_min(560px,48%)] gap-8 xl:gap-12 items-start">
             <div className="space-y-10">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

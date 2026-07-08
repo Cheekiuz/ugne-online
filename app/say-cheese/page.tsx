@@ -35,6 +35,10 @@ export default function SayCheesePage() {
             </p>
           </div>
 
+          <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-12 max-w-3xl">
+            &ldquo;I came for five seconds. I stayed because everyone was smiling.&rdquo;
+          </blockquote>
+
           <div className="grid lg:grid-cols-[1fr_min(560px,48%)] gap-8 xl:gap-12 items-start">
             <div className="max-w-2xl">
               <SponsorSmileWall />
