@@ -4,7 +4,9 @@ import {SiteFooter} from '../components/layout/SiteFooter';
 import {SiteNav} from '../components/layout/SiteNav';
 import {SponsorSmileWall} from '../components/sponsorship/SponsorSmileWall';
 
-const HERO_IMAGE = '/sponsorship-hero.png';
+const HERO_IMAGE = '/cheese-hero.png';
+const HERO_ALT =
+  'Ugnė holding a smiley tennis ball and racket — CODE. TEST. TENNIS. REPEAT.';
 
 export const metadata: Metadata = {
   title: 'Cheese - Ugnė',
@@ -42,8 +44,8 @@ export default function CheesePage() {
               <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20">
                 <Image
                   src={HERO_IMAGE}
-                  alt="Ugnė holding an iced latte and tennis racket — CODE. TEST. TENNIS. REPEAT."
-                  width={920}
+                  alt={HERO_ALT}
+                  width={818}
                   height={1024}
                   className="w-full h-auto"
                   sizes="(max-width: 1024px) 100vw, 560px"
@@ -57,8 +59,8 @@ export default function CheesePage() {
             <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20 max-w-2xl mx-auto">
               <Image
                 src={HERO_IMAGE}
-                alt="Ugnė holding an iced latte and tennis racket — CODE. TEST. TENNIS. REPEAT."
-                width={920}
+                alt={HERO_ALT}
+                width={818}
                 height={1024}
                 className="w-full h-auto"
                 sizes="100vw"
