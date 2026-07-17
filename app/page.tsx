@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import {useRef, useState} from 'react';
+import {DoorClosed, DoorOpen} from 'lucide-react';
 import {ExecutiveDecisionSprite} from './components/executive-decision-sprite/ExecutiveDecisionSprite';
 import { SiteFooter } from './components/layout/SiteFooter';
 import { SiteNav } from './components/layout/SiteNav';
@@ -12,6 +13,9 @@ const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 const KINETIC_MAIN_IMAGE = '/dcd50533-5c90-4e05-ae9c-1e1640403fbc.jpeg';
 const PAGE_LOAD_SOUND = '/audio/211976__qubodup__boom2.flac';
 const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
+
+const DOOR_ICON_CLASS =
+  'door-entry-blink size-[clamp(4rem,16vmin,8rem)] transition-[color,filter,opacity] duration-200 group-active:animate-none group-active:text-white group-active:opacity-100 group-active:drop-shadow-[0_0_24px_rgba(255,237,213,0.95)]';
 
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -43,9 +47,16 @@ export default function Home() {
             className="group flex cursor-pointer items-center justify-center rounded-3xl p-10 transition-all duration-200 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 active:scale-[0.98]"
             aria-label="Enter site"
           >
-            <span className="material-symbols-outlined select-none text-[clamp(4.5rem,20vmin,12rem)] leading-none text-on-surface transition-colors duration-200 group-hover:text-primary group-hover:drop-shadow-md">
-              door_front
-            </span>
+            <DoorClosed
+              className={`${DOOR_ICON_CLASS} group-active:hidden`}
+              strokeWidth={1.25}
+              aria-hidden
+            />
+            <DoorOpen
+              className={`${DOOR_ICON_CLASS} hidden group-active:block`}
+              strokeWidth={1.25}
+              aria-hidden
+            />
           </button>
         </div>
       ) : (

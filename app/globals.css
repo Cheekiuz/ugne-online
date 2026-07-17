@@ -182,3 +182,58 @@ body {
   --color-inverse-on-surface: #2b2f2e;
   --color-inverse-primary: #506300;
 }
+
+@keyframes door-red-gradient-blink {
+  0%,
+  100% {
+    color: #fecaca;
+    filter: drop-shadow(0 0 8px rgba(254, 202, 202, 0.45));
+    opacity: 0.45;
+  }
+
+  12.5% {
+    color: #bae6fd;
+    filter: drop-shadow(0 0 12px rgba(186, 230, 253, 0.55));
+    opacity: 0.58;
+  }
+
+  25% {
+    color: #bbf7d0;
+    filter: drop-shadow(0 0 14px rgba(187, 247, 208, 0.6));
+    opacity: 0.68;
+  }
+
+  37.5% {
+    color: #fda4af;
+    filter: drop-shadow(0 0 16px rgba(253, 164, 175, 0.65));
+    opacity: 0.78;
+  }
+
+  50% {
+    color: #e0f2fe;
+    filter: drop-shadow(0 0 22px rgba(224, 242, 254, 0.9));
+    opacity: 1;
+  }
+
+  62.5% {
+    color: #86efac;
+    filter: drop-shadow(0 0 16px rgba(134, 239, 172, 0.65));
+    opacity: 0.78;
+  }
+
+  75% {
+    color: #93c5fd;
+    filter: drop-shadow(0 0 14px rgba(147, 197, 253, 0.6));
+    opacity: 0.68;
+  }
+
+  87.5% {
+    color: #a7f3d0;
+    filter: drop-shadow(0 0 12px rgba(167, 243, 208, 0.55));
+    opacity: 0.58;
+  }
+}
+
+.door-entry-blink {
+  animation: door-red-gradient-blink 7s ease-in-out infinite;
+}
