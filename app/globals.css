@@ -183,6 +183,57 @@ body {
   --color-inverse-primary: #506300;
 }
 
+@keyframes door-gradient-blink-light {
+  0%,
+  100% {
+    color: #ef4444;
+    filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.55));
+    opacity: 0.8;
+  }
+
+  12.5% {
+    color: #2563eb;
+    filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.6));
+    opacity: 0.85;
+  }
+
+  25% {
+    color: #16a34a;
+    filter: drop-shadow(0 0 10px rgba(22, 163, 74, 0.65));
+    opacity: 0.9;
+  }
+
+  37.5% {
+    color: #ca8a04;
+    filter: drop-shadow(0 0 10px rgba(202, 138, 4, 0.65));
+    opacity: 0.92;
+  }
+
+  50% {
+    color: #1d4ed8;
+    filter: drop-shadow(0 0 14px rgba(29, 78, 216, 0.75));
+    opacity: 1;
+  }
+
+  62.5% {
+    color: #15803d;
+    filter: drop-shadow(0 0 10px rgba(21, 128, 61, 0.65));
+    opacity: 0.92;
+  }
+
+  75% {
+    color: #eab308;
+    filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.6));
+    opacity: 0.9;
+  }
+
+  87.5% {
+    color: #22c55e;
+    filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6));
+    opacity: 0.85;
+  }
+}
+
 @keyframes door-red-gradient-blink {
   0%,
   100% {
@@ -204,8 +255,8 @@ body {
   }
 
   37.5% {
-    color: #fda4af;
-    filter: drop-shadow(0 0 16px rgba(253, 164, 175, 0.65));
+    color: #fde68a;
+    filter: drop-shadow(0 0 16px rgba(253, 230, 138, 0.65));
     opacity: 0.78;
   }
 
@@ -222,8 +273,8 @@ body {
   }
 
   75% {
-    color: #93c5fd;
-    filter: drop-shadow(0 0 14px rgba(147, 197, 253, 0.6));
+    color: #fef08a;
+    filter: drop-shadow(0 0 14px rgba(254, 240, 138, 0.6));
     opacity: 0.68;
   }
 
@@ -235,5 +286,9 @@ body {
 }
 
 .door-entry-blink {
+  animation: door-gradient-blink-light 7s ease-in-out infinite;
+}
+
+.dark .door-entry-blink {
   animation: door-red-gradient-blink 7s ease-in-out infinite;
 }

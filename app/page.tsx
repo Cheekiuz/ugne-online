@@ -15,7 +15,7 @@ const PAGE_LOAD_SOUND = '/audio/211976__qubodup__boom2.flac';
 const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
 
 const DOOR_ICON_CLASS =
-  'door-entry-blink size-[clamp(4rem,16vmin,8rem)] transition-[color,filter,opacity] duration-200 group-active:animate-none group-active:text-white group-active:opacity-100 group-active:drop-shadow-[0_0_24px_rgba(255,237,213,0.95)]';
+  'door-entry-blink size-[clamp(2rem,8vmin,3.5rem)] transition-[color,filter,opacity] duration-200 group-active:animate-none group-active:text-red-700 group-active:opacity-100 group-active:drop-shadow-[0_0_16px_rgba(220,38,38,0.55)] dark:group-active:text-white dark:group-active:drop-shadow-[0_0_24px_rgba(255,237,213,0.95)]';
 
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null);
