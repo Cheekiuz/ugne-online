@@ -50,3 +50,15 @@ export function markSmiledLocally(): void {
     /* ignore quota / private mode */
   }
 }
+
+export function clearSmiledLocally(): void {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  try {
+    window.localStorage.removeItem(SMILED_KEY);
+  } catch {
+    /* ignore quota / private mode */
+  }
+}

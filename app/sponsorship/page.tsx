@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import {ChevronDown} from 'lucide-react';
 import {SiteNav} from '../components/layout/SiteNav';
 import {SiteFooter} from '../components/layout/SiteFooter';
 import {SponsorCta} from '../components/sponsorship/SponsorCta';
@@ -129,7 +130,7 @@ const PACKAGES: Package[] = [
   {tier: 'Bronze', price: '€4.90', perks: 'One cappuccino. I say "Thanks."', border: 'border-primary'},
   {tier: 'Silver', price: '€8.50', perks: 'Large iced latte. I think about you before every match.', border: 'border-secondary-container'},
   {tier: 'Gold', price: '€15', perks: 'Coffee + croissant. Guaranteed 12% confidence boost.', border: 'border-tertiary-container'},
-  {tier: 'Platinum', price: '€25', perks: 'Coffee. Lunch. One motivational speech to myself mentioning your company.', border: 'border-primary'},
+  {tier: 'Platinum', price: '€25', perks: 'Coffee. Lunch. One motivational speech to myself mentioning you.', border: 'border-primary'},
   {tier: 'Enterprise', price: "Let's talk", perks: "Unlimited coffee. I'll legally change my serve's name to yours.", border: 'border-secondary-container'},
 ];
 
@@ -157,9 +158,14 @@ const FAQ_ITEMS: FaqItem[] = [
     border: 'border-tertiary-container',
   },
   {
-    question: 'Is this tax deductible?',
-    answer: 'Almost certainly not.',
+    question: 'What is the minimum sponsorship?',
+    answer: 'One iced latte.',
     border: 'border-primary',
+  },
+  {
+    question: 'What is the maximum sponsorship?',
+    answer: "A private tennis court. We'll happily accept either.",
+    border: 'border-tertiary-container',
   },
   {
     question: 'Will you win more matches?',
@@ -219,6 +225,23 @@ function PackageCard({pkg}: {pkg: Package}) {
       </div>
       <p className="text-on-surface-variant text-sm leading-relaxed">{pkg.perks}</p>
     </div>
+  );
+}
+
+function FaqAccordionItem({item}: {item: FaqItem}) {
+  return (
+    <details className={`group bg-surface-container-lowest rounded-xl shadow-sm border-b-2 ${item.border} overflow-hidden`}>
+      <summary className="font-headline text-base font-bold text-primary p-6 cursor-pointer list-none flex items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
+        <span>{item.question}</span>
+        <ChevronDown
+          className="h-5 w-5 shrink-0 text-primary transition-transform duration-200 group-open:rotate-180"
+          aria-hidden
+        />
+      </summary>
+      <div className="px-6 pb-6 text-on-surface-variant text-sm leading-relaxed border-t border-outline-variant/10">
+        {item.answer}
+      </div>
+    </details>
   );
 }
 
@@ -318,39 +341,10 @@ export default function SponsorshipPage() {
               </div>
 
               <div className="space-y-4">
-                <SectionHeading title="Donation Meter" />
-                <div className="bg-surface-container-lowest rounded-xl p-6 sm:p-8 shadow-sm">
-                  <div className="flex justify-between items-baseline mb-3">
-                    <span className="font-headline text-2xl font-black text-primary tabular-nums">82%</span>
-                    <span className="font-label text-xs uppercase tracking-widest text-on-surface-variant">
-                      Current goal
-                    </span>
-                  </div>
-                  <div className="h-3 rounded-full bg-surface-container-high overflow-hidden mb-4">
-                    <div className="h-full rounded-full bg-primary" style={{width: '82%'}} />
-                  </div>
-                  <div className="space-y-1 text-sm text-on-surface-variant">
-                    <p>
-                      <strong className="text-on-surface">Next milestone:</strong> New overgrip.
-                    </p>
-                    <p>
-                      <strong className="text-on-surface">Stretch goal:</strong> Professional-looking water bottle.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
                 <SectionHeading title="Frequently Asked Questions" />
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {FAQ_ITEMS.map((item) => (
-                    <div
-                      key={item.question}
-                      className={`bg-surface-container-lowest p-6 rounded-xl shadow-sm border-b-2 ${item.border}`}
-                    >
-                      <p className="font-headline text-base font-bold text-primary mb-2">{item.question}</p>
-                      <p className="text-on-surface-variant text-sm leading-relaxed">{item.answer}</p>
-                    </div>
+                    <FaqAccordionItem key={item.question} item={item} />
                   ))}
                 </div>
               </div>

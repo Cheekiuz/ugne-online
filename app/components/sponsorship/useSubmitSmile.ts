@@ -2,7 +2,7 @@
 
 import {useCallback, useEffect, useState} from 'react';
 import {addSmile, type AddSmileResult} from '../../lib/supabase/smiles';
-import {getOrCreateVisitorId, hasSmiledLocally, markSmiledLocally} from '../../lib/supabase/visitor-id';
+import {getOrCreateVisitorId, hasSmiledLocally, markSmiledLocally, clearSmiledLocally} from '../../lib/supabase/visitor-id';
 import {notifySmileSubmitted, notifySmilesRefresh, SPONSOR_SMILE_SUBMITTED_EVENT} from './sponsor-smile-events';
 
 export function useSubmitSmile() {
@@ -52,6 +52,7 @@ export function useSubmitSmile() {
   }, [submitting]);
 
   const resetThankYou = useCallback(() => {
+    clearSmiledLocally();
     setHasSmiled(false);
     setSaveWarning(false);
     setJustSaved(false);
