@@ -150,17 +150,13 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const compactNav = scrolled;
-  const desktopNavClass = compactNav ? 'hidden lg:flex' : 'hidden md:flex';
-  const mobileNavClass = compactNav ? 'lg:hidden' : 'md:hidden';
-
   return (
     <nav
       className={[
         'fixed z-50 transition-all duration-300 ease-out',
         scrolled ? 'glass-nav-scrolled' : 'glass-nav',
         scrolled
-          ? 'top-0 inset-x-3 w-auto rounded-3xl nav-border-blink sm:inset-x-5 md:inset-x-8'
+          ? 'top-0 inset-x-2 w-auto rounded-3xl nav-border-blink sm:inset-x-3 md:inset-x-5'
           : 'top-0 w-full',
       ].join(' ')}
     >
@@ -186,7 +182,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
           <div className="text-xl sm:text-2xl md:text-3xl font-black text-primary truncate">Ugnė.</div>
         </Link>
 
-        <div className={`${desktopNavClass} flex-1 justify-center gap-6 lg:gap-10 items-center min-w-0 px-4`}>
+        <div className="hidden lg:flex flex-1 justify-center gap-6 lg:gap-10 items-center min-w-0 px-4">
           {NAV_LINKS.map((link) => {
             const active = currentPage === link.page;
             return (
@@ -207,7 +203,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
           })}
         </div>
 
-        <div className={`${desktopNavClass} items-center gap-4 lg:gap-6 shrink-0`}>
+        <div className="hidden lg:flex items-center gap-4 lg:gap-6 shrink-0">
           <a
             href={`mailto:${EMAIL}`}
             className="text-primary inline-flex hover:scale-110 transition-transform"
@@ -237,7 +233,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
 
         <button
           type="button"
-          className={`${mobileNavClass} inline-flex h-10 w-10 items-center justify-center rounded-xl border-2 border-primary text-primary transition-all hover:bg-primary/10 active:scale-95 shrink-0`}
+          className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border-2 border-primary text-primary transition-all hover:bg-primary/10 active:scale-95 shrink-0"
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
           aria-controls="site-nav-menu"
@@ -250,7 +246,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
       {menuOpen ? (
         <>
           <div
-            className={`mobile-nav-backdrop fixed inset-0 z-40 bg-on-surface/30 backdrop-blur-sm ${mobileNavClass}`}
+            className="mobile-nav-backdrop fixed inset-0 z-40 bg-on-surface/30 backdrop-blur-sm lg:hidden"
             aria-hidden
             onClick={closeMenu}
           />
@@ -259,7 +255,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
             role="dialog"
             aria-modal="true"
             aria-label="Site navigation"
-            className={`mobile-nav-panel relative z-50 glass-nav border-t border-outline-variant/20 bg-surface-container-lowest/95 backdrop-blur-xl rounded-b-2xl px-4 py-5 shadow-lg ${mobileNavClass}`}
+            className="mobile-nav-panel relative z-50 glass-nav border-t border-outline-variant/20 bg-surface-container-lowest/95 backdrop-blur-xl rounded-b-2xl px-4 py-5 shadow-lg lg:hidden"
           >
             <div className="max-w-7xl mx-auto flex flex-col gap-4">
               <MobileMenuSection title="Navigation">
