@@ -70,8 +70,53 @@ body {
   backdrop-filter: blur(20px);
 }
 
+.glass-nav-scrolled {
+  background: rgba(244, 247, 245, 0.12);
+  backdrop-filter: blur(14px);
+}
+
 .dark .glass-nav {
   background: rgba(15, 20, 18, 0.7);
+}
+
+.dark .glass-nav-scrolled {
+  background: rgba(15, 20, 18, 0.12);
+}
+
+@keyframes nav-border-blink-light {
+  0%,
+  100% {
+    border-color: rgba(80, 99, 0, 0.1);
+    box-shadow: 0 0 0 1px rgba(80, 99, 0, 0.05);
+  }
+
+  50% {
+    border-color: rgba(80, 99, 0, 0.5);
+    box-shadow: 0 0 20px rgba(80, 99, 0, 0.18);
+  }
+}
+
+@keyframes nav-border-blink-dark {
+  0%,
+  100% {
+    border-color: rgba(207, 248, 48, 0.08);
+    box-shadow: 0 0 0 1px rgba(207, 248, 48, 0.04);
+  }
+
+  50% {
+    border-color: rgba(207, 248, 48, 0.45);
+    box-shadow: 0 0 22px rgba(207, 248, 48, 0.22);
+  }
+}
+
+.nav-border-blink {
+  border: 1px solid rgba(80, 99, 0, 0.1);
+  animation: nav-border-blink-light 8s ease-in-out infinite;
+}
+
+.dark .nav-border-blink {
+  border-color: rgba(207, 248, 48, 0.08);
+  animation: nav-border-blink-dark 8s ease-in-out infinite;
 }
 
 @keyframes mobile-nav-enter {
@@ -286,9 +331,9 @@ body {
 }
 
 .door-entry-blink {
-  animation: door-gradient-blink-light 7s ease-in-out infinite;
+  animation: door-gradient-blink-light 12s ease-in-out infinite;
 }
 
 .dark .door-entry-blink {
-  animation: door-red-gradient-blink 7s ease-in-out infinite;
+  animation: door-red-gradient-blink 12s ease-in-out infinite;
 }

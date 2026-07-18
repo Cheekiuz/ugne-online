@@ -122,8 +122,16 @@ function MobileNavRow({
 
 export function SiteNav({currentPage = 'home'}: SiteNavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const themeMode = useThemeMode();
   const ThemeIcon = themeMode === 'dark' ? Sun : Moon;
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive: true});
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -142,10 +150,29 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const compactNav = scrolled;
+  const desktopNavClass = compactNav ? 'hidden lg:flex' : 'hidden md:flex';
+  const mobileNavClass = compactNav ? 'lg:hidden' : 'md:hidden';
+
   return (
-    <nav className="fixed top-0 w-full z-50 glass-nav">
-      <div className="relative z-50 flex justify-between items-center gap-2 px-4 py-3 sm:gap-3 sm:px-6 sm:py-4 md:px-8 md:py-6 max-w-7xl mx-auto font-headline tracking-tight min-w-0">
-        <Link href="/" className="flex items-center gap-2 sm:gap-3 min-w-0 shrink" onClick={closeMenu}>
+    <nav
+      className={[
+        'fixed z-50 transition-all duration-300 ease-out',
+        scrolled ? 'glass-nav-scrolled' : 'glass-nav',
+        scrolled
+          ? 'top-0 inset-x-3 w-auto rounded-3xl nav-border-blink sm:inset-x-5 md:inset-x-8'
+          : 'top-0 w-full',
+      ].join(' ')}
+    >
+      <div
+        className={[
+          'relative z-50 flex justify-between items-center gap-2 py-3 sm:gap-3 sm:py-4 md:py-6 font-headline tracking-tight min-w-0 mx-auto transition-all duration-300',
+          scrolled
+            ? 'max-w-none px-4 sm:px-6 md:px-8'
+            : 'max-w-7xl px-4 sm:px-6 md:px-8',
+        ].join(' ')}
+      >
+        <Link href="/" className="flex items-center gap-2 sm:gap-3 min-w-0 shrink-0" onClick={closeMenu}>
           <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-primary shrink-0">
             <Image
               src={PERSONA_IMAGE}
@@ -159,7 +186,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
           <div className="text-xl sm:text-2xl md:text-3xl font-black text-primary truncate">Ugnė.</div>
         </Link>
 
-        <div className="hidden md:flex gap-6 lg:gap-10 items-center">
+        <div className={`${desktopNavClass} flex-1 justify-center gap-6 lg:gap-10 items-center min-w-0 px-4`}>
           {NAV_LINKS.map((link) => {
             const active = currentPage === link.page;
             return (
@@ -180,7 +207,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
           })}
         </div>
 
-        <div className="hidden md:flex items-center gap-4 lg:gap-6 shrink-0">
+        <div className={`${desktopNavClass} items-center gap-4 lg:gap-6 shrink-0`}>
           <a
             href={`mailto:${EMAIL}`}
             className="text-primary inline-flex hover:scale-110 transition-transform"
@@ -210,7 +237,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
 
         <button
           type="button"
-          className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border-2 border-primary text-primary transition-all hover:bg-primary/10 active:scale-95 shrink-0"
+          className={`${mobileNavClass} inline-flex h-10 w-10 items-center justify-center rounded-xl border-2 border-primary text-primary transition-all hover:bg-primary/10 active:scale-95 shrink-0`}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
           aria-controls="site-nav-menu"
@@ -223,7 +250,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
       {menuOpen ? (
         <>
           <div
-            className="mobile-nav-backdrop fixed inset-0 z-40 bg-on-surface/30 backdrop-blur-sm md:hidden"
+            className={`mobile-nav-backdrop fixed inset-0 z-40 bg-on-surface/30 backdrop-blur-sm ${mobileNavClass}`}
             aria-hidden
             onClick={closeMenu}
           />
@@ -232,7 +259,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
             role="dialog"
             aria-modal="true"
             aria-label="Site navigation"
-            className="mobile-nav-panel relative z-50 glass-nav border-t border-outline-variant/20 bg-surface-container-lowest/95 backdrop-blur-xl rounded-b-2xl px-4 py-5 shadow-lg md:hidden"
+            className={`mobile-nav-panel relative z-50 glass-nav border-t border-outline-variant/20 bg-surface-container-lowest/95 backdrop-blur-xl rounded-b-2xl px-4 py-5 shadow-lg ${mobileNavClass}`}
           >
             <div className="max-w-7xl mx-auto flex flex-col gap-4">
               <MobileMenuSection title="Navigation">
