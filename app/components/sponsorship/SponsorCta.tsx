@@ -2,16 +2,24 @@
 
 import Link from 'next/link';
 import {useState} from 'react';
+import {BUY_ME_A_COFFEE_URL} from '../../lib/site-links';
 import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
 import {useSubmitSmile} from './useSubmitSmile';
 
+const buyMeACoffeeButtonClass =
+  'inline-block bg-on-primary text-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg uppercase hover:scale-105 active:scale-95 transition-all w-full sm:w-auto';
+
 export function SponsorCta() {
-  const {submitSmile, submitting, hasSmiled, saveWarning, resetThankYou} = useSubmitSmile();
+  const {submitSmile, hasSmiled, saveWarning, resetThankYou} = useSubmitSmile();
   const [showThankYou, setShowThankYou] = useState(() => hasSmiledLocally());
 
   const handleSponsorClick = async () => {
     await submitSmile();
     setShowThankYou(true);
+  };
+
+  const handleBuyMeACoffeeClick = () => {
+    void handleSponsorClick();
   };
 
   if (showThankYou || hasSmiled) {
@@ -41,6 +49,14 @@ export function SponsorCta() {
         {saveWarning ? (
           <p className="text-sm opacity-80 italic">Couldn&apos;t save your smile right now — but thank you anyway.</p>
         ) : null}
+        <a
+          href={BUY_ME_A_COFFEE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={buyMeACoffeeButtonClass}
+        >
+          Buy Me a Coffee
+        </a>
         <Link
           href="/sponsorship/"
           onClick={() => {
@@ -58,14 +74,15 @@ export function SponsorCta() {
   return (
     <div className="tennis-gradient rounded-xl p-6 sm:p-10 md:p-12 text-center text-on-primary shadow-xl space-y-4">
       <p className="font-headline text-xl sm:text-2xl md:text-3xl font-black uppercase">Become a Sponsor</p>
-      <button
-        type="button"
-        onClick={() => void handleSponsorClick()}
-        disabled={submitting}
-        className="bg-on-primary text-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg uppercase hover:scale-105 active:scale-95 transition-all disabled:opacity-70 disabled:hover:scale-100 w-full sm:w-auto"
+      <a
+        href={BUY_ME_A_COFFEE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={handleBuyMeACoffeeClick}
+        className={buyMeACoffeeButtonClass}
       >
-        {submitting ? 'Saving…' : "Let's Make Magic Happen"}
-      </button>
+        Buy Me a Coffee
+      </a>
       <p className="text-sm opacity-90 italic max-w-xs mx-auto">
         Help a player dream bigger. And hit stronger.
       </p>

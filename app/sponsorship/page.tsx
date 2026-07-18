@@ -211,9 +211,9 @@ function SponsorCard({sponsor}: {sponsor: Sponsor}) {
 function PackageCard({pkg}: {pkg: Package}) {
   return (
     <div
-      className={`bg-surface-container-lowest p-6 rounded-xl shadow-sm border-b-2 ${pkg.border} flex flex-col gap-2 ${pkg.tier === 'Enterprise' ? 'sm:col-span-2 lg:col-span-3' : ''}`}
+      className={`bg-surface-container-lowest p-6 rounded-xl shadow-sm border-b-2 ${pkg.border} flex flex-col gap-2 ${pkg.tier === 'Enterprise' ? 'sm:col-span-2 xl:col-span-3' : ''}`}
     >
-      <div className="flex items-baseline justify-between gap-2">
+      <div className="flex flex-col gap-1">
         <p className="font-headline text-lg font-black text-primary uppercase">{pkg.tier}</p>
         <p className="font-headline text-lg font-black text-primary tabular-nums">{pkg.price}</p>
       </div>
@@ -288,7 +288,7 @@ export default function SponsorshipPage() {
 
               <div className="space-y-4">
                 <SectionHeading title="Sponsorship Packages" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                   {PACKAGES.map((pkg) => (
                     <PackageCard key={pkg.tier} pkg={pkg} />
                   ))}
