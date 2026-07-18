@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type {LucideIcon} from 'lucide-react';
 import {ChevronRight, Mail, Menu, Moon, Sun, X} from 'lucide-react';
-import {useEffect, useState, type ReactNode} from 'react';
+import {useEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject} from 'react';
 import {ThemeToggle} from '../theme-toggle/ThemeToggle';
 
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
@@ -73,8 +73,8 @@ function MobileNavRow({
   const rowClassName = [
     'flex items-center gap-3 w-full min-h-[48px] px-3 py-2.5 rounded-xl transition-colors font-headline',
     active
-      ? 'bg-primary/10 text-primary font-bold border-l-2 border-primary'
-      : 'text-on-surface hover:bg-surface-container-low',
+      ? 'bg-primary/10 tennis-gradient-text font-bold border-l-2 border-[#7a9418]'
+      : 'text-on-surface-variant hover:tennis-gradient-text',
   ].join(' ');
 
   const content = (
@@ -120,18 +120,49 @@ function MobileNavRow({
   );
 }
 
-export function SiteNav({currentPage = 'home'}: SiteNavProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const themeMode = useThemeMode();
-  const ThemeIcon = themeMode === 'dark' ? Sun : Moon;
+const NAV_SCROLL_RANGE = 72;
 
+function useNavScrollShell(
+  shellRef: RefObject<HTMLElement | null>,
+  barRef: RefObject<HTMLDivElement | null>,
+) {
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
+    let ticking = false;
+    let floating = false;
+
+    const update = () => {
+      const progress = Math.min(1, Math.max(0, window.scrollY / NAV_SCROLL_RANGE));
+      shellRef.current?.style.setProperty('--nav-scroll', progress.toFixed(3));
+
+      const shouldFloat = progress > 0.85;
+      if (shouldFloat !== floating) {
+        floating = shouldFloat;
+        barRef.current?.classList.toggle('is-floating', shouldFloat);
+      }
+
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    update();
     window.addEventListener('scroll', onScroll, {passive: true});
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [shellRef, barRef]);
+}
+
+export function SiteNav({currentPage = 'home'}: SiteNavProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const shellRef = useRef<HTMLElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+  useNavScrollShell(shellRef, barRef);
+  const themeMode = useThemeMode();
+  const ThemeIcon = themeMode === 'dark' ? Sun : Moon;
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -151,35 +182,23 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <nav
-      className={[
-        'fixed z-50 transition-all duration-300 ease-out',
-        scrolled ? 'glass-nav-scrolled' : 'glass-nav',
-        scrolled
-          ? 'top-0 inset-x-2 w-auto rounded-3xl nav-border-blink sm:inset-x-3 md:inset-x-5'
-          : 'top-0 w-full',
-      ].join(' ')}
-    >
-      <div
-        className={[
-          'relative z-50 flex justify-between items-center gap-2 py-3 sm:gap-3 sm:py-4 md:py-6 font-headline tracking-tight min-w-0 mx-auto transition-all duration-300',
-          scrolled
-            ? 'max-w-none px-4 sm:px-6 md:px-8'
-            : 'max-w-7xl px-4 sm:px-6 md:px-8',
-        ].join(' ')}
-      >
+    <nav ref={shellRef} className="site-nav-shell" style={{'--nav-scroll': 0} as CSSProperties}>
+      <div ref={barRef} className="site-nav-bar">
+        <div className="site-nav-inner relative z-50 flex justify-between items-center gap-2 sm:gap-3 font-headline tracking-tight min-w-0 mx-auto px-4 sm:px-6 md:px-8">
         <Link href="/" className="flex items-center gap-2 sm:gap-3 min-w-0 shrink-0" onClick={closeMenu}>
-          <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-primary shrink-0">
-            <Image
-              src={PERSONA_IMAGE}
-              alt="Ugnė"
-              fill
-              className="object-cover object-top"
-              sizes="40px"
-              priority
-            />
+          <div className="tennis-gradient p-0.5 rounded-full shrink-0">
+            <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden">
+              <Image
+                src={PERSONA_IMAGE}
+                alt="Ugnė"
+                fill
+                className="object-cover object-top"
+                sizes="40px"
+                priority
+              />
+            </div>
           </div>
-          <div className="text-xl sm:text-2xl md:text-3xl font-black text-primary truncate">Ugnė.</div>
+          <div className="text-xl sm:text-2xl md:text-3xl font-black tennis-gradient-text truncate">Ugnė.</div>
         </Link>
 
         <div className="hidden lg:flex flex-1 justify-center gap-6 lg:gap-10 items-center min-w-0 px-4">
@@ -190,10 +209,10 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
                 key={link.href}
                 href={link.href}
                 className={[
-                  'font-bold pb-1 transition-colors whitespace-nowrap',
+                  'font-bold pb-1 transition-all whitespace-nowrap opacity-80 hover:opacity-100',
                   active
-                    ? 'text-primary border-b-2 border-primary'
-                    : 'text-on-surface-variant hover:text-primary',
+                    ? 'tennis-gradient-text opacity-100 nav-link-gradient-active'
+                    : 'text-on-surface-variant hover:tennis-gradient-text',
                 ].join(' ')}
                 aria-current={active ? 'page' : undefined}
               >
@@ -216,14 +235,14 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
               href={CHALLENGE_ME_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-primary text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform whitespace-nowrap"
+              className="tennis-gradient text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform whitespace-nowrap"
             >
               Challenge me
             </a>
           ) : (
             <Link
               href="/"
-              className="bg-primary text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform whitespace-nowrap"
+              className="tennis-gradient text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform whitespace-nowrap"
             >
               Back to Reality
             </Link>
@@ -297,7 +316,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
                     href={CHALLENGE_ME_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-2 block w-full bg-primary text-on-primary px-6 py-3 rounded-xl font-headline font-bold text-center active:scale-[0.98] transition-transform"
+                    className="mt-2 block w-full tennis-gradient text-on-primary px-6 py-3 rounded-xl font-headline font-bold text-center active:scale-[0.98] transition-transform"
                     onClick={closeMenu}
                   >
                     Challenge me
@@ -305,7 +324,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
                 ) : (
                   <Link
                     href="/"
-                    className="mt-2 block w-full bg-primary text-on-primary px-6 py-3 rounded-xl font-headline font-bold text-center active:scale-[0.98] transition-transform"
+                    className="mt-2 block w-full tennis-gradient text-on-primary px-6 py-3 rounded-xl font-headline font-bold text-center active:scale-[0.98] transition-transform"
                     onClick={closeMenu}
                   >
                     Back to Reality
@@ -316,6 +335,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
           </div>
         </>
       ) : null}
+      </div>
     </nav>
   );
 }

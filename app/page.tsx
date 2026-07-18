@@ -64,7 +64,7 @@ export default function Home() {
       {/* TopNavBar */}
       <SiteNav currentPage="home" />
 
-      <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32">
+      <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32 page-main-gradient">
         {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-12 sm:mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-x-12 lg:gap-y-10 items-center">

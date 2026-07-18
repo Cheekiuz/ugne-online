@@ -18,7 +18,7 @@ export default function SayCheesePage() {
     <>
       <SiteNav currentPage="say-cheese" />
 
-      <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32">
+      <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32 page-main-gradient">
         <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-12">
           <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-8 font-label text-xs uppercase tracking-widest text-primary">
             <span>Not sponsored by dairy</span>
