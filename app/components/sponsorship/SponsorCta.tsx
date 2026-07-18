@@ -7,7 +7,7 @@ import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
 import {useSubmitSmile} from './useSubmitSmile';
 
 const buyMeACoffeeButtonClass =
-  'inline-block bg-on-primary text-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg uppercase hover:scale-105 active:scale-95 transition-all w-full sm:w-auto';
+  'bmc-blink-button inline-block px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg uppercase hover:scale-105 active:scale-95 transition-transform w-full sm:w-auto';
 
 export function SponsorCta() {
   const {submitSmile, hasSmiled, saveWarning, resetThankYou} = useSubmitSmile();
@@ -73,7 +73,9 @@ export function SponsorCta() {
 
   return (
     <div className="tennis-gradient rounded-xl p-6 sm:p-10 md:p-12 text-center text-on-primary shadow-xl space-y-4">
-      <p className="font-headline text-xl sm:text-2xl md:text-3xl font-black uppercase">Become a Sponsor</p>
+      <p className="font-headline text-xl sm:text-2xl md:text-3xl font-black uppercase">
+        Fund my AI experiments
+      </p>
       <a
         href={BUY_ME_A_COFFEE_URL}
         target="_blank"
@@ -83,16 +85,6 @@ export function SponsorCta() {
       >
         Buy Me a Coffee
       </a>
-      <p className="text-sm opacity-90 italic max-w-xs mx-auto">
-        Help a player dream bigger. And hit stronger.
-      </p>
-      <p className="text-xs opacity-75">
-        Also adds your smile to the{' '}
-        <Link href="/say-cheese/" className="underline underline-offset-2 hover:opacity-100">
-          Say Cheese
-        </Link>{' '}
-        wall.
-      </p>
     </div>
   );
 }
