@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {DoorClosed, DoorOpen} from 'lucide-react';
 import {ExecutiveDecisionSprite} from '../executive-decision-sprite/ExecutiveDecisionSprite';
 import {SiteFooter} from '../layout/SiteFooter';
@@ -15,28 +15,20 @@ const PAGE_LOAD_SOUND = '/audio/211976__qubodup__boom2.flac';
 const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
 
 const DOOR_ICON_CLASS =
-  'door-entry-blink size-[clamp(1.5rem,5vmin,2.25rem)] transition-[color,filter,opacity] duration-200 group-active:animate-none group-active:text-red-700 group-active:opacity-100 group-active:drop-shadow-[0_0_16px_rgba(220,38,38,0.55)] dark:group-active:text-white dark:group-active:drop-shadow-[0_0_24px_rgba(255,237,213,0.95)]';
+  'door-entry-blink size-[clamp(3rem,12vmin,5rem)] text-primary transition-[color,filter,opacity] duration-200 group-active:animate-none group-active:text-red-700 group-active:opacity-100 group-active:drop-shadow-[0_0_16px_rgba(220,38,38,0.55)] dark:group-active:text-white dark:group-active:drop-shadow-[0_0_24px_rgba(255,237,213,0.95)]';
 
 export function HomePage() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [hasEntered, setHasEntered] = useState(false);
 
-  useEffect(() => {
-    if (!hasEntered) {
-      return;
-    }
-
-    const audio = audioRef.current;
-    if (!audio) {
-      return;
-    }
-
-    void audio.play().catch(() => {
-      // FLAC may be unsupported, or autoplay blocked until a stronger gesture.
-    });
-  }, [hasEntered]);
-
   const handleEnter = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      void audio.play().catch(() => {
+        // FLAC may be unsupported in some browsers.
+      });
+    }
+
     setHasEntered(true);
   };
 
@@ -56,11 +48,14 @@ export function HomePage() {
       </audio>
 
       {!hasEntered ? (
-        <div className="fixed inset-0 z-[100] flex min-h-screen items-center justify-center bg-background">
+        <div
+          className="fixed inset-0 z-[200] flex h-dvh w-full items-center justify-center bg-background pointer-events-auto"
+          style={{position: 'fixed', inset: 0, zIndex: 200}}
+        >
           <button
             type="button"
             onClick={handleEnter}
-            className="group flex cursor-pointer items-center justify-center rounded-2xl p-5 transition-all duration-200 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 active:scale-[0.98]"
+            className="group flex min-h-24 min-w-24 cursor-pointer items-center justify-center rounded-2xl p-6 transition-all duration-200 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 active:scale-[0.98]"
             aria-label="Enter site"
           >
             <DoorClosed
