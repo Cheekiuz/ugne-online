@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {useRef, useState} from 'react';
 import {DoorClosed, DoorOpen} from 'lucide-react';
 import {AnimatedTennisBall} from './AnimatedTennisBall';
+import {ThinkAgainButton} from './ThinkAgainButton';
 import {ExecutiveDecisionSprite} from '../executive-decision-sprite/ExecutiveDecisionSprite';
 import {SiteFooter} from '../layout/SiteFooter';
 import {SiteNav} from '../layout/SiteNav';
@@ -241,14 +242,8 @@ export function HomePage() {
               <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl card-lift">
                 <h3 className="font-headline text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-4 sm:mb-6">Ready to challenge me?</h3>
                 <p className="text-base sm:text-lg md:text-xl opacity-90 mb-6 sm:mb-10 max-w-xl mx-auto">Tennis, QA, coffee or arguing about whether that ball was actually out.</p>
-                <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center">
-                  <button
-                    type="button"
-                    onClick={playBoomSound}
-                    className="bg-on-primary text-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:scale-105 active:scale-95 transition-all w-full sm:w-auto"
-                  >
-                    Think again
-                  </button>
+                <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center items-center overflow-visible">
+                  <ThinkAgainButton onClick={playBoomSound} />
                   <Link
                     href="/statistics/"
                     className="border-2 border-on-primary text-on-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:bg-on-primary/10 transition-all w-full sm:w-auto"

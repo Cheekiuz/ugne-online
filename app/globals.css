@@ -662,6 +662,109 @@
   }
 }
 
+@keyframes think-again-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 8px rgba(255, 255, 255, 0.15),
+      0 0 18px rgba(229, 231, 235, 0.2);
+    border-color: #e5e7eb;
+  }
+
+  50% {
+    box-shadow:
+      0 0 16px rgba(255, 255, 255, 0.35),
+      0 0 32px rgba(255, 255, 255, 0.22);
+    border-color: #f9fafb;
+  }
+}
+
+@keyframes think-again-shake {
+  0%,
+  100% {
+    transform: translate(var(--escape-x, 0px), var(--escape-y, 0px)) rotate(0deg);
+  }
+
+  20% {
+    transform: translate(var(--escape-x, 0px), var(--escape-y, 0px)) rotate(-5deg);
+  }
+
+  40% {
+    transform: translate(var(--escape-x, 0px), var(--escape-y, 0px)) rotate(5deg);
+  }
+
+  60% {
+    transform: translate(var(--escape-x, 0px), var(--escape-y, 0px)) rotate(-3deg);
+  }
+
+  80% {
+    transform: translate(var(--escape-x, 0px), var(--escape-y, 0px)) rotate(3deg);
+  }
+}
+
+.think-again-button-stage {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.think-again-button {
+  --escape-x: 0px;
+  --escape-y: 0px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid #e5e7eb;
+  color: #ffffff;
+  animation: think-again-glow 4s ease-in-out infinite;
+  transform: translate(var(--escape-x), var(--escape-y));
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.think-again-button--escaped {
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.think-again-button--shake {
+  animation: think-again-shake 0.5s ease-in-out;
+}
+
+.think-again-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
+  box-shadow:
+    0 0 18px rgba(255, 255, 255, 0.4),
+    0 0 36px rgba(255, 255, 255, 0.28);
+  transform: translate(var(--escape-x), var(--escape-y)) scale(1.05);
+}
+
+.think-again-button:active {
+  transform: translate(var(--escape-x), var(--escape-y)) scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .think-again-button {
+    animation: none;
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.22);
+  }
+
+  .think-again-button--escaped {
+    transition: none;
+  }
+
+  .think-again-button--shake {
+    animation: none;
+  }
+}
+
 .card-lift {
   transition:
     transform 220ms ease,
