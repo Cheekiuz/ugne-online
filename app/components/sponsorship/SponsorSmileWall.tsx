@@ -93,10 +93,29 @@ export function SponsorSmileWall() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 min-h-[120px]">
-        <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
-        <div className="h-px w-16 bg-on-primary/35" role="presentation" />
-        <span className="text-center text-sm font-normal text-on-primary/90">Real Donations</span>
+      <div className="text-center space-y-2 mb-8 sm:mb-10">
+        {justSaved ? (
+          <p className="text-sm text-primary font-bold">Your smile is on the board. Thank you!</p>
+        ) : alreadySmiled ? (
+          <p className="text-sm text-on-surface-variant italic">
+            You already left a smile here.{' '}
+            <span className="text-error-container not-italic font-semibold">Karma noticed.</span>
+          </p>
+        ) : (
+          <button
+            type="button"
+            onClick={() => void submitSmile()}
+            disabled={submitting}
+            className="bmc-blink-button inline-block px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg uppercase hover:scale-105 active:scale-95 transition-transform w-full sm:w-auto disabled:opacity-60 disabled:hover:scale-100"
+          >
+            {submitting ? 'Sending…' : 'Leave a smile'}
+          </button>
+        )}
+        {saveWarning ? (
+          <p className="text-xs text-on-surface-variant italic">
+            Couldn&apos;t save right now. Try again in a moment.
+          </p>
+        ) : null}
       </div>
 
       <div
@@ -121,30 +140,10 @@ export function SponsorSmileWall() {
         )}
       </div>
 
-      <div className="text-center space-y-2">
-        {justSaved ? (
-          <p className="text-sm text-primary font-bold">Your smile is on the board. Thank you!</p>
-        ) : alreadySmiled ? (
-          <p className="text-sm text-on-surface-variant italic">
-            You already left a smile here.{' '}
-            <span className="text-error-container not-italic font-semibold">Karma noticed.</span>
-          </p>
-        ) : (
-          <button
-            type="button"
-            onClick={() => void submitSmile()}
-            disabled={submitting}
-            className="inline-flex items-center gap-2 bg-primary text-on-primary px-8 py-3 rounded-xl font-black text-sm uppercase hover:scale-105 active:scale-95 transition-all disabled:opacity-60 disabled:hover:scale-100"
-          >
-            <Smile className="h-5 w-5" strokeWidth={1.75} aria-hidden />
-            {submitting ? 'Sending…' : 'Leave a smile'}
-          </button>
-        )}
-        {saveWarning ? (
-          <p className="text-xs text-on-surface-variant italic">
-            Couldn&apos;t save right now. Try again in a moment.
-          </p>
-        ) : null}
+      <div className="bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 min-h-[120px]">
+        <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
+        <div className="h-px w-16 bg-on-primary/35" role="presentation" />
+        <span className="text-center text-sm font-normal text-on-primary/90">Real Donations</span>
       </div>
     </div>
   );
