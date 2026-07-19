@@ -143,7 +143,7 @@ export function SponsorSmileWall() {
       <div className="bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 min-h-[120px]">
         <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
         <div className="h-px w-16 bg-on-primary/35" role="presentation" />
-        <span className="text-center text-sm font-normal text-on-primary/90">Real Donations</span>
+        <span className="text-center text-sm font-normal text-on-primary/90">Anonymous Internet Heroes</span>
       </div>
     </div>
   );
