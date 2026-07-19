@@ -1,10 +1,12 @@
 import type {NextConfig} from 'next';
+import path from 'path';
 
 /** Match `NEXT_PUBLIC_BASE_PATH` in the client (e.g. `/repo` for GitHub project pages). */
 const basePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? '').replace(/\/$/, '');
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  outputFileTracingRoot: path.join(process.cwd()),
   ...(basePath ? {basePath, assetPrefix: basePath} : {}),
   eslint: {
     ignoreDuringBuilds: true,

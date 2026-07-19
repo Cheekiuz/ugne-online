@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {ChevronDown} from 'lucide-react';
 import {SiteNav} from '../components/layout/SiteNav';
 import {SiteFooter} from '../components/layout/SiteFooter';
+import {SideBySideContent, SideBySideHero, SideBySideLayout} from '../components/layout/SideBySideLayout';
 import {SponsorCta} from '../components/sponsorship/SponsorCta';
 
 const HERO_IMAGE = '/sponsorship-hero.png';
@@ -270,8 +271,8 @@ export default function SponsorshipPage() {
             &ldquo;I don&apos;t need a title sponsor. I need an iced latte.&rdquo;
           </blockquote>
 
-          <div className="grid lg:grid-cols-[1fr_min(560px,48%)] gap-8 xl:gap-12 items-start">
-            <div className="space-y-10">
+          <SideBySideLayout>
+            <SideBySideContent className="space-y-10">
               <div className="space-y-6">
                 <SectionHeading eyebrow="AKA Life Support System" title="Currently Sponsored By" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -401,9 +402,9 @@ export default function SponsorshipPage() {
               <div className="text-on-surface-variant text-sm leading-relaxed space-y-1">
                 <p>* Tier upgrades accepted in <strong className="font-bold text-on-surface">coconut</strong> milk only.</p>
               </div>
-            </div>
+            </SideBySideContent>
 
-            <aside className="hidden lg:block lg:sticky lg:top-36">
+            <SideBySideHero>
               <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20">
                 <Image
                   src={HERO_IMAGE}
@@ -415,10 +416,10 @@ export default function SponsorshipPage() {
                   priority
                 />
               </div>
-            </aside>
-          </div>
+            </SideBySideHero>
+          </SideBySideLayout>
 
-          <div className="mt-10 lg:hidden">
+          <div className="mt-10 min-[900px]:hidden">
             <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20 max-w-2xl mx-auto">
               <Image
                 src={HERO_IMAGE}
@@ -427,6 +428,7 @@ export default function SponsorshipPage() {
                 height={862}
                 className="w-full h-auto"
                 sizes="100vw"
+                priority
               />
             </div>
           </div>

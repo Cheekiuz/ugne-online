@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import {SiteNav} from '../components/layout/SiteNav';
 import {SiteFooter} from '../components/layout/SiteFooter';
+import {SideBySideContent, SideBySideHero, SideBySideLayout} from '../components/layout/SideBySideLayout';
 
 const HERO_IMAGE = '/career-statistics-hero.png';
 
@@ -157,8 +158,8 @@ export default function StatisticsPage() {
             &ldquo;Statistics are for impressing absolutely nobody.&rdquo;
           </blockquote>
 
-          <div className="grid lg:grid-cols-[1fr_min(560px,48%)] gap-8 xl:gap-12 items-start">
-            <div className="space-y-10">
+          <SideBySideLayout>
+            <SideBySideContent className="space-y-10">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {CAREER_STATS.map((stat) => (
                   <StatCard key={stat.label} stat={stat} />
@@ -188,9 +189,9 @@ export default function StatisticsPage() {
                 <p>* Statistics verified by nobody.</p>
                 <p>** Performance may vary on clay, grass, hard courts, and Mondays.</p>
               </div>
-            </div>
+            </SideBySideContent>
 
-            <aside className="hidden lg:block lg:sticky lg:top-36">
+            <SideBySideHero>
               <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20">
                 <Image
                   src={HERO_IMAGE}
@@ -202,10 +203,10 @@ export default function StatisticsPage() {
                   priority
                 />
               </div>
-            </aside>
-          </div>
+            </SideBySideHero>
+          </SideBySideLayout>
 
-          <div className="mt-10 lg:hidden">
+          <div className="mt-10 min-[900px]:hidden">
             <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20 max-w-2xl mx-auto">
               <Image
                 src={HERO_IMAGE}

@@ -2,11 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-html,
-body {
-  overflow-x: clip;
-}
-
 @theme {
   --color-tertiary: #4b5a89;
   --color-primary-fixed: #cff830;
@@ -255,6 +250,37 @@ body {
     #1e2a14 72%,
     #121915 100%
   );
+}
+
+@media (min-width: 900px) {
+  .side-by-side-layout {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .side-by-side-layout__content {
+    flex: 1 1 0%;
+    min-width: 0;
+  }
+
+  .side-by-side-layout__hero {
+    flex: 0 0 min(560px, 48%);
+    max-width: 560px;
+    align-self: stretch;
+    position: relative;
+  }
+
+  .side-by-side-layout__hero-sticky {
+    position: relative;
+    top: 0;
+  }
+
+  .side-by-side-layout__hero-sticky img {
+    max-height: calc(100dvh - 9rem);
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
 }
 
 .snowfall {

@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import Image from 'next/image';
 import {SiteFooter} from '../components/layout/SiteFooter';
 import {SiteNav} from '../components/layout/SiteNav';
+import {SideBySideContent, SideBySideHero, SideBySideLayout} from '../components/layout/SideBySideLayout';
 import {SponsorSmileWall} from '../components/sponsorship/SponsorSmileWall';
 
 const HERO_IMAGE = '/cheese-hero.png';
@@ -39,12 +40,12 @@ export default function SayCheesePage() {
             &ldquo;I came for five seconds. I stayed because everyone was smiling.&rdquo;
           </blockquote>
 
-          <div className="grid lg:grid-cols-[1fr_min(560px,48%)] gap-8 xl:gap-12 items-start">
-            <div className="max-w-2xl">
+          <SideBySideLayout>
+            <SideBySideContent className="max-w-2xl">
               <SponsorSmileWall />
-            </div>
+            </SideBySideContent>
 
-            <aside className="hidden lg:block lg:sticky lg:top-36">
+            <SideBySideHero>
               <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20">
                 <Image
                   src={HERO_IMAGE}
@@ -56,10 +57,10 @@ export default function SayCheesePage() {
                   priority
                 />
               </div>
-            </aside>
-          </div>
+            </SideBySideHero>
+          </SideBySideLayout>
 
-          <div className="mt-10 lg:hidden">
+          <div className="mt-10 min-[900px]:hidden">
             <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20 max-w-2xl mx-auto">
               <Image
                 src={HERO_IMAGE}
