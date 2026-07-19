@@ -1,0 +1,66 @@
+@keyframes tennis-ball-roll {
+  0% {
+    left: 14%;
+  }
+
+  100% {
+    left: 86%;
+  }
+}
+
+@keyframes tennis-ball-hop {
+  0% {
+    transform: translate(-50%, -50%) translateY(0) rotate(0deg) scale(1, 1);
+    animation-timing-function: ease-out;
+  }
+
+  42% {
+    transform: translate(-50%, -50%) translateY(-3.25rem) rotate(175deg) scale(1, 1);
+    animation-timing-function: ease-in;
+  }
+
+  48% {
+    transform: translate(-50%, -50%) translateY(0) rotate(195deg) scale(1.14, 0.86);
+    animation-timing-function: ease-out;
+  }
+
+  68% {
+    transform: translate(-50%, -50%) translateY(-1.6rem) rotate(280deg) scale(1, 1);
+    animation-timing-function: ease-in;
+  }
+
+  74% {
+    transform: translate(-50%, -50%) translateY(0) rotate(300deg) scale(1.08, 0.92);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) translateY(0) rotate(360deg) scale(1, 1);
+  }
+}
+
+.tennis-ball-track {
+  position: absolute;
+  top: 76%;
+  left: 14%;
+  animation: tennis-ball-roll 5s linear infinite alternate;
+}
+
+.tennis-ball-bounce {
+  position: relative;
+  animation: tennis-ball-hop 0.7s linear infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tennis-ball-track {
+    animation: none;
+    left: 72%;
+    top: 76%;
+  }
+
+  .tennis-ball-bounce {
+    animation: none;
+    transform: translate(-50%, -50%);
+  }
+}

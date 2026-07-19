@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {useRef, useState} from 'react';
 import {DoorClosed, DoorOpen} from 'lucide-react';
+import {AnimatedTennisBall} from './AnimatedTennisBall';
 import {ExecutiveDecisionSprite} from '../executive-decision-sprite/ExecutiveDecisionSprite';
 import {SiteFooter} from '../layout/SiteFooter';
 import {SiteNav} from '../layout/SiteNav';
@@ -83,7 +84,7 @@ export function HomePage() {
                     COURT<br/><span className="text-secondary">COMPETITOR.</span>
                   </h1>
                   <p className="text-lg sm:text-xl md:text-2xl text-on-surface-variant max-w-2xl font-light leading-relaxed">
-                    Where technical precision meets kinetic energy. Exploring the parallels between high-stakes QA engineering and the strategic rhythm of the tennis court.
+                    QA Engineer. Tennis addict. Product thinker. Exploring the parallels between high-stakes QA engineering and the strategic rhythm of the tennis court.
                   </p>
                 </div>
                 <div className="min-w-0 lg:col-span-4 order-1 lg:order-2 flex justify-center">
@@ -138,6 +139,7 @@ export function HomePage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="sm:col-span-2 min-h-[200px] bg-secondary-container rounded-xl overflow-hidden relative">
                       <div className="absolute inset-0 tennis-gradient opacity-10"></div>
+                      <AnimatedTennisBall />
                       <div className="p-6 sm:p-8 h-full flex flex-col justify-center relative z-10">
                         <span className="text-4xl sm:text-6xl font-headline font-black text-on-secondary-container opacity-20 mb-4">#01</span>
                         <h3 className="text-xl sm:text-2xl font-bold text-on-secondary-container leading-tight">Strategic positioning is 90% of the game.</h3>
