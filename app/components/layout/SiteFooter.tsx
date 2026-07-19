@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {Coffee, Instagram} from 'lucide-react';
+import {FooterExitLink} from './FooterExitLink';
 
 const INSTAGRAM_URL = 'https://www.instagram.com/ugne_le_';
 const SPONSORSHIP_URL = '/sponsorship/';
@@ -29,6 +30,7 @@ export function SiteFooter() {
               <Link className={footerIconLinkClass} href={SPONSORSHIP_URL} aria-label="Sponsorship">
                 <Coffee className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />
               </Link>
+              <FooterExitLink className={footerIconLinkClass} />
             </div>
           </div>
           <p className="font-body text-xs uppercase tracking-wide text-on-surface/60 text-center leading-relaxed text-balance max-w-sm mx-auto md:order-2 md:flex-1 md:min-w-0 md:max-w-none md:mx-0 md:px-4 md:leading-snug md:whitespace-normal lg:whitespace-nowrap lg:tracking-widest">

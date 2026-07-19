@@ -5,18 +5,12 @@ import Link from 'next/link';
 import type {LucideIcon} from 'lucide-react';
 import {BarChart3, ChevronRight, Coffee, DoorOpen, Home, Mail, Menu, Moon, Smile, Sun, X} from 'lucide-react';
 import {useEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject} from 'react';
+import {EXIT_SOUNDS, SAY_CHEESE_SOUND, playNavClickSound} from '../../lib/nav-click-sound';
 import {ThemeToggle} from '../theme-toggle/ThemeToggle';
 
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
 const EMAIL = 'crycocacola@gmail.com';
-const EXIT_SOUNDS = [
-  '/audio/637071__SergeQuadrado__dad-says-bye-bye.mp3',
-  '/audio/242669__Reitanna__snake-bye.mp3',
-  '/audio/417197__theliongirl10__me-saying-bye.mp3',
-  '/audio/343893__Reitanna__mmbye.mp3',
-] as const;
-const SAY_CHEESE_SOUND = '/audio/93921__tim.kahn__cheese.mp3';
 
 type SiteNavProps = {
   currentPage?: 'home' | 'statistics' | 'sponsorship' | 'say-cheese' | 'enter';
@@ -39,26 +33,6 @@ const NAV_LINKS: {
   {page: 'say-cheese', href: '/say-cheese/', label: 'Say Cheese', icon: Smile, iconOnly: true, iconFlip: true, clickSound: SAY_CHEESE_SOUND},
   {page: 'enter', href: '/', label: 'Exit', icon: DoorOpen, iconOnly: true, clickSound: EXIT_SOUNDS},
 ];
-
-let lastExitSoundIndex = -1;
-
-function playNavClickSound(src: string | readonly string[]) {
-  const sources = Array.isArray(src) ? src : [src];
-  if (sources.length === 0) return;
-
-  let index = Math.floor(Math.random() * sources.length);
-  if (sources.length > 1) {
-    while (index === lastExitSoundIndex) {
-      index = Math.floor(Math.random() * sources.length);
-    }
-    lastExitSoundIndex = index;
-  }
-
-  const audio = new Audio(sources[index]);
-  void audio.play().catch(() => {
-    // Ignore autoplay restrictions or missing audio support.
-  });
-}
 
 function useThemeMode(): 'light' | 'dark' {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
