@@ -15,7 +15,7 @@ const PAGE_LOAD_SOUND = '/audio/211976__qubodup__boom2.flac';
 const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
 
 const DOOR_ICON_CLASS =
-  'door-entry-blink size-[clamp(2rem,8vmin,3.5rem)] transition-[color,filter,opacity] duration-200 group-active:animate-none group-active:text-red-700 group-active:opacity-100 group-active:drop-shadow-[0_0_16px_rgba(220,38,38,0.55)] dark:group-active:text-white dark:group-active:drop-shadow-[0_0_24px_rgba(255,237,213,0.95)]';
+  'door-entry-blink size-[clamp(1.5rem,5vmin,2.25rem)] transition-[color,filter,opacity] duration-200 group-active:animate-none group-active:text-red-700 group-active:opacity-100 group-active:drop-shadow-[0_0_16px_rgba(220,38,38,0.55)] dark:group-active:text-white dark:group-active:drop-shadow-[0_0_24px_rgba(255,237,213,0.95)]';
 
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -44,7 +44,7 @@ export default function Home() {
           <button
             type="button"
             onClick={handleEnter}
-            className="group flex cursor-pointer items-center justify-center rounded-3xl p-10 transition-all duration-200 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 active:scale-[0.98]"
+            className="group flex cursor-pointer items-center justify-center rounded-2xl p-5 transition-all duration-200 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 active:scale-[0.98]"
             aria-label="Enter site"
           >
             <DoorClosed
