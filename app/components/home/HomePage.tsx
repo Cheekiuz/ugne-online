@@ -72,7 +72,7 @@ export function HomePage() {
         </div>
       ) : null}
 
-      <div aria-hidden={!hasEntered} className={!hasEntered ? 'pointer-events-none' : undefined}>
+      <div className={!hasEntered ? 'pointer-events-none' : undefined}>
           <SiteNav currentPage="home" />
 
           <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32 page-main-gradient">

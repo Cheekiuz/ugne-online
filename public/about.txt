@@ -1,0 +1,20 @@
+# Ugnė — https://ugne.online
+
+Personal website of Ugnė, a tennis court competitor and QA engineer in Vilnius, Lithuania.
+
+Homepage: https://ugne.online/
+Plain-text summary: https://ugne.online/llms.txt
+Career statistics: https://ugne.online/statistics/
+Sponsorship: https://ugne.online/sponsorship/
+Say Cheese: https://ugne.online/say-cheese/
+
+About: Ugnė explores the parallels between high-stakes QA engineering and competitive tennis — precision, strategy, stamina, and execution under pressure.
+
+Match highlights:
+- The Comeback Set — secured a tie-break from 0-5 down in the second set (August 2023).
+- Clay Court Endurance — a 3-hour marathon match won through defensive play (May 2024).
+- The Perfect Ace — fastest serve after six months of biomechanical focus.
+
+Preferred courts: SEB Arena (indoor hard courts), Bernardinai (open-air courts beside Bernardine Garden, Vilnius).
+
+Contact: https://www.instagram.com/ugne_le_

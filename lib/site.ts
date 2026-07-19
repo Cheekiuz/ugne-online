@@ -52,6 +52,9 @@ export function createPageMetadata({title, description, path}: SiteRoute): Metad
     description,
     alternates: {
       canonical: url,
+      types: {
+        'text/plain': '/llms.txt',
+      },
     },
     openGraph: {
       title,

@@ -6,6 +6,7 @@ const URLS = [
   'https://ugne.online/sponsorship/',
   'https://ugne.online/say-cheese/',
   'https://ugne.online/llms.txt',
+  'https://ugne.online/about.txt',
 ];
 
 const response = await fetch('https://api.indexnow.org/indexnow', {
