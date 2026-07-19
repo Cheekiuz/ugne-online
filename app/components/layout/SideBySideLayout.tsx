@@ -1,142 +1,142 @@
 'use client';
 
-import {createContext, useContext, useLayoutEffect, useRef, type ReactNode, type RefObject} from 'react';
-
-const STICKY_TOP_PX = 144;
-const DESKTOP_MEDIA = '(min-width: 900px)';
-
-type SideBySideRefs = {
-  rootRef: RefObject<HTMLDivElement | null>;
-  contentRef: RefObject<HTMLDivElement | null>;
-  railRef: RefObject<HTMLElement | null>;
-  heroRef: RefObject<HTMLDivElement | null>;
-};
-
-const SideBySideContext = createContext<SideBySideRefs | null>(null);
+import {useLayoutEffect, useRef, type ComponentPropsWithoutRef, type ReactNode} from 'react';
 
 type SideBySideLayoutProps = {
   children: ReactNode;
   className?: string;
 };
 
-function resetHeroStyles(hero: HTMLDivElement, rail: HTMLElement) {
-  hero.style.position = '';
-  hero.style.top = '';
-  hero.style.left = '';
-  hero.style.width = '';
-  rail.style.minHeight = '';
+const DESKTOP_MQ = '(min-width: 768px)';
+
+function stickyTopPx(): number {
+  return parseFloat(getComputedStyle(document.documentElement).fontSize) * 9;
+}
+
+function clearStickyStyles(hero: HTMLElement, sticky: HTMLElement) {
+  sticky.style.position = '';
+  sticky.style.top = '';
+  sticky.style.left = '';
+  sticky.style.width = '';
+  sticky.style.transform = '';
+  sticky.style.zIndex = '';
+  hero.style.minHeight = '';
 }
 
 export function SideBySideLayout({children, className = ''}: SideBySideLayoutProps) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const railRef = useRef<HTMLElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const frameRef = useRef(0);
 
   useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const content = root.querySelector<HTMLElement>('.side-by-side-layout__content');
+    const hero = root.querySelector<HTMLElement>('.side-by-side-layout__hero');
+    const sticky = root.querySelector<HTMLElement>('.side-by-side-layout__hero-sticky');
+    if (!content || !hero || !sticky) return;
+
+    const mediaQuery = window.matchMedia(DESKTOP_MQ);
+    let frame = 0;
+
     const update = () => {
-      const root = rootRef.current;
-      const content = contentRef.current;
-      const rail = railRef.current;
-      const hero = heroRef.current;
-      if (!root || !content || !rail || !hero) return;
-
-      if (!window.matchMedia(DESKTOP_MEDIA).matches) {
-        resetHeroStyles(hero, rail);
+      if (!mediaQuery.matches) {
+        clearStickyStyles(hero, sticky);
         return;
       }
 
-      const contentHeight = content.offsetHeight;
-      rail.style.minHeight = `${contentHeight}px`;
+      const end = content.querySelector<HTMLElement>('[data-side-by-side-end]');
+      if (!end) return;
 
+      const top = stickyTopPx();
       const scrollY = window.scrollY;
-      const sectionTop = root.getBoundingClientRect().top + scrollY;
-      const sectionBottom = sectionTop + contentHeight;
-      const heroHeight = hero.offsetHeight;
-      const railRect = rail.getBoundingClientRect();
+      const heroRect = hero.getBoundingClientRect();
+      const endRect = end.getBoundingClientRect();
+      const stickyHeight = sticky.getBoundingClientRect().height;
 
-      if (scrollY + STICKY_TOP_PX < sectionTop) {
-        resetHeroStyles(hero, rail);
-        rail.style.minHeight = `${contentHeight}px`;
+      const trackHeight = Math.ceil(endRect.bottom - heroRect.top);
+      hero.style.minHeight = `${trackHeight}px`;
+
+      const heroTop = scrollY + heroRect.top;
+      const endBottom = scrollY + endRect.bottom;
+      const startScroll = heroTop - top;
+      const endScroll = endBottom - top - stickyHeight;
+
+      if (scrollY < startScroll) {
+        sticky.style.position = '';
+        sticky.style.top = '';
+        sticky.style.left = '';
+        sticky.style.width = '';
+        sticky.style.transform = '';
+        sticky.style.zIndex = '';
         return;
       }
 
-      if (scrollY + STICKY_TOP_PX + heroHeight > sectionBottom) {
-        hero.style.position = 'absolute';
-        hero.style.top = `${contentHeight - heroHeight}px`;
-        hero.style.left = '0';
-        hero.style.width = '100%';
+      if (scrollY > endScroll) {
+        sticky.style.position = '';
+        sticky.style.top = '';
+        sticky.style.left = '';
+        sticky.style.width = '';
+        sticky.style.zIndex = '';
+        sticky.style.transform = `translateY(${Math.max(0, trackHeight - stickyHeight)}px)`;
         return;
       }
 
-      hero.style.position = 'fixed';
-      hero.style.top = `${STICKY_TOP_PX}px`;
-      hero.style.left = `${railRect.left}px`;
-      hero.style.width = `${railRect.width}px`;
+      sticky.style.position = 'fixed';
+      sticky.style.top = `${top}px`;
+      sticky.style.left = `${heroRect.left}px`;
+      sticky.style.width = `${heroRect.width}px`;
+      sticky.style.transform = '';
+      sticky.style.zIndex = '10';
     };
 
     const schedule = () => {
-      cancelAnimationFrame(frameRef.current);
-      frameRef.current = requestAnimationFrame(update);
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
     };
 
     schedule();
 
+    const resizeObserver = new ResizeObserver(schedule);
+    resizeObserver.observe(content);
+    resizeObserver.observe(sticky);
+
     window.addEventListener('scroll', schedule, {passive: true});
     window.addEventListener('resize', schedule);
-
-    const desktopQuery = window.matchMedia(DESKTOP_MEDIA);
-    desktopQuery.addEventListener('change', schedule);
-
-    const content = contentRef.current;
-    if (content) {
-      const resizeObserver = new ResizeObserver(schedule);
-      resizeObserver.observe(content);
-      return () => {
-        cancelAnimationFrame(frameRef.current);
-        window.removeEventListener('scroll', schedule);
-        window.removeEventListener('resize', schedule);
-        desktopQuery.removeEventListener('change', schedule);
-        resizeObserver.disconnect();
-      };
-    }
+    mediaQuery.addEventListener('change', schedule);
 
     return () => {
-      cancelAnimationFrame(frameRef.current);
+      cancelAnimationFrame(frame);
+      resizeObserver.disconnect();
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
-      desktopQuery.removeEventListener('change', schedule);
+      mediaQuery.removeEventListener('change', schedule);
+      clearStickyStyles(hero, sticky);
     };
   }, []);
 
   return (
-    <SideBySideContext.Provider value={{rootRef, contentRef, railRef, heroRef}}>
-      <div ref={rootRef} className={`side-by-side-layout min-[900px]:gap-8 xl:gap-12 ${className}`.trim()}>
-        {children}
-      </div>
-    </SideBySideContext.Provider>
+    <div ref={rootRef} className={`md:flex md:items-stretch md:gap-8 xl:gap-12 ${className}`.trim()}>
+      {children}
+    </div>
   );
 }
 
-export function SideBySideContent({children, className = ''}: SideBySideLayoutProps) {
-  const context = useContext(SideBySideContext);
-
+export function SideBySideContent({
+  children,
+  className = '',
+  ...props
+}: SideBySideLayoutProps & ComponentPropsWithoutRef<'div'>) {
   return (
-    <div ref={context?.contentRef} className={`side-by-side-layout__content min-w-0 ${className}`.trim()}>
+    <div className={`side-by-side-layout__content min-w-0 flex-1 ${className}`.trim()} {...props}>
       {children}
     </div>
   );
 }
 
 export function SideBySideHero({children}: {children: ReactNode}) {
-  const context = useContext(SideBySideContext);
-
   return (
-    <aside ref={context?.railRef} className="side-by-side-layout__hero hidden min-[900px]:block">
-      <div ref={context?.heroRef} className="side-by-side-layout__hero-sticky">
-        {children}
-      </div>
+    <aside className="side-by-side-layout__hero hidden md:block md:w-[min(560px,48%)] md:shrink-0">
+      <div className="side-by-side-layout__hero-sticky">{children}</div>
     </aside>
   );
 }

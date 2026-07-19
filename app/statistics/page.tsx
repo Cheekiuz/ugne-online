@@ -154,12 +154,12 @@ export default function StatisticsPage() {
             <p className="text-lg opacity-90 font-light italic max-w-xl mx-auto">Numbers don&apos;t lie. I just adjust them.</p>
           </div>
 
-          <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-12 max-w-3xl">
-            &ldquo;Statistics are for impressing absolutely nobody.&rdquo;
-          </blockquote>
-
           <SideBySideLayout>
             <SideBySideContent className="space-y-10">
+              <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl">
+                &ldquo;Statistics are for impressing absolutely nobody.&rdquo;
+              </blockquote>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {CAREER_STATS.map((stat) => (
                   <StatCard key={stat.label} stat={stat} />
@@ -185,14 +185,14 @@ export default function StatisticsPage() {
                 </div>
               </div>
 
-              <div className="text-on-surface-variant text-sm leading-relaxed space-y-1">
+              <div className="text-on-surface-variant text-sm leading-relaxed space-y-1" data-side-by-side-end>
                 <p>* Statistics verified by nobody.</p>
                 <p>** Performance may vary on clay, grass, hard courts, and Mondays.</p>
               </div>
             </SideBySideContent>
 
             <SideBySideHero>
-              <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20">
+              <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15">
                 <Image
                   src={HERO_IMAGE}
                   alt="Ugnė on court — CODE. TEST. TENNIS. REPEAT."
@@ -206,8 +206,8 @@ export default function StatisticsPage() {
             </SideBySideHero>
           </SideBySideLayout>
 
-          <div className="mt-10 min-[900px]:hidden">
-            <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20 max-w-2xl mx-auto">
+          <div className="mt-10 min-[768px]:hidden">
+            <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15 max-w-2xl mx-auto">
               <Image
                 src={HERO_IMAGE}
                 alt="Ugnė on court — CODE. TEST. TENNIS. REPEAT."

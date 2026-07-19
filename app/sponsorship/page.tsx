@@ -182,7 +182,6 @@ const TESTIMONIALS: Testimonial[] = [
   {quote: 'Still thinks that ball was in.', attribution: 'Opponent', border: 'border-primary'},
 ];
 
-const OFFICIAL_SPONSORS = ['Coffee', 'Delusion', 'Regression Testing', 'Hope'];
 const NON_SPONSORS = ['Nike', 'Wilson', 'Rolex', 'Red Bull'];
 
 function SectionHeading({eyebrow, title}: {eyebrow?: string; title: string}) {
@@ -267,12 +266,12 @@ export default function SponsorshipPage() {
             </p>
           </div>
 
-          <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-12 max-w-3xl">
-            &ldquo;I don&apos;t need a title sponsor. I need an iced latte.&rdquo;
-          </blockquote>
-
           <SideBySideLayout>
             <SideBySideContent className="space-y-10">
+              <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl">
+                &ldquo;I don&apos;t need a title sponsor. I need an iced latte.&rdquo;
+              </blockquote>
+
               <div className="space-y-6">
                 <SectionHeading eyebrow="AKA Life Support System" title="Currently Sponsored By" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -371,41 +370,27 @@ export default function SponsorshipPage() {
 
               <SponsorCta />
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="bg-surface-container-lowest rounded-xl p-6 shadow-sm border-b-2 border-primary">
-                  <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">
-                    Official Sponsors
-                  </p>
-                  <ul className="space-y-2">
-                    {OFFICIAL_SPONSORS.map((name) => (
-                      <li key={name} className="font-headline font-bold text-primary">
-                        {name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="bg-surface-container-lowest rounded-xl p-6 shadow-sm border-b-2 border-outline-variant">
-                  <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">
-                    Official Non-Sponsors
-                  </p>
-                  <ul className="space-y-2">
-                    {NON_SPONSORS.map((name) => (
-                      <li key={name} className="font-headline font-bold text-on-surface-variant line-through opacity-70">
-                        {name}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-on-surface-variant text-sm italic mt-4">They&apos;re still thinking about it.</p>
-                </div>
+              <div className="bg-surface-container-lowest rounded-xl p-6 shadow-sm border-b-2 border-outline-variant">
+                <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">
+                  Official Non-Sponsors
+                </p>
+                <ul className="space-y-2">
+                  {NON_SPONSORS.map((name) => (
+                    <li key={name} className="font-headline font-bold text-on-surface-variant line-through opacity-70">
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-on-surface-variant text-sm italic mt-4">They&apos;re still thinking about it.</p>
               </div>
 
-              <div className="text-on-surface-variant text-sm leading-relaxed space-y-1">
+              <div className="text-on-surface-variant text-sm leading-relaxed space-y-1" data-side-by-side-end>
                 <p>* Tier upgrades accepted in <strong className="font-bold text-on-surface">coconut</strong> milk only.</p>
               </div>
             </SideBySideContent>
 
             <SideBySideHero>
-              <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20">
+              <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15">
                 <Image
                   src={HERO_IMAGE}
                   alt="Ugnė holding an iced latte and tennis racket — CODE. TEST. TENNIS. REPEAT."
@@ -419,8 +404,8 @@ export default function SponsorshipPage() {
             </SideBySideHero>
           </SideBySideLayout>
 
-          <div className="mt-10 min-[900px]:hidden">
-            <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20 max-w-2xl mx-auto">
+          <div className="mt-10 min-[768px]:hidden">
+            <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15 max-w-2xl mx-auto">
               <Image
                 src={HERO_IMAGE}
                 alt="Ugnė holding an iced latte and tennis racket — CODE. TEST. TENNIS. REPEAT."

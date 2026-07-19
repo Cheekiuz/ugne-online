@@ -120,18 +120,22 @@ function MobileNavRow({
   );
 }
 
-const NAV_SCROLL_RANGE = 72;
+const NAV_SCROLL_RANGE_MOBILE = 72;
+const NAV_SCROLL_RANGE_DESKTOP = 56;
+const DESKTOP_MQ = '(min-width: 768px)';
 
 function useNavScrollShell(
   shellRef: RefObject<HTMLElement | null>,
   barRef: RefObject<HTMLDivElement | null>,
 ) {
   useEffect(() => {
-    let ticking = false;
+    const desktopMq = window.matchMedia(DESKTOP_MQ);
     let floating = false;
+    let frame = 0;
 
     const update = () => {
-      const progress = Math.min(1, Math.max(0, window.scrollY / NAV_SCROLL_RANGE));
+      const range = desktopMq.matches ? NAV_SCROLL_RANGE_DESKTOP : NAV_SCROLL_RANGE_MOBILE;
+      const progress = Math.min(1, Math.max(0, window.scrollY / range));
       shellRef.current?.style.setProperty('--nav-scroll', progress.toFixed(3));
 
       const shouldFloat = progress > 0.85;
@@ -140,19 +144,21 @@ function useNavScrollShell(
         barRef.current?.classList.toggle('is-floating', shouldFloat);
       }
 
-      ticking = false;
+      frame = 0;
     };
 
     const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
+      if (!frame) frame = requestAnimationFrame(update);
     };
 
     update();
     window.addEventListener('scroll', onScroll, {passive: true});
-    return () => window.removeEventListener('scroll', onScroll);
+    desktopMq.addEventListener('change', update);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      desktopMq.removeEventListener('change', update);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, [shellRef, barRef]);
 }
 

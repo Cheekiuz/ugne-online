@@ -41,12 +41,12 @@ export default function SayCheesePage() {
           </blockquote>
 
           <SideBySideLayout>
-            <SideBySideContent className="max-w-2xl">
+            <SideBySideContent className="max-w-2xl" data-side-by-side-end>
               <SponsorSmileWall />
             </SideBySideContent>
 
             <SideBySideHero>
-              <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20">
+              <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15">
                 <Image
                   src={HERO_IMAGE}
                   alt={HERO_ALT}
@@ -60,8 +60,8 @@ export default function SayCheesePage() {
             </SideBySideHero>
           </SideBySideLayout>
 
-          <div className="mt-10 min-[900px]:hidden">
-            <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20 max-w-2xl mx-auto">
+          <div className="mt-10 min-[768px]:hidden">
+            <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15 max-w-2xl mx-auto">
               <Image
                 src={HERO_IMAGE}
                 alt={HERO_ALT}

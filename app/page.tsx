@@ -77,7 +77,7 @@ export default function Home() {
               </p>
             </div>
             <div className="min-w-0 lg:col-span-4 order-1 lg:order-2 flex justify-center">
-              <div className="relative mx-auto w-full max-w-sm aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border-4 border-surface-container-lowest ring-1 ring-outline-variant/20">
+              <div className="relative mx-auto w-full max-w-sm aspect-[3/4] rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15">
                 <Image
                   src={PERSONA_IMAGE}
                   alt="Ugnė — court competitor"
