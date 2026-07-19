@@ -23,7 +23,7 @@ export function SponsorCta() {
 
   if (showThankYou || hasSmiled) {
     return (
-      <div className="tennis-gradient rounded-xl p-6 sm:p-10 md:p-12 text-center text-on-primary shadow-xl space-y-6">
+      <div className="tennis-gradient rounded-xl p-6 sm:p-10 md:p-12 text-center text-on-primary shadow-xl space-y-6 card-lift">
         <div>
           <p className="font-headline text-2xl sm:text-3xl md:text-4xl font-black mb-3 uppercase">Thank you!</p>
           <p className="text-lg opacity-90 leading-relaxed">
@@ -45,7 +45,7 @@ export function SponsorCta() {
   }
 
   return (
-    <div className="tennis-gradient rounded-xl p-6 sm:p-10 md:p-12 text-center text-on-primary shadow-xl space-y-4">
+    <div className="tennis-gradient rounded-xl p-6 sm:p-10 md:p-12 text-center text-on-primary shadow-xl space-y-4 card-lift">
       <p className="font-headline text-xl sm:text-2xl md:text-3xl font-black uppercase">
         Fund my AI experiments
       </p>

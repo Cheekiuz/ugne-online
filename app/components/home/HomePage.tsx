@@ -88,7 +88,7 @@ export function HomePage() {
                   </p>
                 </div>
                 <div className="min-w-0 lg:col-span-4 order-1 lg:order-2 flex justify-center">
-                  <div className="relative mx-auto w-full max-w-sm aspect-[3/4] rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15">
+                  <div className="relative mx-auto w-full max-w-sm aspect-[3/4] rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15 card-lift">
                     <Image
                       src={PERSONA_IMAGE}
                       alt="Ugnė — court competitor"
@@ -103,7 +103,7 @@ export function HomePage() {
                   <div className="flex w-full justify-center lg:justify-end max-w-full">
                     <ExecutiveDecisionSprite variant="blue" compact />
                   </div>
-                  <div className="bg-primary-container p-6 sm:p-8 rounded-xl flex flex-col items-center justify-center text-center shadow-sm w-full max-w-[220px] shrink-0">
+                  <div className="bg-primary-container p-6 sm:p-8 rounded-xl flex flex-col items-center justify-center text-center shadow-sm w-full max-w-[220px] shrink-0 card-lift">
                     <span className="font-headline text-4xl sm:text-5xl font-black text-on-primary-container">40-15</span>
                     <span className="font-label uppercase tracking-widest text-sm text-on-primary-container opacity-70 mt-2">Game Point Mindset</span>
                   </div>
@@ -119,7 +119,7 @@ export function HomePage() {
                   <span className="font-label text-tertiary-container bg-tertiary px-4 py-1 rounded-full text-xs uppercase tracking-widest">Active Season</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:min-h-[600px] md:items-stretch">
-                  <div className="flex min-h-[320px] flex-col overflow-hidden rounded-xl bg-surface-container-lowest md:min-h-0">
+                  <div className="flex min-h-[320px] flex-col overflow-hidden rounded-xl bg-surface-container-lowest md:min-h-0 card-lift">
                     <div className="relative min-h-0 flex-1 basis-0 min-h-[280px]">
                       <Image
                         className="object-cover"
@@ -137,7 +137,7 @@ export function HomePage() {
                     </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="sm:col-span-2 min-h-[200px] bg-secondary-container rounded-xl overflow-hidden relative">
+                    <div className="sm:col-span-2 min-h-[200px] bg-secondary-container rounded-xl overflow-hidden relative card-lift">
                       <div className="absolute inset-0 tennis-gradient opacity-10"></div>
                       <AnimatedTennisBall />
                       <div className="p-6 sm:p-8 h-full flex flex-col justify-center relative z-10">
@@ -145,7 +145,7 @@ export function HomePage() {
                         <h3 className="text-xl sm:text-2xl font-bold text-on-secondary-container leading-tight">Strategic positioning is 90% of the game.</h3>
                       </div>
                     </div>
-                    <div className="min-h-[200px] bg-surface-container-highest rounded-xl overflow-hidden relative">
+                    <div className="min-h-[200px] bg-surface-container-highest rounded-xl overflow-hidden relative card-lift">
                       <Image
                         className="w-full h-full object-cover"
                         alt="Yellow tennis balls organized in a container"
@@ -163,7 +163,7 @@ export function HomePage() {
             <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-16 sm:mb-24">
               <h2 className="font-headline text-3xl sm:text-4xl font-bold mb-8 sm:mb-12">Match Moments</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 border-primary">
+                <div className="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 border-primary card-lift">
                   <div className="flex justify-between mb-6">
                     <span className="text-xs font-label uppercase tracking-tighter text-outline">August 2023</span>
                     <div className="w-2 h-2 rounded-full bg-secondary"></div>
@@ -175,7 +175,7 @@ export function HomePage() {
                     <span className="px-3 py-1 bg-surface-container-high rounded-full text-[10px] uppercase font-bold text-on-surface-variant">Grit</span>
                   </div>
                 </div>
-                <div className="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 border-secondary-container">
+                <div className="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 border-secondary-container card-lift">
                   <div className="flex justify-between mb-6">
                     <span className="text-xs font-label uppercase tracking-tighter text-outline">May 2024</span>
                     <div className="w-2 h-2 rounded-full bg-primary"></div>
@@ -187,7 +187,7 @@ export function HomePage() {
                     <span className="px-3 py-1 bg-surface-container-high rounded-full text-[10px] uppercase font-bold text-on-surface-variant">Strategy</span>
                   </div>
                 </div>
-                <div className="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 border-tertiary-container">
+                <div className="bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 border-tertiary-container card-lift">
                   <div className="flex justify-between mb-6">
                     <span className="text-xs font-label uppercase tracking-tighter text-outline">Active</span>
                     <div className="w-2 h-2 rounded-full bg-tertiary"></div>
@@ -203,7 +203,7 @@ export function HomePage() {
             </section>
 
             <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-16 sm:mb-24">
-              <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col md:flex-row">
+              <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col md:flex-row card-lift">
                 <div className="md:w-1/2 h-56 sm:h-72 md:h-auto relative min-h-[14rem]">
                   <Image
                     className="w-full h-full object-cover"
@@ -238,7 +238,7 @@ export function HomePage() {
             </section>
 
             <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl">
+              <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl card-lift">
                 <h3 className="font-headline text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-4 sm:mb-6">Ready to challenge me?</h3>
                 <p className="text-base sm:text-lg md:text-xl opacity-90 mb-6 sm:mb-10 max-w-xl mx-auto">Tennis, QA, coffee or arguing about whether that ball was actually out.</p>
                 <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center">

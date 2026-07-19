@@ -119,7 +119,7 @@ export function SponsorSmileWall() {
       </div>
 
       <div
-        className={`bg-surface-container-lowest rounded-xl shadow-sm p-4 ${wallMinHeight} relative overflow-hidden border-b-2 border-primary`}
+        className={`bg-surface-container-lowest rounded-xl shadow-sm p-4 ${wallMinHeight} relative overflow-hidden border-b-2 border-primary card-lift`}
       >
         {loading ? (
           <p className="text-on-surface-variant text-sm text-center py-16">Loading smiles…</p>
@@ -140,7 +140,7 @@ export function SponsorSmileWall() {
         )}
       </div>
 
-      <div className="bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 min-h-[120px]">
+      <div className="bg-primary rounded-xl flex flex-col items-center justify-center gap-3 px-4 py-6 min-h-[120px] card-lift">
         <Smile className="text-on-primary h-8 w-8 shrink-0" strokeWidth={1.5} aria-hidden />
         <div className="h-px w-16 bg-on-primary/35" role="presentation" />
         <span className="text-center text-sm font-normal text-on-primary/90">Anonymous Internet Heroes</span>

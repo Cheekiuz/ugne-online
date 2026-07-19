@@ -112,7 +112,7 @@ function StatCard({stat}: {stat: CareerStat}) {
 
   return (
     <div
-      className={`bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 ${stat.border} flex flex-col gap-3`}
+      className={`bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 ${stat.border} flex flex-col gap-3 card-lift`}
     >
       <Icon className="h-5 w-5 text-primary" strokeWidth={1.75} aria-hidden />
       <p className="font-label uppercase tracking-widest text-xs text-on-surface-variant">{stat.label}</p>
@@ -144,7 +144,7 @@ export default function StatisticsPage() {
             <span className="text-on-surface-variant">(Trust me)</span>
           </div>
 
-          <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6">
+          <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6 card-lift">
             <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black mb-3">Career Statistics</h1>
             <p className="font-headline text-lg sm:text-xl md:text-2xl font-bold opacity-90 mb-2">
               of a Court Competitor &amp; Bug Hunter
@@ -154,7 +154,7 @@ export default function StatisticsPage() {
 
           <SideBySideLayout>
             <SideBySideContent className="space-y-10">
-              <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl">
+              <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl card-lift">
                 &ldquo;Statistics are for impressing absolutely nobody.&rdquo;
               </blockquote>
 
@@ -164,7 +164,7 @@ export default function StatisticsPage() {
                 ))}
               </div>
 
-              <div className="bg-surface-container-low rounded-xl p-6 sm:p-8">
+              <div className="bg-surface-container-low rounded-xl p-6 sm:p-8 card-lift">
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
                   {MINI_STATS.map((mini) => {
                     const MiniIcon = mini.icon;
@@ -190,7 +190,7 @@ export default function StatisticsPage() {
             </SideBySideContent>
 
             <SideBySideHero>
-              <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15">
+              <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15 card-lift">
                 <Image
                   src={HERO_IMAGE}
                   alt="Ugnė on court — CODE. TEST. TENNIS. REPEAT."
@@ -205,7 +205,7 @@ export default function StatisticsPage() {
           </SideBySideLayout>
 
           <div className="mt-10 min-[768px]:hidden">
-            <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15 max-w-2xl mx-auto">
+            <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15 max-w-2xl mx-auto card-lift">
               <Image
                 src={HERO_IMAGE}
                 alt="Ugnė on court — CODE. TEST. TENNIS. REPEAT."

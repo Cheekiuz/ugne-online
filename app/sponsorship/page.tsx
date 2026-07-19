@@ -196,7 +196,7 @@ function SectionHeading({eyebrow, title}: {eyebrow?: string; title: string}) {
 function SponsorCard({sponsor}: {sponsor: Sponsor}) {
   return (
     <div
-      className={`bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-2 ${sponsor.border} flex flex-col gap-3`}
+      className={`bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-2 ${sponsor.border} flex flex-col gap-3 card-lift`}
     >
       <div className="flex items-center justify-between gap-2">
         <span className="text-3xl" aria-hidden>
@@ -215,7 +215,7 @@ function SponsorCard({sponsor}: {sponsor: Sponsor}) {
 function PackageCard({pkg}: {pkg: Package}) {
   return (
     <div
-      className={`bg-surface-container-lowest p-6 rounded-xl shadow-sm border-b-2 ${pkg.border} flex flex-col gap-2 ${pkg.tier === 'Enterprise' ? 'sm:col-span-2 xl:col-span-3' : ''}`}
+      className={`bg-surface-container-lowest p-6 rounded-xl shadow-sm border-b-2 ${pkg.border} flex flex-col gap-2 card-lift ${pkg.tier === 'Enterprise' ? 'sm:col-span-2 xl:col-span-3' : ''}`}
     >
       <div className="flex flex-col gap-1">
         <p className="font-headline text-lg font-black text-primary uppercase">{pkg.tier}</p>
@@ -228,7 +228,7 @@ function PackageCard({pkg}: {pkg: Package}) {
 
 function FaqAccordionItem({item}: {item: FaqItem}) {
   return (
-    <details className={`group bg-surface-container-lowest rounded-xl shadow-sm border-b-2 ${item.border} overflow-hidden`}>
+    <details className={`group bg-surface-container-lowest rounded-xl shadow-sm border-b-2 ${item.border} overflow-hidden card-lift`}>
       <summary className="font-headline text-base font-bold text-primary p-6 cursor-pointer list-none flex items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
         <span>{item.question}</span>
         <ChevronDown
@@ -254,7 +254,7 @@ export default function SponsorshipPage() {
             <span>Current world ranking: Financially Optimistic.</span>
           </div>
 
-          <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6">
+          <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6 card-lift">
             <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black mb-3">Sponsorship Opportunities</h1>
             <p className="font-headline text-lg sm:text-xl md:text-2xl font-bold opacity-90 mb-2">
               Because tennis balls or coffee don&apos;t grow on trees
@@ -266,7 +266,7 @@ export default function SponsorshipPage() {
 
           <SideBySideLayout>
             <SideBySideContent className="space-y-10">
-              <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl">
+              <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl card-lift">
                 &ldquo;Supporting whatever crazy idea comes next.&rdquo;
               </blockquote>
 
@@ -283,7 +283,7 @@ export default function SponsorshipPage() {
 
               <div className="space-y-4">
                 <SectionHeading title="Looking for New Sponsors" />
-                <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+                <div className="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden card-lift">
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
@@ -320,7 +320,7 @@ export default function SponsorshipPage() {
 
               <div className="space-y-4">
                 <SectionHeading eyebrow="Investor Relations" title="ROI Calculator" />
-                <div className="bg-surface-container-low rounded-xl p-6 sm:p-8">
+                <div className="bg-surface-container-low rounded-xl p-6 sm:p-8 card-lift">
                   <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">
                     Investment: One latte
                   </p>
@@ -355,7 +355,7 @@ export default function SponsorshipPage() {
                   {TESTIMONIALS.map((item) => (
                     <div
                       key={item.attribution}
-                      className={`bg-surface-container-lowest p-6 rounded-xl shadow-sm border-b-2 ${item.border}`}
+                      className={`bg-surface-container-lowest p-6 rounded-xl shadow-sm border-b-2 ${item.border} card-lift`}
                     >
                       <p className="text-on-surface-variant text-sm leading-relaxed italic mb-3">
                         &ldquo;{item.quote}&rdquo;
@@ -370,7 +370,7 @@ export default function SponsorshipPage() {
 
               <SponsorCta />
 
-              <div className="bg-surface-container-lowest rounded-xl p-6 shadow-sm border-b-2 border-outline-variant">
+              <div className="bg-surface-container-lowest rounded-xl p-6 shadow-sm border-b-2 border-outline-variant card-lift">
                 <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">
                   Official Non-Sponsors
                 </p>
@@ -390,7 +390,7 @@ export default function SponsorshipPage() {
             </SideBySideContent>
 
             <SideBySideHero>
-              <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15">
+              <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15 card-lift">
                 <Image
                   src={HERO_IMAGE}
                   alt="Ugnė holding an iced latte and tennis racket — CODE. TEST. TENNIS. REPEAT."
@@ -405,7 +405,7 @@ export default function SponsorshipPage() {
           </SideBySideLayout>
 
           <div className="mt-10 min-[768px]:hidden">
-            <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15 max-w-2xl mx-auto">
+            <div className="rounded-2xl overflow-hidden shadow-sm border border-outline-variant/15 max-w-2xl mx-auto card-lift">
               <Image
                 src={HERO_IMAGE}
                 alt="Ugnė holding an iced latte and tennis racket — CODE. TEST. TENNIS. REPEAT."
