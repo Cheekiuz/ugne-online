@@ -2,7 +2,8 @@ import type {Metadata} from 'next';
 
 export const SITE_URL = 'https://ugne.online';
 export const SITE_NAME = 'Ugnė';
-export const DEFAULT_DESCRIPTION = 'Where technical precision meets kinetic energy.';
+export const DEFAULT_DESCRIPTION =
+  'Personal site of Ugnė — tennis court competitor and QA engineer in Vilnius. Match stories, career statistics, sponsorship, and the parallels between high-stakes testing and competitive tennis.';
 
 export type SiteRoute = {
   path: string;
