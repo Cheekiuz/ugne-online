@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type {LucideIcon} from 'lucide-react';
-import {ChevronRight, Coffee, Mail, Menu, Moon, Smile, Sun, X} from 'lucide-react';
+import {BarChart3, ChevronRight, Coffee, DoorOpen, Home, Mail, Menu, Moon, Smile, Sun, X} from 'lucide-react';
 import {useEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject} from 'react';
 import {ThemeToggle} from '../theme-toggle/ThemeToggle';
 
@@ -12,16 +12,17 @@ const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
 const EMAIL = 'crycocacola@gmail.com';
 
 type SiteNavProps = {
-  currentPage?: 'home' | 'statistics' | 'sponsorship' | 'say-cheese';
+  currentPage?: 'home' | 'statistics' | 'sponsorship' | 'say-cheese' | 'enter';
 };
 
 type NavPage = SiteNavProps['currentPage'];
 
 const NAV_LINKS: {page: NavPage; href: string; label: string; icon?: LucideIcon; iconOnly?: boolean; iconFlip?: boolean}[] = [
-  {page: 'home', href: '/home/', label: 'Home'},
-  {page: 'statistics', href: '/statistics/', label: 'Statistics'},
+  {page: 'home', href: '/home/', label: 'Home', icon: Home, iconOnly: true},
+  {page: 'statistics', href: '/statistics/', label: 'Statistics', icon: BarChart3, iconOnly: true},
   {page: 'sponsorship', href: '/sponsorship/', label: 'Sponsorship', icon: Coffee, iconOnly: true},
   {page: 'say-cheese', href: '/say-cheese/', label: 'Say Cheese', icon: Smile, iconOnly: true, iconFlip: true},
+  {page: 'enter', href: '/', label: 'Exit', icon: DoorOpen, iconOnly: true},
 ];
 
 function useThemeMode(): 'light' | 'dark' {
