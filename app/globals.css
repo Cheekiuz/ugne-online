@@ -621,22 +621,22 @@
   100% {
     background-position: 0% 50%;
     box-shadow:
-      0 0 12px rgba(6, 182, 212, 0.45),
-      0 0 24px rgba(34, 211, 238, 0.25);
+      0 0 12px rgba(8, 145, 178, 0.45),
+      0 0 24px rgba(6, 182, 212, 0.25);
     filter: brightness(1);
   }
 
   50% {
     background-position: 100% 50%;
     box-shadow:
-      0 0 20px rgba(6, 182, 212, 0.7),
-      0 0 40px rgba(34, 211, 238, 0.45);
-    filter: brightness(1.06);
+      0 0 20px rgba(8, 145, 178, 0.7),
+      0 0 40px rgba(6, 182, 212, 0.45);
+    filter: brightness(1.04);
   }
 }
 
 .challenge-me-button {
-  background: linear-gradient(45deg, #0891b2 0%, #06b6d4 30%, #22d3ee 55%, #67e8f9 75%, #06b6d4 100%);
+  background: linear-gradient(45deg, #0e7490 0%, #0891b2 30%, #06b6d4 55%, #22d3ee 75%, #0891b2 100%);
   background-size: 220% 220%;
   color: #06141b;
   border: none;
@@ -648,34 +648,38 @@
 }
 
 .challenge-me-button:hover {
-  filter: brightness(1.1);
+  filter: brightness(1.06);
   box-shadow:
-    0 0 20px rgba(6, 182, 212, 0.55),
-    0 0 40px rgba(34, 211, 238, 0.45);
+    0 0 20px rgba(8, 145, 178, 0.55),
+    0 0 40px rgba(6, 182, 212, 0.45);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .challenge-me-button {
     animation: none;
-    background: #06b6d4;
-    box-shadow: 0 0 16px rgba(6, 182, 212, 0.35);
+    background: #0891b2;
+    box-shadow: 0 0 16px rgba(8, 145, 178, 0.35);
   }
 }
 
 @keyframes think-again-glow {
   0%,
   100% {
+    background-position: 0% 50%;
     box-shadow:
       0 0 8px rgba(255, 255, 255, 0.15),
       0 0 18px rgba(229, 231, 235, 0.2);
     border-color: #e5e7eb;
+    filter: brightness(1);
   }
 
   50% {
+    background-position: 100% 50%;
     box-shadow:
       0 0 16px rgba(255, 255, 255, 0.35),
       0 0 32px rgba(255, 255, 255, 0.22);
     border-color: #f9fafb;
+    filter: brightness(1.06);
   }
 }
 
@@ -714,7 +718,15 @@
 .think-again-button {
   --escape-x: 0px;
   --escape-y: 0px;
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.14) 35%,
+    rgba(255, 255, 255, 0.24) 55%,
+    rgba(255, 255, 255, 0.12) 75%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  background-size: 220% 220%;
   border: 2px solid #e5e7eb;
   color: #ffffff;
   animation: think-again-glow 4s ease-in-out infinite;
@@ -722,7 +734,8 @@
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
 }
 
 .think-again-button--escaped {
@@ -738,7 +751,15 @@
 }
 
 .think-again-button:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.22) 35%,
+    rgba(255, 255, 255, 0.32) 55%,
+    rgba(255, 255, 255, 0.18) 75%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  background-size: 220% 220%;
   border-color: #ffffff;
   box-shadow:
     0 0 18px rgba(255, 255, 255, 0.4),
@@ -753,6 +774,7 @@
 @media (prefers-reduced-motion: reduce) {
   .think-again-button {
     animation: none;
+    background: rgba(255, 255, 255, 0.12);
     box-shadow: 0 0 14px rgba(255, 255, 255, 0.22);
   }
 
