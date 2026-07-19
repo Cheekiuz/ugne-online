@@ -86,3 +86,31 @@ jobs:
           github_token: ${{ github.token }}
           publish_dir: ./out
           force_orphan: true
+
+  notify-search-engines:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Wait for live site
+        run: |
+          for i in {1..12}; do
+            if curl -fsS "https://ugne.online/52c99c8c23d62861b4b1acf14ee1e9ba.txt" | grep -q "52c99c8c23d62861b4b1acf14ee1e9ba"; then
+              echo "IndexNow key file is live."
+              exit 0
+            fi
+            echo "Waiting for deployment to propagate ($i/12)..."
+            sleep 10
+          done
+          echo "Timed out waiting for IndexNow key file."
+          exit 1
+
+      - name: Submit URLs to IndexNow
+        run: node scripts/submit-indexnow.mjs
