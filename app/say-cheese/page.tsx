@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import Image from 'next/image';
+import {createPageMetadata, PAGE_ROUTES} from '@/lib/site';
 import {SiteFooter} from '../components/layout/SiteFooter';
 import {SiteNav} from '../components/layout/SiteNav';
 import {SideBySideContent, SideBySideHero, SideBySideLayout} from '../components/layout/SideBySideLayout';
@@ -9,10 +10,7 @@ const HERO_IMAGE = '/cheese-hero.png';
 const HERO_ALT =
   'Ugnė holding a smiley tennis ball and racket — CODE. TEST. TENNIS. REPEAT.';
 
-export const metadata: Metadata = {
-  title: 'Say Cheese - Ugnė',
-  description: 'Real smiles donated. Leave one if you dare.',
-};
+export const metadata: Metadata = createPageMetadata(PAGE_ROUTES.sayCheese);
 
 export default function SayCheesePage() {
   return (

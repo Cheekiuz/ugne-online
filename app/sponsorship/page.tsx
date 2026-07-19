@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import {createPageMetadata, PAGE_ROUTES} from '@/lib/site';
 import {ChevronDown} from 'lucide-react';
 import {SiteNav} from '../components/layout/SiteNav';
 import {SiteFooter} from '../components/layout/SiteFooter';
@@ -9,10 +10,7 @@ import {SponsorCta} from '../components/sponsorship/SponsorCta';
 
 const HERO_IMAGE = '/sponsorship-hero.png';
 
-export const metadata: Metadata = {
-  title: 'Sponsorship - Ugnė',
-  description: 'Funding dreams since approximately last Tuesday.',
-};
+export const metadata: Metadata = createPageMetadata(PAGE_ROUTES.sponsorship);
 
 type Sponsor = {
   emoji: string;

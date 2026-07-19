@@ -1,5 +1,6 @@
 import type {Metadata, Viewport} from 'next';
-import { Lexend, Inter } from 'next/font/google';
+import {Lexend, Inter} from 'next/font/google';
+import {DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL} from '@/lib/site';
 import {GoogleAnalytics} from './components/analytics/GoogleAnalytics';
 import {Snowfall} from './components/snow/Snowfall';
 import './globals.css'; // Global styles
@@ -15,10 +16,30 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Ugnė - Court Competitor',
-  description: 'Where technical precision meets kinetic energy.',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Ugnė - Court Competitor',
+    template: '%s',
+  },
+  description: DEFAULT_DESCRIPTION,
   icons: {
     icon: '/favicon.png',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  openGraph: {
+    siteName: SITE_NAME,
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
   },
 };
 

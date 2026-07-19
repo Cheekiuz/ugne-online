@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import Image from 'next/image';
+import {createPageMetadata, PAGE_ROUTES} from '@/lib/site';
 import Link from 'next/link';
 import type {LucideIcon} from 'lucide-react';
 import {
@@ -21,10 +22,7 @@ import {SideBySideContent, SideBySideHero, SideBySideLayout} from '../components
 
 const HERO_IMAGE = '/career-statistics-hero.png';
 
-export const metadata: Metadata = {
-  title: 'Career Statistics - Ugnė',
-  description: "Numbers don't lie. I just adjust them.",
-};
+export const metadata: Metadata = createPageMetadata(PAGE_ROUTES.statistics);
 
 type StatVariant = 'numeric' | 'text' | 'redacted' | 'long';
 
