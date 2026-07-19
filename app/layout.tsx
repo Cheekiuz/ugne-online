@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
   },
   verification: {
-    google: 'google3493f41b81b6dd38',
+    google: '5PH4VVPYwr2dn4CEljdd3POi1ZgUtHlvjVGpFu81q-c',
   },
 };
 
