@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {DoorClosed, DoorOpen} from 'lucide-react';
 import {ExecutiveDecisionSprite} from '../executive-decision-sprite/ExecutiveDecisionSprite';
 import {SiteFooter} from '../layout/SiteFooter';
@@ -21,21 +21,37 @@ export function HomePage() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [hasEntered, setHasEntered] = useState(false);
 
+  useEffect(() => {
+    if (!hasEntered) {
+      return;
+    }
+
+    const audio = audioRef.current;
+    if (!audio) {
+      return;
+    }
+
+    void audio.play().catch(() => {
+      // FLAC may be unsupported, or autoplay blocked until a stronger gesture.
+    });
+  }, [hasEntered]);
+
   const handleEnter = () => {
     setHasEntered(true);
-    void audioRef.current?.play();
   };
 
   const playBoomSound = () => {
     const el = audioRef.current;
     if (!el) return;
     el.currentTime = 0;
-    void el.play();
+    void el.play().catch(() => {
+      // Ignore autoplay restrictions.
+    });
   };
 
   return (
     <>
-      <audio ref={audioRef} preload="auto">
+      <audio ref={audioRef} preload="none" onError={() => undefined}>
         <source src={PAGE_LOAD_SOUND} type="audio/flac" />
       </audio>
 
