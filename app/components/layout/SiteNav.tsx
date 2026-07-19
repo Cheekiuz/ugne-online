@@ -18,7 +18,7 @@ type SiteNavProps = {
 type NavPage = SiteNavProps['currentPage'];
 
 const NAV_LINKS: {page: NavPage; href: string; label: string; icon?: LucideIcon; iconOnly?: boolean; iconFlip?: boolean}[] = [
-  {page: 'home', href: '/', label: 'Home'},
+  {page: 'home', href: '/home/', label: 'Home'},
   {page: 'statistics', href: '/statistics/', label: 'Statistics'},
   {page: 'sponsorship', href: '/sponsorship/', label: 'Sponsorship', icon: Coffee, iconOnly: true},
   {page: 'say-cheese', href: '/say-cheese/', label: 'Say Cheese', icon: Smile, iconOnly: true, iconFlip: true},
@@ -225,7 +225,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
     <nav ref={shellRef} className="site-nav-shell" style={{'--nav-scroll': 0} as CSSProperties}>
       <div ref={barRef} className="site-nav-bar">
         <div className="site-nav-inner relative z-50 flex justify-between items-center gap-2 sm:gap-3 font-headline tracking-tight min-w-0 mx-auto px-4 sm:px-6 md:px-8">
-        <Link href="/" className="flex items-center gap-2 sm:gap-3 min-w-0 shrink-0" onClick={closeMenu}>
+        <Link href="/home/" className="flex items-center gap-2 sm:gap-3 min-w-0 shrink-0" onClick={closeMenu}>
           <div className="tennis-gradient p-0.5 rounded-full shrink-0">
             <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden">
               <Image
@@ -300,7 +300,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
             </a>
           ) : (
             <Link
-              href="/"
+              href="/home/"
               className="tennis-gradient text-on-primary px-6 py-2 rounded-xl font-bold scale-95 active:scale-90 transition-transform whitespace-nowrap"
             >
               Back to Reality
@@ -385,7 +385,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
                   </a>
                 ) : (
                   <Link
-                    href="/"
+                    href="/home/"
                     className="mt-2 block w-full tennis-gradient text-on-primary px-6 py-3 rounded-xl font-headline font-bold text-center active:scale-[0.98] transition-transform"
                     onClick={closeMenu}
                   >

@@ -2,8 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {useRef, useState} from 'react';
-import {DoorClosed, DoorOpen} from 'lucide-react';
+import {useRef} from 'react';
 import {AnimatedTennisBall} from './AnimatedTennisBall';
 import {ThinkAgainButton} from './ThinkAgainButton';
 import {ExecutiveDecisionSprite} from '../executive-decision-sprite/ExecutiveDecisionSprite';
@@ -16,23 +15,8 @@ const KINETIC_MAIN_IMAGE = '/dcd50533-5c90-4e05-ae9c-1e1640403fbc.jpeg';
 const PAGE_LOAD_SOUND = '/audio/211976__qubodup__boom2.flac';
 const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
 
-const DOOR_ICON_CLASS =
-  'door-entry-blink size-[clamp(2.25rem,8vmin,3.5rem)] text-primary transition-[color,filter,opacity] duration-200 group-active:animate-none group-active:text-red-700 group-active:opacity-100 group-active:drop-shadow-[0_0_16px_rgba(220,38,38,0.55)] dark:group-active:text-white dark:group-active:drop-shadow-[0_0_24px_rgba(255,237,213,0.95)]';
-
 export function HomePage() {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [hasEntered, setHasEntered] = useState(false);
-
-  const handleEnter = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      void audio.play().catch(() => {
-        // FLAC may be unsupported in some browsers.
-      });
-    }
-
-    setHasEntered(true);
-  };
 
   const playBoomSound = () => {
     const el = audioRef.current;
@@ -49,35 +33,9 @@ export function HomePage() {
         <source src={PAGE_LOAD_SOUND} type="audio/flac" />
       </audio>
 
-      {!hasEntered ? (
-        <div
-          className="fixed inset-0 z-[200] flex h-dvh w-full items-center justify-center bg-background pointer-events-auto"
-          style={{position: 'fixed', inset: 0, zIndex: 200}}
-        >
-          <button
-            type="button"
-            onClick={handleEnter}
-            className="group flex min-h-16 min-w-16 cursor-pointer items-center justify-center rounded-2xl p-4 transition-all duration-200 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 active:scale-[0.98]"
-            aria-label="Enter site"
-          >
-            <DoorClosed
-              className={`${DOOR_ICON_CLASS} group-active:hidden`}
-              strokeWidth={1.25}
-              aria-hidden
-            />
-            <DoorOpen
-              className={`${DOOR_ICON_CLASS} hidden group-active:block`}
-              strokeWidth={1.25}
-              aria-hidden
-            />
-          </button>
-        </div>
-      ) : null}
+      <SiteNav currentPage="home" />
 
-      <div className={!hasEntered ? 'pointer-events-none' : undefined}>
-          <SiteNav currentPage="home" />
-
-          <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32 page-main-gradient">
+      <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32 page-main-gradient">
             <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-12 sm:mb-20">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-x-12 lg:gap-y-10 items-center">
                 <div className="min-w-0 lg:col-span-5 order-2 lg:order-1">
@@ -272,8 +230,7 @@ export function HomePage() {
             </section>
           </main>
 
-          <SiteFooter />
-      </div>
+      <SiteFooter />
     </>
   );
 }

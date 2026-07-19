@@ -7,6 +7,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return SITE_ROUTES.map((route) => ({
     url: siteUrl(route.path),
     changeFrequency: 'monthly',
-    priority: route.path === '/' ? 1 : 0.8,
+    priority: route.path === '/home/' ? 1 : route.path === '/' ? 0.9 : 0.8,
   }));
 }

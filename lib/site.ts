@@ -14,6 +14,11 @@ export type SiteRoute = {
 export const PAGE_ROUTES = {
   home: {
     path: '/',
+    title: 'Enter - Ugnė',
+    description: 'Step inside Ugnė\'s personal site — court competitor, QA engineer, and professional overthinker.',
+  },
+  homePage: {
+    path: '/home/',
     title: 'Ugnė - Court Competitor',
     description: DEFAULT_DESCRIPTION,
   },
