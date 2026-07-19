@@ -10,6 +10,13 @@ import {ThemeToggle} from '../theme-toggle/ThemeToggle';
 const PERSONA_IMAGE = '/cc34d4a1-65a9-47d8-82e2-ce055bec3b13.jpeg';
 const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
 const EMAIL = 'crycocacola@gmail.com';
+const EXIT_SOUNDS = [
+  '/audio/637071__SergeQuadrado__dad-says-bye-bye.mp3',
+  '/audio/242669__Reitanna__snake-bye.mp3',
+  '/audio/417197__theliongirl10__me-saying-bye.mp3',
+  '/audio/343893__Reitanna__mmbye.mp3',
+] as const;
+const SAY_CHEESE_SOUND = '/audio/93921__tim.kahn__cheese.mp3';
 
 type SiteNavProps = {
   currentPage?: 'home' | 'statistics' | 'sponsorship' | 'say-cheese' | 'enter';
@@ -17,13 +24,41 @@ type SiteNavProps = {
 
 type NavPage = SiteNavProps['currentPage'];
 
-const NAV_LINKS: {page: NavPage; href: string; label: string; icon?: LucideIcon; iconOnly?: boolean; iconFlip?: boolean}[] = [
+const NAV_LINKS: {
+  page: NavPage;
+  href: string;
+  label: string;
+  icon?: LucideIcon;
+  iconOnly?: boolean;
+  iconFlip?: boolean;
+  clickSound?: string | readonly string[];
+}[] = [
   {page: 'home', href: '/home/', label: 'Home', icon: Home, iconOnly: true},
   {page: 'statistics', href: '/statistics/', label: 'Statistics', icon: BarChart3, iconOnly: true},
   {page: 'sponsorship', href: '/sponsorship/', label: 'Sponsorship', icon: Coffee, iconOnly: true},
-  {page: 'say-cheese', href: '/say-cheese/', label: 'Say Cheese', icon: Smile, iconOnly: true, iconFlip: true},
-  {page: 'enter', href: '/', label: 'Exit', icon: DoorOpen, iconOnly: true},
+  {page: 'say-cheese', href: '/say-cheese/', label: 'Say Cheese', icon: Smile, iconOnly: true, iconFlip: true, clickSound: SAY_CHEESE_SOUND},
+  {page: 'enter', href: '/', label: 'Exit', icon: DoorOpen, iconOnly: true, clickSound: EXIT_SOUNDS},
 ];
+
+let lastExitSoundIndex = -1;
+
+function playNavClickSound(src: string | readonly string[]) {
+  const sources = Array.isArray(src) ? src : [src];
+  if (sources.length === 0) return;
+
+  let index = Math.floor(Math.random() * sources.length);
+  if (sources.length > 1) {
+    while (index === lastExitSoundIndex) {
+      index = Math.floor(Math.random() * sources.length);
+    }
+    lastExitSoundIndex = index;
+  }
+
+  const audio = new Audio(sources[index]);
+  void audio.play().catch(() => {
+    // Ignore autoplay restrictions or missing audio support.
+  });
+}
 
 function useThemeMode(): 'light' | 'dark' {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
@@ -59,6 +94,7 @@ type MobileNavRowProps = {
   iconFlip?: boolean;
   active?: boolean;
   external?: boolean;
+  clickSound?: string | readonly string[];
   onNavigate?: () => void;
   trailing?: ReactNode;
 };
@@ -72,6 +108,7 @@ function MobileNavRow({
   iconFlip = false,
   active = false,
   external = false,
+  clickSound,
   onNavigate,
   trailing,
 }: MobileNavRowProps) {
@@ -134,6 +171,11 @@ function MobileNavRow({
     </>
   );
 
+  const handleNavigate = () => {
+    if (clickSound) playNavClickSound(clickSound);
+    onNavigate?.();
+  };
+
   if (external) {
     return (
       <a
@@ -141,7 +183,7 @@ function MobileNavRow({
         target="_blank"
         rel="noopener noreferrer"
         className={rowClassName}
-        onClick={onNavigate}
+        onClick={handleNavigate}
       >
         {content}
       </a>
@@ -149,7 +191,7 @@ function MobileNavRow({
   }
 
   return (
-    <Link href={href} className={rowClassName} onClick={onNavigate}>
+    <Link href={href} className={rowClassName} onClick={handleNavigate}>
       {content}
     </Link>
   );
@@ -256,6 +298,13 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
                 ].join(' ')}
                 aria-current={active ? 'page' : undefined}
                 aria-label={link.iconOnly ? link.label : undefined}
+                onClick={
+                  link.clickSound
+                    ? () => {
+                        playNavClickSound(link.clickSound!);
+                      }
+                    : undefined
+                }
               >
                 <span
                   className={[
@@ -347,6 +396,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
                     iconOnly={link.iconOnly}
                     iconFlip={link.iconFlip}
                     active={currentPage === link.page}
+                    clickSound={link.clickSound}
                     onNavigate={closeMenu}
                   />
                 ))}
