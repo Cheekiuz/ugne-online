@@ -44,7 +44,9 @@ export function SideBySideLayout({children, className = ''}: SideBySideLayoutPro
         return;
       }
 
-      const end = content.querySelector<HTMLElement>('[data-side-by-side-end]');
+      const end = content.matches('[data-side-by-side-end]')
+        ? content
+        : content.querySelector<HTMLElement>('[data-side-by-side-end]');
       if (!end) return;
 
       const top = stickyTopPx();

@@ -272,6 +272,8 @@ export default function SponsorshipPage() {
                 &ldquo;I don&apos;t need a title sponsor. I need an iced latte.&rdquo;
               </blockquote>
 
+              <SponsorCta />
+
               <div className="space-y-6">
                 <SectionHeading eyebrow="AKA Life Support System" title="Currently Sponsored By" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

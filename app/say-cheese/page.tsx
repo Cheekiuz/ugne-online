@@ -41,8 +41,9 @@ export default function SayCheesePage() {
           </blockquote>
 
           <SideBySideLayout>
-            <SideBySideContent className="max-w-2xl" data-side-by-side-end>
+            <SideBySideContent className="max-w-2xl">
               <SponsorSmileWall />
+              <div data-side-by-side-end className="sr-only" aria-hidden />
             </SideBySideContent>
 
             <SideBySideHero>
