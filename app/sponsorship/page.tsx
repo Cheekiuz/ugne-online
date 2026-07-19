@@ -7,6 +7,7 @@ import {SiteNav} from '../components/layout/SiteNav';
 import {SiteFooter} from '../components/layout/SiteFooter';
 import {SideBySideContent, SideBySideHero, SideBySideLayout} from '../components/layout/SideBySideLayout';
 import {SponsorCta} from '../components/sponsorship/SponsorCta';
+import {SponsorshipHeroFloaters} from '../components/sponsorship/SponsorshipHeroFloaters';
 
 const HERO_IMAGE = '/sponsorship-hero.png';
 
@@ -254,14 +255,17 @@ export default function SponsorshipPage() {
             <span>Current world ranking: Financially Optimistic.</span>
           </div>
 
-          <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6 card-lift">
-            <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black mb-3">Sponsorship Opportunities</h1>
-            <p className="font-headline text-lg sm:text-xl md:text-2xl font-bold opacity-90 mb-2">
-              Because tennis balls or coffee don&apos;t grow on trees
-            </p>
-            <p className="text-lg opacity-90 font-light italic max-w-xl mx-auto">
-              Funding dreams since approximately last Tuesday.
-            </p>
+          <div className="tennis-gradient relative overflow-hidden p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6 card-lift">
+            <SponsorshipHeroFloaters />
+            <div className="relative z-10">
+              <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black mb-3">Sponsorship Opportunities</h1>
+              <p className="font-headline text-lg sm:text-xl md:text-2xl font-bold opacity-90 mb-2">
+                Because tennis balls or coffee don&apos;t grow on trees
+              </p>
+              <p className="text-lg opacity-90 font-light italic max-w-xl mx-auto">
+                Funding dreams since approximately last Tuesday.
+              </p>
+            </div>
           </div>
 
           <SideBySideLayout>
