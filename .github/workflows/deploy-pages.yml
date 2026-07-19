@@ -75,7 +75,7 @@ jobs:
       contents: write
     steps:
       - name: Download site bundle
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: site
           path: out
