@@ -17,11 +17,11 @@ type SiteNavProps = {
 
 type NavPage = SiteNavProps['currentPage'];
 
-const NAV_LINKS: {page: NavPage; href: string; label: string; icon?: LucideIcon; iconOnly?: boolean}[] = [
+const NAV_LINKS: {page: NavPage; href: string; label: string; icon?: LucideIcon; iconOnly?: boolean; iconFlip?: boolean}[] = [
   {page: 'home', href: '/', label: 'Home'},
   {page: 'statistics', href: '/statistics/', label: 'Statistics'},
   {page: 'sponsorship', href: '/sponsorship/', label: 'Sponsorship', icon: Coffee, iconOnly: true},
-  {page: 'say-cheese', href: '/say-cheese/', label: 'Say Cheese', icon: Smile, iconOnly: true},
+  {page: 'say-cheese', href: '/say-cheese/', label: 'Say Cheese', icon: Smile, iconOnly: true, iconFlip: true},
 ];
 
 function useThemeMode(): 'light' | 'dark' {
@@ -55,6 +55,7 @@ type MobileNavRowProps = {
   secondary?: string;
   icon?: LucideIcon;
   iconOnly?: boolean;
+  iconFlip?: boolean;
   active?: boolean;
   external?: boolean;
   onNavigate?: () => void;
@@ -67,6 +68,7 @@ function MobileNavRow({
   secondary,
   icon: Icon,
   iconOnly = false,
+  iconFlip = false,
   active = false,
   external = false,
   onNavigate,
@@ -89,7 +91,11 @@ function MobileNavRow({
       {iconOnly && Icon ? (
         <span className={['inline-flex shrink-0 items-center justify-center', pillClassName].join(' ')}>
           <Icon
-            className={active ? 'h-5 w-5 nav-link-icon nav-link-icon-active' : 'h-5 w-5 nav-link-icon nav-link-icon-inactive'}
+            className={[
+              'nav-link-icon',
+              active ? 'h-5 w-5 nav-link-icon-active' : 'h-5 w-5 nav-link-icon-inactive',
+              iconFlip ? 'nav-link-icon--flipped' : '',
+            ].join(' ')}
             strokeWidth={active ? 2.5 : 2}
             aria-hidden
           />
@@ -258,7 +264,11 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
                 >
                   {link.iconOnly && Icon ? (
                     <Icon
-                      className={['nav-link-icon', active ? 'h-5 w-5 nav-link-icon-active' : 'h-6 w-6 nav-link-icon-inactive'].join(' ')}
+                      className={[
+                        'nav-link-icon',
+                        active ? 'h-5 w-5 nav-link-icon-active' : 'h-6 w-6 nav-link-icon-inactive',
+                        link.iconFlip ? 'nav-link-icon--flipped' : '',
+                      ].join(' ')}
                       strokeWidth={active ? 2.5 : 2}
                       aria-hidden
                     />
@@ -334,6 +344,7 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
                     label={link.label}
                     icon={link.icon}
                     iconOnly={link.iconOnly}
+                    iconFlip={link.iconFlip}
                     active={currentPage === link.page}
                     onNavigate={closeMenu}
                   />

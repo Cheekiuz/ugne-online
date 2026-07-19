@@ -261,6 +261,10 @@
   transition: stroke 0.2s ease, opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
 }
 
+.nav-link-icon--flipped {
+  transform: rotate(180deg);
+}
+
 .nav-link-pill-inactive {
   display: inline-flex;
   align-items: center;
@@ -295,6 +299,10 @@
   stroke-width: 2.25;
   filter: drop-shadow(0 0 4px rgba(207, 248, 48, 0.45));
   transform: scale(1.06);
+}
+
+.group:hover .nav-link-pill-inactive .nav-link-icon-inactive.nav-link-icon--flipped {
+  transform: rotate(180deg) scale(1.06);
 }
 
 .group:hover .nav-link-pill-inactive .nav-link-text-inactive {
@@ -605,6 +613,52 @@
   .bmc-blink-button {
     animation: none;
     background: #ffdd00;
+  }
+}
+
+@keyframes challenge-cyan-gradient-glow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    box-shadow:
+      0 0 12px rgba(6, 182, 212, 0.45),
+      0 0 24px rgba(34, 211, 238, 0.25);
+    filter: brightness(1);
+  }
+
+  50% {
+    background-position: 100% 50%;
+    box-shadow:
+      0 0 20px rgba(6, 182, 212, 0.7),
+      0 0 40px rgba(34, 211, 238, 0.45);
+    filter: brightness(1.06);
+  }
+}
+
+.challenge-me-button {
+  background: linear-gradient(45deg, #0891b2 0%, #06b6d4 30%, #22d3ee 55%, #67e8f9 75%, #06b6d4 100%);
+  background-size: 220% 220%;
+  color: #06141b;
+  border: none;
+  animation: challenge-cyan-gradient-glow 5s ease-in-out infinite;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.challenge-me-button:hover {
+  filter: brightness(1.1);
+  box-shadow:
+    0 0 20px rgba(6, 182, 212, 0.55),
+    0 0 40px rgba(34, 211, 238, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .challenge-me-button {
+    animation: none;
+    background: #06b6d4;
+    box-shadow: 0 0 16px rgba(6, 182, 212, 0.35);
   }
 }
 

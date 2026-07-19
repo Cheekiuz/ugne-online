@@ -265,7 +265,7 @@ export function HomePage() {
                     href={CHALLENGE_ME_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-error text-on-error px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:scale-105 active:scale-95 transition-all w-full sm:w-auto"
+                    className="challenge-me-button px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:scale-105 active:scale-95 transition-all w-full sm:w-auto"
                   >
                     Challenge me
                   </a>
