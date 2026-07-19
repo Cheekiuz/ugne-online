@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type {LucideIcon} from 'lucide-react';
-import {ChevronRight, Mail, Menu, Moon, Sun, X} from 'lucide-react';
+import {ChevronRight, Coffee, Mail, Menu, Moon, Smile, Sun, X} from 'lucide-react';
 import {useEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject} from 'react';
 import {ThemeToggle} from '../theme-toggle/ThemeToggle';
 
@@ -17,11 +17,11 @@ type SiteNavProps = {
 
 type NavPage = SiteNavProps['currentPage'];
 
-const NAV_LINKS: {page: NavPage; href: string; label: string}[] = [
+const NAV_LINKS: {page: NavPage; href: string; label: string; icon?: LucideIcon; iconOnly?: boolean}[] = [
   {page: 'home', href: '/', label: 'Home'},
   {page: 'statistics', href: '/statistics/', label: 'Statistics'},
-  {page: 'sponsorship', href: '/sponsorship/', label: 'Sponsorship'},
-  {page: 'say-cheese', href: '/say-cheese/', label: 'Say Cheese'},
+  {page: 'sponsorship', href: '/sponsorship/', label: 'Sponsorship', icon: Coffee, iconOnly: true},
+  {page: 'say-cheese', href: '/say-cheese/', label: 'Say Cheese', icon: Smile, iconOnly: true},
 ];
 
 function useThemeMode(): 'light' | 'dark' {
@@ -54,6 +54,7 @@ type MobileNavRowProps = {
   label: string;
   secondary?: string;
   icon?: LucideIcon;
+  iconOnly?: boolean;
   active?: boolean;
   external?: boolean;
   onNavigate?: () => void;
@@ -65,21 +66,35 @@ function MobileNavRow({
   label,
   secondary,
   icon: Icon,
+  iconOnly = false,
   active = false,
   external = false,
   onNavigate,
   trailing,
 }: MobileNavRowProps) {
   const rowClassName = [
-    'flex items-center gap-3 w-full min-h-[48px] px-3 py-2.5 rounded-xl transition-colors font-headline',
+    'group flex items-center gap-3 w-full min-h-[48px] px-3 py-2.5 rounded-xl transition-colors font-headline',
     active
-      ? 'bg-primary/10 tennis-gradient-text font-bold border-l-2 border-[#7a9418]'
-      : 'text-on-surface-variant hover:tennis-gradient-text',
+      ? 'bg-primary/12 font-bold border-l-2 border-primary'
+      : 'text-on-surface-variant hover:bg-primary/8',
+  ].join(' ');
+
+  const pillClassName = [
+    active ? 'nav-link-pill-active' : 'nav-link-pill-inactive',
+    iconOnly ? 'nav-link-pill--icon h-11 w-11' : 'nav-link-pill--text',
   ].join(' ');
 
   const content = (
     <>
-      {Icon ? (
+      {iconOnly && Icon ? (
+        <span className={['inline-flex shrink-0 items-center justify-center', pillClassName].join(' ')}>
+          <Icon
+            className={active ? 'h-5 w-5 nav-link-icon nav-link-icon-active' : 'h-5 w-5 nav-link-icon nav-link-icon-inactive'}
+            strokeWidth={active ? 2.5 : 2}
+            aria-hidden
+          />
+        </span>
+      ) : Icon ? (
         <span
           className={[
             'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg',
@@ -88,13 +103,26 @@ function MobileNavRow({
         >
           <Icon className="h-4 w-4" aria-hidden />
         </span>
-      ) : null}
-      <span className="flex flex-col min-w-0 flex-1 text-left">
-        <span className="text-sm leading-tight">{label}</span>
-        {secondary ? (
-          <span className="font-body text-xs text-on-surface-variant truncate mt-0.5">{secondary}</span>
-        ) : null}
-      </span>
+      ) : (
+        <span className={['inline-flex shrink-0 items-center justify-center', pillClassName].join(' ')}>
+          <span className={active ? 'nav-link-text-active text-sm leading-tight' : 'nav-link-text-inactive text-sm leading-tight'}>
+            {label}
+          </span>
+        </span>
+      )}
+      {iconOnly ? (
+        <>
+          <span className="sr-only">{label}</span>
+          <span className="flex-1" aria-hidden />
+        </>
+      ) : (
+        <span className="flex flex-col min-w-0 flex-1 text-left">
+          {Icon ? <span className="text-sm leading-tight">{label}</span> : <span className="sr-only">{label}</span>}
+          {secondary ? (
+            <span className="font-body text-xs text-on-surface-variant truncate mt-0.5">{secondary}</span>
+          ) : null}
+        </span>
+      )}
       {trailing ?? (external || href ? <ChevronRight className="h-4 w-4 shrink-0 opacity-40" aria-hidden /> : null)}
     </>
   );
@@ -210,19 +238,34 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
         <div className="hidden lg:flex flex-1 justify-center gap-6 lg:gap-10 items-center min-w-0 px-4">
           {NAV_LINKS.map((link) => {
             const active = currentPage === link.page;
+            const Icon = link.icon;
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={[
-                  'font-bold pb-1 transition-all whitespace-nowrap opacity-80 hover:opacity-100',
-                  active
-                    ? 'tennis-gradient-text opacity-100 nav-link-gradient-active'
-                    : 'text-on-surface-variant hover:tennis-gradient-text',
+                  'group inline-flex items-center justify-center font-bold transition-all whitespace-nowrap',
+                  active ? 'opacity-100' : 'opacity-80 hover:opacity-100',
                 ].join(' ')}
                 aria-current={active ? 'page' : undefined}
+                aria-label={link.iconOnly ? link.label : undefined}
               >
-                {link.label}
+                <span
+                  className={[
+                    active ? 'nav-link-pill-active' : 'nav-link-pill-inactive',
+                    link.iconOnly ? 'nav-link-pill--icon' : 'nav-link-pill--text',
+                  ].join(' ')}
+                >
+                  {link.iconOnly && Icon ? (
+                    <Icon
+                      className={['nav-link-icon', active ? 'h-5 w-5 nav-link-icon-active' : 'h-6 w-6 nav-link-icon-inactive'].join(' ')}
+                      strokeWidth={active ? 2.5 : 2}
+                      aria-hidden
+                    />
+                  ) : (
+                    <span className={active ? 'nav-link-text-active' : 'nav-link-text-inactive'}>{link.label}</span>
+                  )}
+                </span>
               </Link>
             );
           })}
@@ -289,6 +332,8 @@ export function SiteNav({currentPage = 'home'}: SiteNavProps) {
                     key={link.href}
                     href={link.href}
                     label={link.label}
+                    icon={link.icon}
+                    iconOnly={link.iconOnly}
                     active={currentPage === link.page}
                     onNavigate={closeMenu}
                   />

@@ -259,7 +259,7 @@ export default function SponsorshipPage() {
           <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6">
             <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black mb-3">Sponsorship Opportunities</h1>
             <p className="font-headline text-lg sm:text-xl md:text-2xl font-bold opacity-90 mb-2">
-              Because tennis balls don&apos;t grow on trees
+              Because tennis balls or coffee don&apos;t grow on trees
             </p>
             <p className="text-lg opacity-90 font-light italic max-w-xl mx-auto">
               Funding dreams since approximately last Tuesday.
@@ -269,7 +269,7 @@ export default function SponsorshipPage() {
           <SideBySideLayout>
             <SideBySideContent className="space-y-10">
               <blockquote className="bg-surface-container-low rounded-xl p-4 sm:p-6 border-l-2 border-primary italic text-on-surface-variant text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl">
-                &ldquo;I don&apos;t need a title sponsor. I need an iced latte.&rdquo;
+                &ldquo;Supporting whatever crazy idea comes next.&rdquo;
               </blockquote>
 
               <SponsorCta />
