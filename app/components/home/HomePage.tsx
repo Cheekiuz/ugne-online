@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {Coffee} from 'lucide-react';
 import {useRef} from 'react';
 import {AnimatedTennisBall} from './AnimatedTennisBall';
+import {FirstVisitWelcome} from './FirstVisitWelcome';
 import {ThinkAgainButton} from './ThinkAgainButton';
 import './home-page-flip.css';
 import {useHomeUpsideDownFlip} from './useHomeUpsideDownFlip';
@@ -40,6 +41,7 @@ export function HomePage() {
       <SiteNav currentPage="home" />
 
       <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32 page-main-gradient">
+            <FirstVisitWelcome />
             <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-12 sm:mb-20">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-x-12 lg:gap-y-10 items-center">
                 <div className="min-w-0 lg:col-span-5 order-2 lg:order-1">

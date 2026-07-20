@@ -145,9 +145,9 @@ export default function StatisticsPage() {
           </div>
 
           <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl mb-6 card-lift">
-            <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black mb-3">Career Statistics</h1>
+            <h1 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black mb-3">Life in Numbers</h1>
             <p className="font-headline text-lg sm:text-xl md:text-2xl font-bold opacity-90 mb-2">
-              of a Court Competitor &amp; Bug Hunter
+              Dashboard of Randomness
             </p>
             <p className="text-lg opacity-90 font-light italic max-w-xl mx-auto">Numbers don&apos;t lie. I just adjust them.</p>
           </div>

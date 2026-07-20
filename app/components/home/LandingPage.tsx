@@ -3,6 +3,7 @@
 import {useRouter} from 'next/navigation';
 import {useRef} from 'react';
 import {DoorClosed, DoorOpen} from 'lucide-react';
+import {prepareWelcomeAfterDoorEntry} from './FirstVisitWelcome';
 
 const PAGE_LOAD_SOUND = '/audio/211976__qubodup__boom2.flac';
 
@@ -20,6 +21,8 @@ export function LandingPage() {
         // FLAC may be unsupported in some browsers.
       });
     }
+
+    prepareWelcomeAfterDoorEntry();
 
     router.push('/home/');
   };
