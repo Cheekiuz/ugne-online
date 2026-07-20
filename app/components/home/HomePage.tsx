@@ -5,6 +5,8 @@ import Link from 'next/link';
 import {useRef} from 'react';
 import {AnimatedTennisBall} from './AnimatedTennisBall';
 import {ThinkAgainButton} from './ThinkAgainButton';
+import './home-page-flip.css';
+import {useHomeUpsideDownFlip} from './useHomeUpsideDownFlip';
 import {ExecutiveDecisionSprite} from '../executive-decision-sprite/ExecutiveDecisionSprite';
 import {SiteFooter} from '../layout/SiteFooter';
 import {SiteNav} from '../layout/SiteNav';
@@ -17,6 +19,7 @@ const CHALLENGE_ME_URL = 'https://www.instagram.com/ugne_le_';
 
 export function HomePage() {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const isFlipped = useHomeUpsideDownFlip();
 
   const playBoomSound = () => {
     const el = audioRef.current;
@@ -28,7 +31,7 @@ export function HomePage() {
   };
 
   return (
-    <>
+    <div className={`home-page-flip${isFlipped ? ' home-page-flip--active' : ''}`}>
       <audio ref={audioRef} preload="none" onError={() => undefined}>
         <source src={PAGE_LOAD_SOUND} type="audio/flac" />
       </audio>
@@ -231,6 +234,6 @@ export function HomePage() {
           </main>
 
       <SiteFooter />
-    </>
+    </div>
   );
 }
