@@ -14,10 +14,16 @@ import {
   SMILE_DONATION_FLOOR,
   type SponsorSmile,
 } from '../../lib/supabase/smiles';
+import {mergeUniqueSmiles} from '../../lib/supabase/local-smiles';
 import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
 import {useSubmitSmile} from './useSubmitSmile';
+import './sponsor-smile-wall.css';
 
-import {SPONSOR_SMILES_REFRESH_EVENT} from './sponsor-smile-events';
+import {
+  SPONSOR_SMILES_REFRESH_EVENT,
+  SPONSOR_SMILE_SUBMITTED_EVENT,
+  type SmileSubmittedDetail,
+} from './sponsor-smile-events';
 
 function smileStyle(smile: LayoutSmile, zIndex: number, color: string): CSSProperties {
   return {
@@ -29,42 +35,47 @@ function smileStyle(smile: LayoutSmile, zIndex: number, color: string): CSSPrope
   };
 }
 
-function createOptimisticSmile(): SponsorSmile {
-  return {
-    id: Date.now(),
-    pos_x: 15 + Math.random() * 70,
-    pos_y: 15 + Math.random() * 70,
-    created_at: new Date().toISOString(),
-  };
+function upsertSmile(smiles: SponsorSmile[], next: SponsorSmile): SponsorSmile[] {
+  if (smiles.some((smile) => smile.id === next.id)) {
+    return smiles;
+  }
+
+  return [...smiles, next];
 }
 
 export function SponsorSmileWall() {
   const [smiles, setSmiles] = useState<SponsorSmile[]>([]);
   const [count, setCount] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [optimisticSmile, setOptimisticSmile] = useState<SponsorSmile | null>(null);
-  const prevSmileCountRef = useRef(0);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [pendingSmileId, setPendingSmileId] = useState<number | null>(null);
+  const hasLoadedRef = useRef(false);
   const {submitSmile, submitting, hasSmiled, saveWarning, justSaved} = useSubmitSmile();
   const alreadySmiled = hasSmiled || hasSmiledLocally();
 
   const smilesForLayout = useMemo(() => {
-    let base = smiles;
-    if (optimisticSmile && !smiles.some((smile) => smile.id === optimisticSmile.id)) {
-      base = [...smiles, optimisticSmile];
-    }
-    const displayCount = Math.max(SMILE_DONATION_FLOOR, count);
-    return ensureSmilesForDisplay(base, Math.max(base.length, displayCount));
-  }, [smiles, optimisticSmile, count]);
+    const displayCount = Math.max(SMILE_DONATION_FLOOR, count, smiles.length);
+    return ensureSmilesForDisplay(smiles, displayCount);
+  }, [smiles, count]);
 
   const wallSmiles = useMemo(() => layoutScatteredSmiles(smilesForLayout), [smilesForLayout]);
   const wallMinHeight = wallSmiles.length > 8 ? 'min-h-[700px]' : 'min-h-[480px]';
 
   const loadSmiles = useCallback(async () => {
-    setLoading(true);
-    const [data, total] = await Promise.all([fetchSmiles(), fetchSmileCount()]);
-    setSmiles(data);
-    setCount(total);
-    setLoading(false);
+    const showInitialLoader = !hasLoadedRef.current;
+    if (showInitialLoader) {
+      setInitialLoading(true);
+    }
+
+    try {
+      const [data, total] = await Promise.all([fetchSmiles(), fetchSmileCount()]);
+      setSmiles((current) => mergeUniqueSmiles(data, current));
+      setCount((current) => Math.max(total, data.length, current, SMILE_DONATION_FLOOR));
+    } finally {
+      if (showInitialLoader) {
+        setInitialLoading(false);
+      }
+      hasLoadedRef.current = true;
+    }
   }, []);
 
   useEffect(() => {
@@ -74,22 +85,31 @@ export function SponsorSmileWall() {
       void loadSmiles();
     };
 
+    const onSubmitted = (event: Event) => {
+      const detail = (event as CustomEvent<SmileSubmittedDetail>).detail;
+      if (!detail?.smile) return;
+
+      setPendingSmileId(detail.smile.id);
+      setSmiles((current) => {
+        const next = upsertSmile(current, detail.smile);
+        setCount((total) => Math.max(total + 1, next.length, SMILE_DONATION_FLOOR));
+        return next;
+      });
+    };
+
     window.addEventListener(SPONSOR_SMILES_REFRESH_EVENT, onRefresh);
-    return () => window.removeEventListener(SPONSOR_SMILES_REFRESH_EVENT, onRefresh);
+    window.addEventListener(SPONSOR_SMILE_SUBMITTED_EVENT, onSubmitted);
+    return () => {
+      window.removeEventListener(SPONSOR_SMILES_REFRESH_EVENT, onRefresh);
+      window.removeEventListener(SPONSOR_SMILE_SUBMITTED_EVENT, onSubmitted);
+    };
   }, [loadSmiles]);
 
   useEffect(() => {
-    if (justSaved) {
-      setOptimisticSmile(createOptimisticSmile());
+    if (pendingSmileId && smiles.some((smile) => smile.id === pendingSmileId)) {
+      setPendingSmileId(null);
     }
-  }, [justSaved]);
-
-  useEffect(() => {
-    if (!loading && smiles.length > prevSmileCountRef.current) {
-      setOptimisticSmile(null);
-    }
-    prevSmileCountRef.current = smiles.length;
-  }, [loading, smiles.length]);
+  }, [pendingSmileId, smiles]);
 
   return (
     <div className="space-y-4">
@@ -121,13 +141,13 @@ export function SponsorSmileWall() {
       <div
         className={`bg-surface-container-lowest rounded-xl shadow-sm p-4 ${wallMinHeight} relative overflow-hidden border-b-2 border-primary card-lift`}
       >
-        {loading ? (
+        {initialLoading ? (
           <p className="text-on-surface-variant text-sm text-center py-16">Loading smiles…</p>
         ) : wallSmiles.length > 0 ? (
           wallSmiles.map((smile, index) => (
             <Smile
               key={`wall-${smile.id}`}
-              className="absolute h-10 w-10"
+              className={`absolute h-10 w-10${smile.id === pendingSmileId ? ' sponsor-smile-wall__new' : ''}`}
               strokeWidth={2.25}
               style={smileStyle(smile, index + 1, smile.colorWall)}
               aria-hidden

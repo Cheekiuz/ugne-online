@@ -1,0 +1,28 @@
+@keyframes sponsor-smile-pop {
+  0% {
+    scale: 0.4;
+    opacity: 0;
+  }
+
+  70% {
+    scale: 1.15;
+    opacity: 1;
+  }
+
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+.sponsor-smile-wall__new {
+  animation: sponsor-smile-pop 0.55s cubic-bezier(0.22, 0.72, 0.32, 1);
+  filter: drop-shadow(0 0 8px rgba(194, 233, 28, 0.65));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sponsor-smile-wall__new {
+    animation: none;
+    filter: none;
+  }
+}

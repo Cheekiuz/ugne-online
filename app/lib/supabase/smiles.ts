@@ -1,7 +1,9 @@
 import {getSupabaseClient} from './client';
+import {addLocalSmile, mergeUniqueSmiles, readLocalSmiles} from './local-smiles';
 
 export type SponsorSmile = {
   id: number;
+  visitor_id?: string;
   pos_x: number | null;
   pos_y: number | null;
   created_at: string;
@@ -91,9 +93,10 @@ function randomPosition(): {pos_x: number; pos_y: number} {
 }
 
 export async function fetchSmileCount(): Promise<number> {
+  const localCount = readLocalSmiles().length;
   const supabase = getSupabaseClient();
   if (!supabase) {
-    return 0;
+    return localCount;
   }
 
   const {count, error} = await supabase
@@ -102,16 +105,17 @@ export async function fetchSmileCount(): Promise<number> {
 
   if (error) {
     console.error('Failed to fetch smile count:', error.message);
-    return 0;
+    return localCount;
   }
 
-  return count ?? 0;
+  return Math.max(count ?? 0, localCount);
 }
 
 export async function fetchSmiles(): Promise<SponsorSmile[]> {
+  const localSmiles = readLocalSmiles();
   const supabase = getSupabaseClient();
   if (!supabase) {
-    return [];
+    return localSmiles;
   }
 
   const {data, error} = await supabase
@@ -121,7 +125,7 @@ export async function fetchSmiles(): Promise<SponsorSmile[]> {
     .limit(SMILE_LIMIT);
 
   if (!error && data) {
-    return data.map(normalizeSmile);
+    return mergeUniqueSmiles(data.map(normalizeSmile), localSmiles);
   }
 
   const {data: fallbackData, error: fallbackError} = await supabase
@@ -132,10 +136,10 @@ export async function fetchSmiles(): Promise<SponsorSmile[]> {
 
   if (fallbackError) {
     console.error('Failed to fetch smiles:', error?.message ?? fallbackError.message);
-    return [];
+    return localSmiles;
   }
 
-  return (fallbackData ?? []).map((row) =>
+  const remoteSmiles = (fallbackData ?? []).map((row) =>
     normalizeSmile({
       id: row.id,
       created_at: row.created_at,
@@ -143,38 +147,55 @@ export async function fetchSmiles(): Promise<SponsorSmile[]> {
       pos_y: null,
     }),
   );
+
+  return mergeUniqueSmiles(remoteSmiles, localSmiles);
 }
 
-export type AddSmileResult = 'success' | 'duplicate' | 'error' | 'unconfigured';
+export type AddSmileResult =
+  | {status: 'success'; smile: SponsorSmile}
+  | {status: 'duplicate'}
+  | {status: 'error'}
+  | {status: 'already'};
 
 export async function addSmile(visitorId: string): Promise<AddSmileResult> {
   const supabase = getSupabaseClient();
   if (!supabase) {
-    return 'unconfigured';
+    const smile = addLocalSmile(visitorId);
+    return {status: 'success', smile};
   }
 
   const {pos_x, pos_y} = randomPosition();
 
-  let {error} = await supabase.from('sponsor_smiles').insert({
-    visitor_id: visitorId,
-    pos_x,
-    pos_y,
-  });
+  let {data, error} = await supabase
+    .from('sponsor_smiles')
+    .insert({
+      visitor_id: visitorId,
+      pos_x,
+      pos_y,
+    })
+    .select('id, pos_x, pos_y, created_at')
+    .single();
 
   if (error) {
-    ({error} = await supabase.from('sponsor_smiles').insert({
-      visitor_id: visitorId,
-    }));
+    ({data, error} = await supabase
+      .from('sponsor_smiles')
+      .insert({
+        visitor_id: visitorId,
+      })
+      .select('id, pos_x, pos_y, created_at')
+      .single());
   }
 
-  if (!error) {
-    return 'success';
+  if (!error && data) {
+    return {status: 'success', smile: normalizeSmile(data)};
   }
 
-  if (error.code === '23505') {
-    return 'duplicate';
+  if (error?.code === '23505') {
+    return {status: 'duplicate'};
   }
 
-  console.error('Failed to add smile:', error.message);
-  return 'error';
+  console.error('Failed to add smile:', error?.message ?? 'Unknown error');
+
+  const localSmile = addLocalSmile(visitorId);
+  return {status: 'success', smile: localSmile};
 }

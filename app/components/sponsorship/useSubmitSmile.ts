@@ -3,7 +3,7 @@
 import {useCallback, useEffect, useState} from 'react';
 import {addSmile, type AddSmileResult} from '../../lib/supabase/smiles';
 import {getOrCreateVisitorId, hasSmiledLocally, markSmiledLocally, clearSmiledLocally} from '../../lib/supabase/visitor-id';
-import {notifySmileSubmitted, notifySmilesRefresh, SPONSOR_SMILE_SUBMITTED_EVENT} from './sponsor-smile-events';
+import {notifySmileSubmitted, notifySmilesRefresh, SPONSOR_SMILE_SUBMITTED_EVENT, type SmileSubmittedDetail} from './sponsor-smile-events';
 
 export function useSubmitSmile() {
   const [submitting, setSubmitting] = useState(false);
@@ -12,9 +12,13 @@ export function useSubmitSmile() {
   const [justSaved, setJustSaved] = useState(false);
 
   useEffect(() => {
-    const sync = () => {
+    const sync = (event: Event) => {
+      const detail = (event as CustomEvent<SmileSubmittedDetail>).detail;
       setHasSmiled(hasSmiledLocally());
-      setJustSaved(true);
+      if (detail?.smile) {
+        setJustSaved(true);
+        setSaveWarning(false);
+      }
     };
     window.addEventListener(SPONSOR_SMILE_SUBMITTED_EVENT, sync);
     return () => window.removeEventListener(SPONSOR_SMILE_SUBMITTED_EVENT, sync);
@@ -37,12 +41,17 @@ export function useSubmitSmile() {
     const visitorId = getOrCreateVisitorId();
     const result = await addSmile(visitorId);
 
-    if (result === 'success' || result === 'duplicate') {
+    if (result.status === 'success') {
+      markSmiledLocally();
+      setHasSmiled(true);
+      setJustSaved(true);
+      notifySmileSubmitted(result.smile);
+      notifySmilesRefresh();
+    } else if (result.status === 'duplicate') {
       markSmiledLocally();
       setHasSmiled(true);
       setJustSaved(true);
       notifySmilesRefresh();
-      notifySmileSubmitted();
     } else {
       setSaveWarning(true);
     }
