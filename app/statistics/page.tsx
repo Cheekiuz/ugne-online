@@ -112,15 +112,15 @@ function StatCard({stat}: {stat: CareerStat}) {
 
   return (
     <div
-      className={`bg-surface-container-lowest p-6 sm:p-8 rounded-xl shadow-sm border-b-4 ${stat.border} flex flex-col gap-3 card-lift`}
+      className={`bg-surface-container-lowest overflow-hidden p-6 sm:p-8 rounded-xl shadow-sm border-b-4 ${stat.border} flex flex-col gap-3 card-lift`}
     >
       <Icon className="h-5 w-5 text-primary" strokeWidth={1.75} aria-hidden />
       <p className="font-label uppercase tracking-widest text-xs text-on-surface-variant">{stat.label}</p>
       {stat.variant === 'redacted' ? (
-        <div className="relative inline-block max-w-full">
+        <div className="relative inline-block max-w-full overflow-hidden rounded-lg">
           <span className={statValueClassName(stat.variant)}>{stat.value}</span>
           <span
-            className="absolute inset-0 rounded bg-on-surface/90 blur-[2px]"
+            className="absolute inset-0 bg-on-surface/90 blur-[2px]"
             aria-hidden
           />
         </div>
