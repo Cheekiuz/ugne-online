@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import {Coffee} from 'lucide-react';
 import {useRef} from 'react';
 import {AnimatedTennisBall} from './AnimatedTennisBall';
 import {ThinkAgainButton} from './ThinkAgainButton';
@@ -207,15 +208,15 @@ export function HomePage() {
                   <ThinkAgainButton onClick={playBoomSound} />
                   <Link
                     href="/statistics/"
-                    className="border-2 border-on-primary text-on-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:bg-on-primary/10 transition-all w-full sm:w-auto"
+                    className="border border-on-primary/40 text-on-primary px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg hover:bg-on-primary/10 transition-all w-full sm:w-auto"
                   >
                     View Statistics
                   </Link>
                   <Link
                     href="/sponsorship/"
-                    className="bmc-blink-button inline-block px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg uppercase hover:scale-105 active:scale-95 transition-transform w-full sm:w-auto"
+                    className="bmc-blink-button inline-flex items-center justify-center gap-1.5 px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg uppercase hover:scale-105 active:scale-95 transition-transform w-full sm:w-auto"
                   >
-                    💰 Sponsorship Opportunities
+                    Buying <Coffee className="h-[1.1em] w-[1.1em] shrink-0" aria-hidden /> Oportunities
                   </Link>
                   <a
                     href={CHALLENGE_ME_URL}
