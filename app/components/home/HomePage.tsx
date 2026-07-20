@@ -221,7 +221,7 @@ export function HomePage() {
                     href="/sponsorship/"
                     className="bmc-blink-button inline-flex items-center justify-center gap-1.5 px-6 py-3 sm:px-10 sm:py-4 rounded-xl font-black text-base sm:text-lg uppercase hover:scale-105 active:scale-95 transition-transform w-full sm:w-auto"
                   >
-                    Buying <Coffee className="h-[1.1em] w-[1.1em] shrink-0" aria-hidden /> Oportunities
+                    Buying <Coffee className="h-[1.1em] w-[1.1em] shrink-0" aria-hidden /> Opportunities
                   </Link>
                   <a
                     href={CHALLENGE_ME_URL}
