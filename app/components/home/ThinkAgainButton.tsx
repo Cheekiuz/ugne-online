@@ -5,7 +5,7 @@ import {useCallback, useState, type CSSProperties} from 'react';
 const ESCAPE_RANGE_MIN = 28;
 const ESCAPE_RANGE_MAX = 72;
 const MAX_OFFSET = 96;
-const FOLLOW_UP_LABELS = ['Nice try 😄', 'Still trying?', 'I\'m quick.', 'Okay, okay!'] as const;
+const FOLLOW_UP_LABELS = ['Nice try', 'Still trying?', 'I\'m quick.', 'Okay, okay!'] as const;
 
 type Offset = {x: number; y: number};
 
