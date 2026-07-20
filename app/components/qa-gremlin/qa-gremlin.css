@@ -1,0 +1,157 @@
+.qa-gremlin-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.qa-gremlin {
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  filter: drop-shadow(0 4px 10px rgba(15, 20, 18, 0.2));
+  transition: transform 0.2s ease, left 0.35s ease, top 0.35s ease;
+}
+
+.dark .qa-gremlin {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.45));
+}
+
+.qa-gremlin svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Peek behind card — only eyes / edge visible */
+.qa-gremlin--peek-top {
+  clip-path: inset(0 0 40% 0);
+}
+
+.qa-gremlin--peek-left {
+  clip-path: inset(0 50% 0 0);
+}
+
+.qa-gremlin--peek-right {
+  clip-path: inset(0 0 0 50%);
+}
+
+.qa-gremlin--watch {
+  animation: qa-gremlin-idle-bob 2.4s ease-in-out infinite;
+}
+
+.qa-gremlin--wave {
+  animation: qa-gremlin-wave-arm 0.55s ease-in-out infinite;
+}
+
+.qa-gremlin--laugh {
+  animation: qa-gremlin-laugh-shake 0.12s ease-in-out infinite;
+  cursor: default;
+}
+
+.qa-gremlin--flee-right {
+  animation: qa-gremlin-flee-right 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+.qa-gremlin--flee-left {
+  animation: qa-gremlin-flee-left 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+.qa-gremlin--trip {
+  animation: qa-gremlin-trip 0.9s ease-in-out;
+}
+
+.qa-gremlin__trip-ball {
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #a3ff12;
+  border: 2px solid #1a2a22;
+  pointer-events: none;
+  z-index: 41;
+}
+
+@keyframes qa-gremlin-idle-bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -3px;
+  }
+}
+
+@keyframes qa-gremlin-wave-arm {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+
+  50% {
+    rotate: -6deg;
+  }
+}
+
+@keyframes qa-gremlin-laugh-shake {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  25% {
+    translate: -2px 0;
+  }
+
+  75% {
+    translate: 2px 0;
+  }
+}
+
+@keyframes qa-gremlin-flee-right {
+  to {
+    translate: calc(100vw + 4rem) 0;
+  }
+}
+
+@keyframes qa-gremlin-flee-left {
+  to {
+    translate: calc(-100vw - 4rem) 0;
+  }
+}
+
+@keyframes qa-gremlin-trip {
+  0% {
+    rotate: 0deg;
+    translate: 0 0;
+  }
+
+  35% {
+    rotate: -18deg;
+    translate: 0 6px;
+  }
+
+  70% {
+    rotate: 8deg;
+    translate: 0 2px;
+  }
+
+  100% {
+    rotate: 0deg;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qa-gremlin-layer {
+    display: none;
+  }
+}

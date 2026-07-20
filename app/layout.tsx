@@ -3,6 +3,7 @@ import {Lexend, Inter} from 'next/font/google';
 import {DEFAULT_DESCRIPTION, SITE_NAME, SITE_URL} from '@/lib/site';
 import {GoogleAnalytics} from './components/analytics/GoogleAnalytics';
 import {ScrollPeekCharacter} from './components/scroll-peek/ScrollPeekCharacter';
+import {QaGremlin} from './components/qa-gremlin/QaGremlin';
 import {Snowfall} from './components/snow/Snowfall';
 import './globals.css'; // Global styles
 
@@ -65,6 +66,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body className="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container antialiased" suppressHydrationWarning>
         <Snowfall />
         <ScrollPeekCharacter />
+        <QaGremlin />
         {children}
         <GoogleAnalytics />
       </body>

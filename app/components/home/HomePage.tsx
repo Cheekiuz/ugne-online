@@ -5,7 +5,6 @@ import Link from 'next/link';
 import {Coffee} from 'lucide-react';
 import {useRef} from 'react';
 import {AnimatedTennisBall} from './AnimatedTennisBall';
-import {AnimatedTennisRacket} from './AnimatedTennisRacket';
 import {FirstVisitWelcome} from './FirstVisitWelcome';
 import {ThinkAgainButton} from './ThinkAgainButton';
 import './home-page-flip.css';
@@ -80,7 +79,7 @@ export function HomePage() {
             <section className="bg-surface-container-low pt-12 pb-12 sm:pt-24 sm:pb-24 mb-12 sm:mb-20">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <div className="flex flex-col md:flex-row gap-4 mb-8 sm:mb-12 items-baseline">
-                  <h2 className="font-headline text-3xl sm:text-4xl font-bold">The Kinetic Drive</h2>
+                  <h2 className="font-headline text-3xl sm:text-4xl font-bold">Life in Motion</h2>
                   <div className="h-[2px] flex-grow bg-outline-variant opacity-20"></div>
                   <span className="font-label text-tertiary-container bg-tertiary px-4 py-1 rounded-full text-xs uppercase tracking-widest">Active Season</span>
                 </div>
@@ -178,7 +177,6 @@ export function HomePage() {
                     fill
                     referrerPolicy="no-referrer"
                   />
-                  <AnimatedTennisRacket />
                 </div>
                 <div className="md:w-1/2 p-6 sm:p-8 md:p-12 bg-surface-container-low flex flex-col justify-center">
                   <h2 className="font-headline text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-primary">Preferred Courts</h2>
