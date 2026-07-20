@@ -33,12 +33,13 @@ export function HomePage() {
   };
 
   return (
-    <div className={`home-page-flip${isFlipped ? ' home-page-flip--active' : ''}`}>
+    <>
+      <SiteNav currentPage="home" />
+
+      <div className={`home-page-flip${isFlipped ? ' home-page-flip--active' : ''}`}>
       <audio ref={audioRef} preload="none" onError={() => undefined}>
         <source src={PAGE_LOAD_SOUND} type="audio/flac" />
       </audio>
-
-      <SiteNav currentPage="home" />
 
       <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32 page-main-gradient">
             <FirstVisitWelcome />
@@ -240,6 +241,7 @@ export function HomePage() {
           </main>
 
       <SiteFooter />
-    </div>
+      </div>
+    </>
   );
 }
