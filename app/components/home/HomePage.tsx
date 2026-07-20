@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {Coffee} from 'lucide-react';
 import {useRef} from 'react';
 import {AnimatedTennisBall} from './AnimatedTennisBall';
+import {AnimatedTennisRacket} from './AnimatedTennisRacket';
 import {FirstVisitWelcome} from './FirstVisitWelcome';
 import {ThinkAgainButton} from './ThinkAgainButton';
 import './home-page-flip.css';
@@ -177,6 +178,7 @@ export function HomePage() {
                     fill
                     referrerPolicy="no-referrer"
                   />
+                  <AnimatedTennisRacket />
                 </div>
                 <div className="md:w-1/2 p-6 sm:p-8 md:p-12 bg-surface-container-low flex flex-col justify-center">
                   <h2 className="font-headline text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-primary">Preferred Courts</h2>
@@ -203,7 +205,10 @@ export function HomePage() {
             </section>
 
             <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <div className="tennis-gradient p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl card-lift">
+              <div
+                className="tennis-gradient relative overflow-visible p-6 sm:p-10 md:p-16 rounded-xl text-center text-on-primary shadow-xl card-lift"
+                data-think-again-arena
+              >
                 <h3 className="font-headline text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-4 sm:mb-6">Ready to challenge me?</h3>
                 <p className="text-base sm:text-lg md:text-xl opacity-90 mb-6 sm:mb-10 max-w-xl mx-auto">Tennis, QA, coffee or arguing about whether that ball was actually out.</p>
                 <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center items-center overflow-visible">

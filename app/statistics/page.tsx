@@ -7,14 +7,15 @@ import {
   Activity,
   AlertTriangle,
   Bandage,
-  Bug,
   Circle,
   CircleDot,
   Coffee,
+  Earth,
   HeartCrack,
   Sparkles,
   Terminal,
   Trophy,
+  Users,
 } from 'lucide-react';
 import {SiteNav} from '../components/layout/SiteNav';
 import {SiteFooter} from '../components/layout/SiteFooter';
@@ -37,12 +38,21 @@ type CareerStat = {
 
 const CAREER_STATS: CareerStat[] = [
   {
-    label: 'Bug reports resolved',
-    value: '2,341',
-    subtext: 'And still shipping (tennis balls).',
+    label: 'Countries visited',
+    value: '27',
+    subtext: 'Favorite:\n🇱🇹 Home & 🇫🇷 South of France (Feels like I lived there in a past life)',
     variant: 'numeric',
     border: 'border-primary',
-    icon: Bug,
+    icon: Earth,
+  },
+  {
+    label: 'People met',
+    value: '12,847',
+    subtext:
+      'Most were wonderful. Some became stories.\n\nAcquaintances: n + k\nReal friends: 20\n\nQuality over quantity.',
+    variant: 'numeric',
+    border: 'border-secondary-container',
+    icon: Users,
   },
   {
     label: 'Aces',
@@ -127,7 +137,7 @@ function StatCard({stat}: {stat: CareerStat}) {
       ) : (
         <span className={statValueClassName(stat.variant)}>{stat.value}</span>
       )}
-      <p className="text-on-surface-variant text-sm leading-relaxed">{stat.subtext}</p>
+      <p className="text-on-surface-variant text-sm leading-relaxed whitespace-pre-line">{stat.subtext}</p>
     </div>
   );
 }

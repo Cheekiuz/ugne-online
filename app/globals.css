@@ -687,23 +687,23 @@
 @keyframes think-again-shake {
   0%,
   100% {
-    transform: translate(var(--escape-x, 0px), var(--escape-y, 0px)) rotate(0deg);
+    transform: rotate(0deg);
   }
 
   20% {
-    transform: translate(var(--escape-x, 0px), var(--escape-y, 0px)) rotate(-5deg);
+    transform: rotate(-5deg);
   }
 
   40% {
-    transform: translate(var(--escape-x, 0px), var(--escape-y, 0px)) rotate(5deg);
+    transform: rotate(5deg);
   }
 
   60% {
-    transform: translate(var(--escape-x, 0px), var(--escape-y, 0px)) rotate(-3deg);
+    transform: rotate(-3deg);
   }
 
   80% {
-    transform: translate(var(--escape-x, 0px), var(--escape-y, 0px)) rotate(3deg);
+    transform: rotate(3deg);
   }
 }
 
@@ -714,6 +714,14 @@
   justify-content: center;
   flex-shrink: 0;
   overflow: visible;
+}
+
+.think-again-button-stage--escaped {
+  position: absolute;
+  z-index: 30;
+  transition:
+    left var(--escape-duration, 0.42s) cubic-bezier(0.34, 1.56, 0.64, 1),
+    top var(--escape-duration, 0.42s) cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .think-again-button {
@@ -731,12 +739,12 @@
   border: 1px solid rgba(255, 255, 255, 0.35);
   color: #ffffff;
   animation: think-again-glow 4s ease-in-out infinite;
-  transform: translate(var(--escape-x), var(--escape-y));
   transition:
     background 0.2s ease,
     border-color 0.2s ease,
     box-shadow 0.2s ease,
-    filter 0.2s ease;
+    filter 0.2s ease,
+    transform 0.2s ease;
 }
 
 .think-again-button--escaped {
@@ -744,7 +752,8 @@
     background 0.2s ease,
     border-color 0.2s ease,
     box-shadow 0.2s ease,
-    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter 0.2s ease,
+    transform 0.2s ease;
 }
 
 .think-again-button--shake {
@@ -765,11 +774,11 @@
   box-shadow:
     0 0 18px rgba(255, 255, 255, 0.4),
     0 0 36px rgba(255, 255, 255, 0.28);
-  transform: translate(var(--escape-x), var(--escape-y)) scale(1.05);
+  transform: scale(1.05);
 }
 
 .think-again-button:active {
-  transform: translate(var(--escape-x), var(--escape-y)) scale(0.97);
+  transform: scale(0.97);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -780,6 +789,10 @@
   }
 
   .think-again-button--escaped {
+    transition: none;
+  }
+
+  .think-again-button-stage--escaped {
     transition: none;
   }
 
