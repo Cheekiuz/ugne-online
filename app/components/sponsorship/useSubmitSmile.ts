@@ -2,16 +2,19 @@
 
 import {useCallback, useEffect, useState} from 'react';
 import {addSmile, type AddSmileResult} from '../../lib/supabase/smiles';
+import {readLocalSmiles} from '../../lib/supabase/local-smiles';
 import {getOrCreateVisitorId, hasSmiledLocally, markSmiledLocally, clearSmiledLocally} from '../../lib/supabase/visitor-id';
 import {notifySmileSubmitted, notifySmilesRefresh, SPONSOR_SMILE_SUBMITTED_EVENT, type SmileSubmittedDetail} from './sponsor-smile-events';
 
 export function useSubmitSmile() {
   const [submitting, setSubmitting] = useState(false);
-  const [hasSmiled, setHasSmiled] = useState(() => hasSmiledLocally());
+  const [hasSmiled, setHasSmiled] = useState(false);
   const [saveWarning, setSaveWarning] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
 
   useEffect(() => {
+    setHasSmiled(hasSmiledLocally());
+
     const sync = (event: Event) => {
       const detail = (event as CustomEvent<SmileSubmittedDetail>).detail;
       setHasSmiled(hasSmiledLocally());
@@ -51,6 +54,10 @@ export function useSubmitSmile() {
       markSmiledLocally();
       setHasSmiled(true);
       setJustSaved(true);
+      const existing = readLocalSmiles().find((smile) => smile.visitor_id === visitorId);
+      if (existing) {
+        notifySmileSubmitted(existing);
+      }
       notifySmilesRefresh();
     } else {
       setSaveWarning(true);

@@ -15,7 +15,6 @@ import {
   type SponsorSmile,
 } from '../../lib/supabase/smiles';
 import {mergeUniqueSmiles} from '../../lib/supabase/local-smiles';
-import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
 import {useSubmitSmile} from './useSubmitSmile';
 import './sponsor-smile-wall.css';
 
@@ -50,7 +49,7 @@ export function SponsorSmileWall() {
   const [pendingSmileId, setPendingSmileId] = useState<number | null>(null);
   const hasLoadedRef = useRef(false);
   const {submitSmile, submitting, hasSmiled, saveWarning, justSaved} = useSubmitSmile();
-  const alreadySmiled = hasSmiled || hasSmiledLocally();
+  const alreadySmiled = hasSmiled;
 
   const smilesForLayout = useMemo(() => {
     const displayCount = Math.max(SMILE_DONATION_FLOOR, count, smiles.length);
@@ -106,10 +105,14 @@ export function SponsorSmileWall() {
   }, [loadSmiles]);
 
   useEffect(() => {
-    if (pendingSmileId && smiles.some((smile) => smile.id === pendingSmileId)) {
+    if (!pendingSmileId) return;
+
+    const timer = window.setTimeout(() => {
       setPendingSmileId(null);
-    }
-  }, [pendingSmileId, smiles]);
+    }, 700);
+
+    return () => clearTimeout(timer);
+  }, [pendingSmileId]);
 
   return (
     <div className="space-y-4">

@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {BUY_ME_A_COFFEE_URL} from '../../lib/site-links';
 import {hasSmiledLocally} from '../../lib/supabase/visitor-id';
 import {useSubmitSmile} from './useSubmitSmile';
@@ -10,7 +10,11 @@ const buyMeACoffeeButtonClass =
 
 export function SponsorCta() {
   const {submitSmile, hasSmiled, resetThankYou} = useSubmitSmile();
-  const [showThankYou, setShowThankYou] = useState(() => hasSmiledLocally());
+  const [showThankYou, setShowThankYou] = useState(false);
+
+  useEffect(() => {
+    setShowThankYou(hasSmiledLocally());
+  }, []);
 
   const handleSponsorClick = async () => {
     await submitSmile();
