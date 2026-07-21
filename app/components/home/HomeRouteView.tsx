@@ -1,37 +1,17 @@
+import {JsonLd} from '../seo/JsonLd';
 import {HomePage} from './HomePage';
 import type {SiteRoute} from '@/lib/site';
-import {SITE_NAME, SITE_URL, siteUrl} from '@/lib/site';
+import {siteUrl} from '@/lib/site';
+import {buildProfilePageJsonLd} from '@/lib/json-ld';
 
 type HomeRouteViewProps = {
   route: SiteRoute;
 };
 
 export function HomeRouteView({route}: HomeRouteViewProps) {
-  const pageUrl = siteUrl(route.path);
-
-  const homeJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ProfilePage',
-    name: route.title,
-    description: route.description,
-    url: pageUrl,
-    mainEntity: {
-      '@type': 'Person',
-      name: SITE_NAME,
-      url: SITE_URL,
-      description: route.description,
-      jobTitle: 'QA Engineer',
-      knowsAbout: ['Tennis', 'Quality Assurance', 'Software Testing'],
-      sameAs: ['https://www.instagram.com/ugne_le_'],
-    },
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{__html: JSON.stringify(homeJsonLd)}}
-      />
+      <JsonLd data={buildProfilePageJsonLd(route)} />
       <article id="site-summary" className="sr-only">
         <h1>Ugnė - Court Competitor</h1>
         <p>

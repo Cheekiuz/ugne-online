@@ -1,8 +1,9 @@
 import type {Metadata} from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
-import {createPageMetadata, PAGE_ROUTES} from '@/lib/site';
+import {createPageMetadata, PAGE_ROUTES, siteUrl} from '@/lib/site';
+import {buildFaqPageJsonLd} from '@/lib/json-ld';
 import {ChevronDown} from 'lucide-react';
+import {JsonLd} from '../components/seo/JsonLd';
 import {SiteNav} from '../components/layout/SiteNav';
 import {SiteFooter} from '../components/layout/SiteFooter';
 import {SideBySideContent, SideBySideHero, SideBySideLayout} from '../components/layout/SideBySideLayout';
@@ -247,6 +248,7 @@ function FaqAccordionItem({item}: {item: FaqItem}) {
 export default function SponsorshipPage() {
   return (
     <>
+      <JsonLd data={buildFaqPageJsonLd(FAQ_ITEMS, siteUrl(PAGE_ROUTES.sponsorship.path))} />
       <SiteNav currentPage="sponsorship" />
 
       <main className="pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32 page-main-gradient">
