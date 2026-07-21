@@ -109,7 +109,7 @@ export function ThinkAgainButton({onClick}: ThinkAgainButtonProps) {
 
   const label =
     clickCount === 0
-      ? 'Think again'
+      ? "Don't press"
       : FOLLOW_UP_LABELS[Math.min(clickCount - 1, FOLLOW_UP_LABELS.length - 1)];
 
   return (
