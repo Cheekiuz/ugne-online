@@ -1,45 +1,32 @@
 'use client';
 
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
+import {usePathname} from 'next/navigation';
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 declare global {
   interface Window {
-    dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
   }
 }
 
 export function GoogleAnalytics() {
+  const pathname = usePathname();
+  const isInitialPageview = useRef(true);
+
   useEffect(() => {
     if (!GA_MEASUREMENT_ID || process.env.NODE_ENV !== 'production') {
       return;
     }
 
-    window.dataLayer = window.dataLayer ?? [];
-    window.gtag = function gtag(...args: unknown[]) {
-      window.dataLayer?.push(args);
-    };
+    if (isInitialPageview.current) {
+      isInitialPageview.current = false;
+      return;
+    }
 
-    window.gtag('js', new Date());
-
-    const script = document.createElement('script');
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-    script.async = true;
-    script.onload = () => {
-      window.gtag?.('config', GA_MEASUREMENT_ID);
-    };
-    script.onerror = () => {
-      // Ad blockers and privacy tools often block GA — not a site error.
-    };
-
-    document.head.appendChild(script);
-
-    return () => {
-      script.remove();
-    };
-  }, []);
+    window.gtag?.('config', GA_MEASUREMENT_ID, {page_path: pathname});
+  }, [pathname]);
 
   return null;
 }
