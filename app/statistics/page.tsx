@@ -39,8 +39,8 @@ type CareerStat = {
 const CAREER_STATS: CareerStat[] = [
   {
     label: 'Countries visited',
-    value: '27',
-    subtext: 'Favorite:\n🇱🇹 Home & 🇫🇷 South of France (Feels like I lived there in a past life)',
+    value: '31',
+    subtext: 'Favorite:\n🇱🇹 Home & 🇫🇷 South of France',
     variant: 'numeric',
     border: 'border-primary',
     icon: Earth,
@@ -104,16 +104,18 @@ const MINI_STATS: {value: string; label: string; icon: LucideIcon}[] = [
   {value: '404', label: 'Lost balls', icon: AlertTriangle},
 ];
 
+const STAT_VALUE_WRAP = 'block min-w-0 w-full max-w-full break-words [overflow-wrap:anywhere]';
+
 function statValueClassName(variant: StatVariant): string {
   switch (variant) {
     case 'numeric':
-      return 'font-headline text-4xl md:text-5xl font-black text-primary tabular-nums';
+      return `${STAT_VALUE_WRAP} font-headline text-4xl md:text-5xl font-black text-primary tabular-nums`;
     case 'text':
-      return 'font-headline text-xl md:text-2xl font-black text-primary italic';
+      return `${STAT_VALUE_WRAP} font-headline text-xl md:text-2xl font-black text-primary italic`;
     case 'redacted':
-      return 'font-headline text-xl md:text-2xl font-black text-primary';
+      return `${STAT_VALUE_WRAP} font-headline text-xl md:text-2xl font-black text-primary`;
     case 'long':
-      return 'font-headline text-base md:text-lg font-black text-primary leading-snug';
+      return `${STAT_VALUE_WRAP} font-headline text-base md:text-lg font-black text-primary leading-snug`;
   }
 }
 
@@ -122,12 +124,12 @@ function StatCard({stat}: {stat: CareerStat}) {
 
   return (
     <div
-      className={`bg-surface-container-lowest overflow-hidden p-6 sm:p-8 rounded-xl shadow-sm border-b-4 ${stat.border} flex flex-col gap-3 card-lift`}
+      className={`bg-surface-container-lowest overflow-hidden p-6 sm:p-8 rounded-xl shadow-sm border-b-4 ${stat.border} flex min-w-0 flex-col gap-3 card-lift`}
     >
       <Icon className="h-5 w-5 text-primary" strokeWidth={1.75} aria-hidden />
       <p className="font-label uppercase tracking-widest text-xs text-on-surface-variant">{stat.label}</p>
       {stat.variant === 'redacted' ? (
-        <div className="relative inline-block max-w-full overflow-hidden rounded-lg">
+        <div className="relative max-w-full overflow-hidden rounded-lg">
           <span className={statValueClassName(stat.variant)}>{stat.value}</span>
           <span
             className="absolute inset-0 bg-on-surface/90 blur-[2px]"
