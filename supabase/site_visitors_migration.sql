@@ -1,23 +1,25 @@
 -- Run once in Supabase SQL Editor.
--- Unique first-party visitors for ugne.online (not Google Analytics).
+-- Same policy style as sponsor_smiles (that one already works).
 
-create table if not exists site_visitors (
+create table if not exists public.site_visitors (
   visitor_id text primary key,
   first_seen timestamptz not null default now()
 );
 
-alter table site_visitors enable row level security;
+alter table public.site_visitors enable row level security;
 
-drop policy if exists "Anyone can insert site visitors" on site_visitors;
+drop policy if exists "Anyone can insert site visitors" on public.site_visitors;
 create policy "Anyone can insert site visitors"
-  on site_visitors for insert
-  to anon, authenticated
+  on public.site_visitors
+  for insert
+  to anon
   with check (true);
 
-drop policy if exists "Anyone can read site visitor count" on site_visitors;
+drop policy if exists "Anyone can read site visitor count" on public.site_visitors;
 create policy "Anyone can read site visitor count"
-  on site_visitors for select
-  to anon, authenticated
+  on public.site_visitors
+  for select
+  to anon
   using (true);
 
-grant select, insert on table site_visitors to anon, authenticated;
+notify pgrst, 'reload schema';

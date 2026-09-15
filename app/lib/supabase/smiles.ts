@@ -1,5 +1,6 @@
 import {getSupabaseClient} from './client';
 import {addLocalSmile, mergeUniqueSmiles, readLocalSmiles} from './local-smiles';
+import {isVisitRecordId, VISIT_RECORD_PREFIX} from './visit-prefix';
 
 export type SponsorSmile = {
   id: number;
@@ -101,7 +102,8 @@ export async function fetchSmileCount(): Promise<number> {
 
   const {count, error} = await supabase
     .from('sponsor_smiles')
-    .select('*', {count: 'exact', head: true});
+    .select('*', {count: 'exact', head: true})
+    .not('visitor_id', 'like', `${VISIT_RECORD_PREFIX}%`);
 
   if (error) {
     console.error('Failed to fetch smile count:', error.message);
@@ -120,17 +122,22 @@ export async function fetchSmiles(): Promise<SponsorSmile[]> {
 
   const {data, error} = await supabase
     .from('sponsor_smiles')
-    .select('id, pos_x, pos_y, created_at')
+    .select('id, visitor_id, pos_x, pos_y, created_at')
+    .not('visitor_id', 'like', `${VISIT_RECORD_PREFIX}%`)
     .order('created_at', {ascending: false})
     .limit(SMILE_LIMIT);
 
   if (!error && data) {
-    return mergeUniqueSmiles(data.map(normalizeSmile), localSmiles);
+    return mergeUniqueSmiles(
+      data.filter((smile) => !isVisitRecordId(smile.visitor_id)).map(normalizeSmile),
+      localSmiles,
+    );
   }
 
   const {data: fallbackData, error: fallbackError} = await supabase
     .from('sponsor_smiles')
-    .select('id, created_at')
+    .select('id, visitor_id, created_at')
+    .not('visitor_id', 'like', `${VISIT_RECORD_PREFIX}%`)
     .order('created_at', {ascending: false})
     .limit(SMILE_LIMIT);
 
@@ -139,14 +146,17 @@ export async function fetchSmiles(): Promise<SponsorSmile[]> {
     return localSmiles;
   }
 
-  const remoteSmiles = (fallbackData ?? []).map((row) =>
-    normalizeSmile({
-      id: row.id,
-      created_at: row.created_at,
-      pos_x: null,
-      pos_y: null,
-    }),
-  );
+  const remoteSmiles = (fallbackData ?? [])
+    .filter((row) => !isVisitRecordId(row.visitor_id))
+    .map((row) =>
+      normalizeSmile({
+        id: row.id,
+        visitor_id: row.visitor_id,
+        created_at: row.created_at,
+        pos_x: null,
+        pos_y: null,
+      }),
+    );
 
   return mergeUniqueSmiles(remoteSmiles, localSmiles);
 }
