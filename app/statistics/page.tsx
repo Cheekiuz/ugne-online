@@ -20,6 +20,7 @@ import {
 import {SiteNav} from '../components/layout/SiteNav';
 import {SiteFooter} from '../components/layout/SiteFooter';
 import {SideBySideContent, SideBySideHero, SideBySideLayout} from '../components/layout/SideBySideLayout';
+import {RealVisitorStatCard} from '../components/statistics/RealVisitorStatCard';
 
 const HERO_IMAGE = '/career-statistics-hero.png';
 
@@ -171,6 +172,7 @@ export default function StatisticsPage() {
               </blockquote>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <RealVisitorStatCard />
                 {CAREER_STATS.map((stat) => (
                   <StatCard key={stat.label} stat={stat} />
                 ))}

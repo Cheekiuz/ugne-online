@@ -3,6 +3,7 @@ import {Lexend, Inter} from 'next/font/google';
 import {getGtagInlineScript} from '@/lib/gtag-init';
 import {createRootMetadata, THEME_COLOR} from '@/lib/site';
 import {GoogleAnalytics} from './components/analytics/GoogleAnalytics';
+import {VisitorTracker} from './components/analytics/VisitorTracker';
 import {ScrollPeekCharacter} from './components/scroll-peek/ScrollPeekCharacter';
 import {QaGremlin} from './components/qa-gremlin/QaGremlin';
 import {Snowfall} from './components/snow/Snowfall';
@@ -52,6 +53,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <QaGremlin />
         {children}
         <GoogleAnalytics />
+        <VisitorTracker />
       </body>
     </html>
   );
