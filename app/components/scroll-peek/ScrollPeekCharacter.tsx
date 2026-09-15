@@ -5,11 +5,16 @@ import './scroll-peek-character.css';
 
 const SCROLL_THRESHOLD_PX = 160;
 const HIDE_AFTER_SCROLL_MS = 450;
+const SHOW_SCROLL_PEEK_CHARACTER = false;
 
 export function ScrollPeekCharacter() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    if (!SHOW_SCROLL_PEEK_CHARACTER) {
+      return;
+    }
+
     let hideTimeout: ReturnType<typeof setTimeout> | undefined;
 
     const onScroll = () => {
@@ -32,6 +37,10 @@ export function ScrollPeekCharacter() {
       window.clearTimeout(hideTimeout);
     };
   }, []);
+
+  if (!SHOW_SCROLL_PEEK_CHARACTER) {
+    return null;
+  }
 
   return (
     <div

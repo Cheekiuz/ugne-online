@@ -29,6 +29,7 @@ export const viewport: Viewport = {
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const isProduction = process.env.NODE_ENV === 'production';
+const SHOW_SCROLL_PEEK_CHARACTER = false;
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
@@ -49,7 +50,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       </head>
       <body className="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container antialiased" suppressHydrationWarning>
         <Snowfall />
-        <ScrollPeekCharacter />
+        {SHOW_SCROLL_PEEK_CHARACTER ? <ScrollPeekCharacter /> : null}
         <QaGremlin />
         {children}
         <GoogleAnalytics />
