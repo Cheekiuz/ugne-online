@@ -1,0 +1,24 @@
+# Ugnė
+
+> Personal website of Ugnė — tennis court competitor and QA engineer based in Vilnius, Lithuania.
+
+## About
+
+Ugnė explores the parallels between high-stakes QA engineering and competitive tennis: precision, strategy, stamina, and execution under pressure.
+
+## Pages
+
+- [Enter](https://ugne.online/): Site entry landing with door
+- [Home](https://ugne.online/home/): Court competitor intro, match moments, preferred courts (SEB Arena, Bernardinai)
+- [Career Statistics](https://ugne.online/statistics/): Tennis and QA career stats
+- [Sponsorship](https://ugne.online/sponsorship/): Sponsorship tiers and opportunities
+- [Say Cheese](https://ugne.online/say-cheese/): Visitor smile wall
+
+## Plain-text mirrors
+
+- [llms.txt](https://ugne.online/llms.txt): AI/crawler-friendly summary
+- [about.txt](https://ugne.online/about.txt): Full plain-text site overview
+
+## Contact
+
+- Instagram: https://www.instagram.com/ugne_le_
