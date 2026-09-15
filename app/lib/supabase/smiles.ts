@@ -1,6 +1,6 @@
 import {getSupabaseClient} from './client';
 import {addLocalSmile, mergeUniqueSmiles, readLocalSmiles} from './local-smiles';
-import {isVisitRecordId, VISIT_RECORD_PREFIX} from './visit-prefix';
+import {isVisitRecordId} from './visit-prefix';
 
 export type SponsorSmile = {
   id: number;
@@ -100,17 +100,15 @@ export async function fetchSmileCount(): Promise<number> {
     return localCount;
   }
 
-  const {count, error} = await supabase
-    .from('sponsor_smiles')
-    .select('*', {count: 'exact', head: true})
-    .not('visitor_id', 'like', `${VISIT_RECORD_PREFIX}%`);
+  const {data, error} = await supabase.from('sponsor_smiles').select('visitor_id');
 
   if (error) {
     console.error('Failed to fetch smile count:', error.message);
     return localCount;
   }
 
-  return Math.max(count ?? 0, localCount);
+  const remoteCount = (data ?? []).filter((row) => !isVisitRecordId(row.visitor_id)).length;
+  return Math.max(remoteCount, localCount);
 }
 
 export async function fetchSmiles(): Promise<SponsorSmile[]> {
@@ -123,7 +121,6 @@ export async function fetchSmiles(): Promise<SponsorSmile[]> {
   const {data, error} = await supabase
     .from('sponsor_smiles')
     .select('id, visitor_id, pos_x, pos_y, created_at')
-    .not('visitor_id', 'like', `${VISIT_RECORD_PREFIX}%`)
     .order('created_at', {ascending: false})
     .limit(SMILE_LIMIT);
 
@@ -137,7 +134,6 @@ export async function fetchSmiles(): Promise<SponsorSmile[]> {
   const {data: fallbackData, error: fallbackError} = await supabase
     .from('sponsor_smiles')
     .select('id, visitor_id, created_at')
-    .not('visitor_id', 'like', `${VISIT_RECORD_PREFIX}%`)
     .order('created_at', {ascending: false})
     .limit(SMILE_LIMIT);
 

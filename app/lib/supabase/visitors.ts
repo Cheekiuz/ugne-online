@@ -1,6 +1,6 @@
 import {getSupabaseClient, isSupabaseConfigured} from './client';
 import {getOrCreateVisitorId} from './visitor-id';
-import {VISIT_RECORD_PREFIX, visitRecordId} from './visit-prefix';
+import {isVisitRecordId, visitRecordId} from './visit-prefix';
 
 const SESSION_KEY = 'ugne-visit-recorded';
 
@@ -22,16 +22,23 @@ function isLikelyBot(): boolean {
   return /bot|crawler|spider|slurp|facebookexternalhit|linkedinbot/i.test(navigator.userAgent);
 }
 
-function friendlyError(message: string): string {
-  if (/schema cache|does not exist|could not find the table/i.test(message)) {
-    return 'Could not save visit — database table missing';
+function randomPosition(): {pos_x: number; pos_y: number} {
+  return {
+    pos_x: 5 + Math.random() * 90,
+    pos_y: 5 + Math.random() * 90,
+  };
+}
+
+function errorMessage(error: unknown): string {
+  if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string') {
+    return error.message;
   }
 
-  if (/row-level security|permission denied|42501/i.test(message)) {
-    return 'Blocked by database rules';
+  if (error instanceof Error) {
+    return error.message;
   }
 
-  return message;
+  return 'Could not reach the visitor database';
 }
 
 export function formatVisitorCount(count: number | null, ready: boolean): string {
@@ -56,17 +63,15 @@ export async function fetchVisitorCount(): Promise<VisitorCountResult> {
     return {configured: false, count: null, error: 'Open ugne.online — local dev has no database keys'};
   }
 
-  const {count, error} = await supabase
-    .from('sponsor_smiles')
-    .select('*', {count: 'exact', head: true})
-    .like('visitor_id', `${VISIT_RECORD_PREFIX}%`);
+  const {data, error} = await supabase.from('sponsor_smiles').select('visitor_id');
 
   if (error) {
     console.error('Failed to fetch visitor count:', error.message);
-    return {configured: true, count: null, error: friendlyError(error.message)};
+    return {configured: true, count: null, error: errorMessage(error)};
   }
 
-  return {configured: true, count: count ?? 0, error: null};
+  const count = (data ?? []).filter((row) => isVisitRecordId(row.visitor_id)).length;
+  return {configured: true, count, error: null};
 }
 
 export async function recordVisit(): Promise<string | null> {
@@ -92,9 +97,18 @@ export async function recordVisit(): Promise<string | null> {
     return null;
   }
 
-  const {error} = await supabase.from('sponsor_smiles').insert({
+  const {pos_x, pos_y} = randomPosition();
+  let {error} = await supabase.from('sponsor_smiles').insert({
     visitor_id: visitRecordId(visitorId),
+    pos_x,
+    pos_y,
   });
+
+  if (error) {
+    ({error} = await supabase.from('sponsor_smiles').insert({
+      visitor_id: visitRecordId(visitorId),
+    }));
+  }
 
   if (error) {
     if (error.code === '23505') {
@@ -107,7 +121,7 @@ export async function recordVisit(): Promise<string | null> {
     }
 
     console.error('Failed to record visit:', error.message);
-    return friendlyError(error.message);
+    return errorMessage(error);
   }
 
   try {
@@ -124,13 +138,17 @@ let inflight: Promise<VisitorCountResult> | null = null;
 export function ensureVisitCounted(): Promise<VisitorCountResult> {
   if (!inflight) {
     inflight = (async () => {
-      const recordError = await recordVisit();
-      const result = await fetchVisitorCount();
-      if (result.error || !recordError) {
-        return result;
-      }
+      try {
+        const recordError = await recordVisit();
+        const result = await fetchVisitorCount();
+        if (result.error || !recordError) {
+          return result;
+        }
 
-      return {...result, error: recordError};
+        return {...result, error: recordError};
+      } catch (error) {
+        return {configured: true, count: null, error: errorMessage(error)};
+      }
     })();
   }
 
